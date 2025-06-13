@@ -1,0 +1,22 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  profiles:
+    # 默认激活 dev 环境
+    active: dev
+
+jwt:
+  # 签发人
+  issuer: zifengliu
+  # 秘钥
+  secret: TQDGw7oWCy2p5j8267FKCqYamD3bzhjbx0TPp7LwYpLwKSEFxqvTizminm8qUD0fm2rVY0xtAKaF7BZ9NZANmQ==
+  # token 过期时间（单位：分钟） 24*60
+  tokenExpireTime: 1440
+  # token 请求头中的 key 值
+  tokenHeaderKey: Authorization
+  # token 请求头中的 value 值前缀
+  tokenPrefix: Bearer
+
+
