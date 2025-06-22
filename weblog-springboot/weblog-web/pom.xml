@@ -18,29 +18,10 @@
     <name>weblog-web</name>
     <description>web项目入口,负责博客前台展示相关功能,打包也放在这个模块负责</description>
 
-    <!--  ：设置为 WAR 包 -->
-<!--    <packaging>war</packaging>-->
+
 
     <dependencies>
-<!--        &lt;!&ndash; ✅ Spring Boot Web，tomcat 设为 provided &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-web</artifactId>-->
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.springframework.boot</groupId>-->
-<!--                    <artifactId>spring-boot-starter-tomcat</artifactId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
-<!--        </dependency>-->
 
-<!--        &lt;!&ndash; ✅ 外部容器部署必须将 tomcat 设为 provided &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-tomcat</artifactId>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
-        <!--&lt;!&ndash; Web 依赖 &ndash;&gt;-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
