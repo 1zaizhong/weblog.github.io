@@ -4,8 +4,8 @@ import com.zifengliu.weblog.common.utils.Response;
 
 /**
  * @author: 粟英朝
- * @url: www.quanxiaoha.com
- * @date: 2023-09-15 14:03
+ *
+ * @date:  2025-09-15 14:03
  * @description: 分类
  **/
 public interface CategoryService {

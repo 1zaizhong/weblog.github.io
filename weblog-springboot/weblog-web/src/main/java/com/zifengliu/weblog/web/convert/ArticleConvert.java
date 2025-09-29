@@ -7,8 +7,8 @@ import org.mapstruct.factory.Mappers;
 
 /**
  * @author: 粟英朝
- * @url: www.quanxiaoha.com
- * @date: 2023/10/8 14:57
+ *
+ * @date:  2025/10/8 14:57
  * @description: 文章转换
  **/
 @Mapper

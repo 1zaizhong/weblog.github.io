@@ -14,8 +14,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 /**
  * @author: 粟英朝
- * @url: www.quanxiaoha.com
- * @date: 2023-08-16 7:53
+ *
+ * @date:  2025-08-16 7:53
  * @description: Knife4j 配置
  **/
 @Configuration
