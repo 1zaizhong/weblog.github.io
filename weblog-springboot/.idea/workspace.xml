@@ -4,26 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="修改注释">
+    <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/config/Knife4jConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/config/Knife4jConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/ArticleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/ArticleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/CategoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/TagController.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/TagController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/TestController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/convert/ArticleConvert.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/convert/ArticleConvert.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/article/FindIndexArticlePageListReqVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/article/FindIndexArticlePageListReqVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/article/FindIndexArticlePageListRspVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/article/FindIndexArticlePageListRspVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/category/FindCategoryListRspVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/category/FindCategoryListRspVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/tag/FindTagListRspVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/tag/FindTagListRspVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/ArticleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/ArticleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/CategoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/TagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/TagService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/WeblogWebApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/WeblogWebApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArticleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArticleServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CategoryServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/TagServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/TagServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +23,19 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$/.." source="origin/master" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
     <option name="WARN_ABOUT_LARGE_FILES_LIMIT_MB" value="60" />
   </component>
@@ -47,12 +45,12 @@
     &quot;assignee&quot;: &quot;1zaizhong&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;git@github.com:1zaizhong/weblog.git&quot;,
-    &quot;accountId&quot;: &quot;a4023012-845b-4ed9-a631-7213d1b16eeb&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/1zaizhong/weblog.github.io.git",
+    "accountId": "a4023012-845b-4ed9-a631-7213d1b16eeb"
   }
-}</component>
+}]]></component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/config/WebSecurityConfig.java" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -82,34 +80,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Maven.weblog-springboot [clean].executor": "Run",
-    "Maven.weblog-springboot [install].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.WeblogModuleCommonApplication.executor": "Run",
-    "Spring Boot.WeblogWebApplication.executor": "Run",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "E:/AI",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "模块",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "spring",
-    "vue.rearranger.settings.migration": "true",
-    "应用程序.WeblogWebApplication.executor": "Run"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Maven.weblog-springboot [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.weblog-springboot [install].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.WeblogModuleCommonApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.WeblogWebApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/AI&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;spring&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;应用程序.WeblogWebApplication.executor&quot;: &quot;Run&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Spring Boot.WeblogWebApplication">
     <configuration name="WeblogWebApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.zifengliu.weblog.web.WeblogWebApplication" />
@@ -187,7 +185,8 @@
       <workItem from="1750659628505" duration="409000" />
       <workItem from="1751956404572" duration="28000" />
       <workItem from="1759132807688" duration="250000" />
-      <workItem from="1759133068888" duration="5595000" />
+      <workItem from="1759133068888" duration="7598000" />
+      <workItem from="1759605970084" duration="537000" />
     </task>
     <task id="LOCAL-00001" summary="更改">
       <option name="closed" value="true" />
@@ -253,7 +252,15 @@
       <option name="project" value="LOCAL" />
       <updated>1750585261774</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="修改注释">
+      <option name="closed" value="true" />
+      <created>1759141348197</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1759141348197</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
