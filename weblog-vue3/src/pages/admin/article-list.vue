@@ -409,6 +409,7 @@ const tagSelectLoading = ref(true)
 const tags = ref([])
 //渲染
 getTagSelectList().then(res => {
+    console.log('获取标签数据')
     tags.value = res.data
 })
 
@@ -542,6 +543,7 @@ const updateSubmit = () => {
         })
     })
 }
+
        
 </script>
 

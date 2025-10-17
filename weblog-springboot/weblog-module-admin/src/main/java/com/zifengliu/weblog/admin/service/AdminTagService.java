@@ -43,7 +43,7 @@ public interface AdminTagService {
     Response deleteTag(DeleteTagReqVO deleteTagReqVO);
 
     /*
-     * 获取标签分类的 Select 列表数据
+     * 查询标签 Select 列表数据
      * @return
      * */
     Response findTagSelectList( );
