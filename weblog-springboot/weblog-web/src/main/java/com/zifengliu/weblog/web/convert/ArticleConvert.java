@@ -3,6 +3,7 @@ package com.zifengliu.weblog.web.convert;
 import com.zifengliu.weblog.common.domain.dos.ArticleDO;
 import com.zifengliu.weblog.web.model.vo.article.FindIndexArticlePageListRspVO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -23,6 +24,6 @@ public interface ArticleConvert {
      * @param bean
      * @return
      */
-    FindIndexArticlePageListRspVO convertDO2VO(ArticleDO bean);
 
+    FindIndexArticlePageListRspVO convertDO2VO(ArticleDO bean);
 }

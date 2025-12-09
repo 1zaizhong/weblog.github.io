@@ -3,6 +3,7 @@ import { getToken } from '@/composables/cookie'
 import { showMessage } from '@/composables/util'
 import { showPageLoading } from '@/composables/util'
 import { hidePageLoading } from '@/composables/util'
+import { useBlogSettingsStore } from '@/stores/blogsettings'
 
 //全局路由 前置守卫
 router.beforeEach((to, from, next) => {
@@ -14,6 +15,7 @@ router.beforeEach((to, from, next) => {
     //若用户想访问后台 比如/amdin/*
     //未登录就强制跳转登录页
     let  token = getToken()
+
     if(!token && to.path.startsWith('/admin')){
         showMessage('请先登录', 'warning')
         next({path: '/login'})
@@ -22,6 +24,13 @@ router.beforeEach((to, from, next) => {
        showMessage('已经登陆,请勿重复登录' , 'warning')
        //跳转到后台首页
        next({path: '/admin/index' })
+    }else if (!to.path.startsWith('/admin')) {
+        // 如果访问的非 /admin 前缀路由
+        // 引入博客设置 store
+        let blogSettingsStore = useBlogSettingsStore()
+        // 获取博客设置信息并保存到全局状态中
+        blogSettingsStore.getBlogSettings()
+        next()
     }else{
         next();
     }

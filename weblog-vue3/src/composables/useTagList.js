@@ -1,7 +1,7 @@
-import { ref } from 'vue'
 import { useMenuStore } from '@/stores/menu'
 import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router'
 import { setTabList, getTabList } from '@/composables/cookie'
+import { ref } from 'vue'
 
 export function useTabList() {
     const menuStore = useMenuStore()
