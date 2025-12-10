@@ -156,7 +156,7 @@ function getTableData() {
     getTagPageList({ current: current.value, size: size.value, startDate: startDate.value, endDate: endDate.value, name: searchTagName.value })
         .then((res) => {
             if (res.success == true) {
-                    console.log(res.data)//检查
+
                 tableData.value = res.data
                 current.value = res.current
                 size.value = res.size
@@ -223,7 +223,6 @@ const onSubmit = () => {
                 showMessage(message, 'error')
             }
         }).finally(() => formDialogRef.value.closeBtnLoading()) // 隐藏提交按钮 loading
-
     })
 }
 

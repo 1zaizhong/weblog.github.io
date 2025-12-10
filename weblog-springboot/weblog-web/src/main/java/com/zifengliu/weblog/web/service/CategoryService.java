@@ -1,6 +1,7 @@
 package com.zifengliu.weblog.web.service;
 
 import com.zifengliu.weblog.common.utils.Response;
+import com.zifengliu.weblog.web.model.vo.category.FindCategoryArticlePageListReqVO;
 
 /**
  * @author: 粟英朝
@@ -14,4 +15,13 @@ public interface CategoryService {
      * @return
      */
     Response findCategoryList();
+
+
+    /**
+     * 获取分类下文章分页数据
+     * @param findCategoryArticlePageListReqVO
+     * @return
+     */
+    Response findCategoryArticlePageList(FindCategoryArticlePageListReqVO findCategoryArticlePageListReqVO);
+
 }

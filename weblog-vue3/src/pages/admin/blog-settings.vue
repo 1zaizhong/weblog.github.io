@@ -66,8 +66,8 @@
                     <el-input v-model="form.csdnHomepage" clearable placeholder="请输入 CSDN 主页访问的 URL" />
                 </el-form-item>
                 <el-form-item>
-    	                <el-button type="primary" :loading="btnLoading" @click="onSubmit">保存</el-button>
-	                </el-form-item>
+                    <el-button type="primary" :loading="btnLoading" @click="onSubmit">保存</el-button>
+                </el-form-item>
             </el-form>
         </el-card>
     </div>
@@ -88,9 +88,6 @@ const isGiteeChecked = ref(false)
 const isZhihuChecked = ref(false)
 // 是否开启 CSDN
 const isCSDNChecked = ref(false)
-
-
-
 // 是否显示保存按钮的 loading 状态，默认为 false
 const btnLoading = ref(false)
 
@@ -150,7 +147,6 @@ const csdnSwitchChange = (checked) => {
 function initBlogSettings() {
     getBlogSettingsDetail().then((e) => {
         if (e.success = true) {
-            
             // 设置表单数据
             form.name = e.data.name
             form.author = e.data.author
@@ -196,7 +192,7 @@ const handleLogoChange = (file) => {
             showMessage(message, 'error')
             return
         }
- 
+
         // 成功则设置 logo 链接，并提示成功
         form.logo = e.data.url
         showMessage('上传成功')
@@ -205,8 +201,8 @@ const handleLogoChange = (file) => {
 
 // 上传作者头像
 const handleAvatarChange = (file) => {
-// 表单对象
-let formData = new FormData()
+    // 表单对象
+    let formData = new FormData()
     // 添加 file 字段，并将文件传入 
     formData.append('file', file.raw)
     uploadFile(formData).then((e) => {
@@ -223,33 +219,33 @@ let formData = new FormData()
     })
 }
 
-  
-                // 保存当前博客设置
-                const onSubmit = () => {
-                    // 先验证 form 表单字段
-                    formRef.value.validate((valid) => {
-                        if (!valid) {
-                            console.log('表单验证不通过')
-                            return false
-                        }
+// 保存当前博客设置
+const onSubmit = () => {
+    // 先验证 form 表单字段
+    formRef.value.validate((valid) => {
+        if (!valid) {
+            console.log('表单验证不通过')
+            return false
+        }
 
-                        // 显示保存按钮 loading
-                        btnLoading.value = true
-                        updateBlogSettings(form).then((res) => {
-                            if (res.success == false) {
-                                // 获取服务端返回的错误消息
-                                let message = res.message
-                                // 提示错误消息
-                                showMessage(message, 'error')
-                                return
-                            }
+        // 显示保存按钮 loading
+        btnLoading.value = true
+        updateBlogSettings(form).then((res) => {
+            if (res.success == false) {
+                // 获取服务端返回的错误消息
+                let message = res.message
+                // 提示错误消息
+                showMessage(message, 'error')
+                return
+            }
+            
+            // 重新渲染页面中的信息
+            initBlogSettings()
+            showMessage('保存成功')
+        }).finally(() => btnLoading.value = false) // 隐藏保存按钮 loading
+    })
+}
 
-                            // 重新渲染页面中的信息
-                            initBlogSettings()
-                            showMessage('保存成功')
-                        }).finally(() => btnLoading.value = false) // 隐藏保存按钮 loading
-                    })
-                }
 
 </script>
 

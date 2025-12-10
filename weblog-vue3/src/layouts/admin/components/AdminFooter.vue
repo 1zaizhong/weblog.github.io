@@ -1,6 +1,6 @@
 <template>
     <div class="bg-white py-5 flex items-center justify-center text-sm text-gray-500 shadow-none">
-       <!--版权信息-->
-       &nbsp;<a class="underline" herf="https://www.zifengliu.com" target="_blank"></a>
+        <!-- Copyright 版权信息 -->
+        个人成果:&nbsp;<a class="underline"  target="_blank">粟英朝</a>
     </div>
 </template>

@@ -21,8 +21,8 @@
 
         <el-card shadow="never">
             <!-- 新增按钮 -->
-            <div class="mb-5" @click="addCategoryBtnClick">
-                <el-button type="primary">
+            <div class="mb-5">
+                <el-button type="primary" @click="addCategoryBtnClick">
                     <el-icon class="mr-1">
                         <Plus />
                     </el-icon>
@@ -55,31 +55,13 @@
         </el-card>
 
     <!-- 添加分类 -->
-    <!-- <el-dialog v-model="dialogVisible" title="添加文章分类" width="40%" :draggable ="true" :close-on-click-modal="false" :close-on-press-escape="false">
-        <el-form ref="formRef" :rules="rules" :model="form">
-                    <el-form-item label="分类名称" prop="name" label-width="80px">
-                        
-                        <el-input size="large" v-model="form.name" placeholder="请输入分类名称" maxlength="20" show-word-limit clearable/>
-                    </el-form-item>
-                </el-form>
-        <template #footer>
-            <span class="dialog-footer">
-                <el-button @click="dialogVisible = false">取消</el-button>
-                <el-button type="primary" @click="onSubmit">
-                    提交
-                </el-button>
-            </span>
-        </template>
-    </el-dialog> -->
-   	<!-- 添加分类 -->
-       <FormDialog ref="formDialogRef" title="添加文章分类" destroyOnClose @submit="onSubmit">
+    <FormDialog ref="formDialogRef" title="添加文章分类" destroyOnClose @submit="onSubmit">
         <el-form ref="formRef" :rules="rules" :model="form">
                     <el-form-item label="分类名称" prop="name" label-width="80px" size="large">
                         <el-input v-model="form.name" placeholder="请输入分类名称" maxlength="20" show-word-limit clearable/>
                     </el-form-item>
                 </el-form>
     </FormDialog>
-    
 
     </div>
 </template>
@@ -91,9 +73,6 @@ import { getCategoryPageList, addCategory, deleteCategory } from '@/api/admin/ca
 import moment from 'moment'
 import { showMessage, showModel } from '@/composables/util'
 import FormDialog from '@/components/FormDialog.vue'
-
-//表格加载Loading
-const tableLoading = ref(false)
 
 // 分页查询的分类名称
 const searchCategoryName = ref('')
@@ -142,6 +121,8 @@ const shortcuts = [
     },
 ]
 
+// 表格加载 Loading
+const tableLoading = ref(false)
 // 表格数据
 const tableData = ref([])
 // 当前页码，给了一个默认值 1
@@ -154,9 +135,10 @@ const size = ref(10)
 
 // 获取分页数据
 function getTableData() {
-    //显示表格Loading
-    tableLoading.value = true 
+    // 显示表格 loading
+    tableLoading.value = true
     // 调用后台分页接口，并传入所需参数
+    
     getCategoryPageList({current: current.value, size: size.value, startDate: startDate.value, endDate: endDate.value, name: searchCategoryName.value})
     .then((res) => {
         if (res.success == true) {
@@ -167,7 +149,7 @@ function getTableData() {
             total.value = res.total
         }
     })
-    .finally(() => tableLoading.value = false) //隐藏表格loadiing
+    .finally(() => tableLoading.value = false) // 隐藏表格 loading
 }
 getTableData()
 
@@ -187,11 +169,9 @@ const reset = () => {
 }
 
 // 对话框是否显示
-//const dialogVisible = ref(false)
-
-//对话框是否显示
 const formDialogRef = ref(null)
-//新增分类按钮点击事件
+
+// 新增分类按钮点击事件
 const addCategoryBtnClick = () => {
     formDialogRef.value.open()
 }
@@ -224,15 +204,16 @@ const onSubmit = () => {
             console.log('表单验证不通过')
             return false
         }
+        
         // 显示提交按钮 loading
         formDialogRef.value.showBtnLoading()
-
         addCategory(form).then((res) => {
             if (res.success == true) {
                 showMessage('添加成功')
                 // 将表单中分类名称置空
                 form.name = ''
-                
+                // 隐藏对话框
+                formDialogRef.value.close()
                 // 重新请求分页接口，渲染数据
                 getTableData()
             } else {
@@ -241,11 +222,12 @@ const onSubmit = () => {
                 // 提示错误消息
                 showMessage(message, 'error')
             }
-        }).finally(() => formDialogRef.value.closeBtnLoading())//隐藏提交按钮 loading
+        }).finally(() => formDialogRef.value.closeBtnLoading()) // 隐藏提交按钮 loading
 
     })
 }
 
+// 删除分类
 const deleteCategorySubmit = (row) => {
     console.log(row)
     showModel('是否确定要删除该分类？').then(() => {

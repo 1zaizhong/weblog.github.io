@@ -1,15 +1,13 @@
-
 <template>
- <Transition  name="fade">
     <!-- 外层容器 -->
     <el-container>
     
         <!-- 左边侧边栏 -->
-        <el-aside :width="menuStore.menuWidth" class="transition-all">
+        <el-aside :width='menuStore.menuWidth' class="transition-all duration-300">
             <AdminMenu></AdminMenu>
         </el-aside>
         
-        <!-- 主容器 -->
+        <!-- 右边主内容区域 -->
         <el-container>
             <!-- 顶栏容器 -->
             <el-header>
@@ -21,11 +19,14 @@
                 <AdminTagList></AdminTagList>
 
                 <!-- 主内容（根据路由动态展示不同页面） -->
-                <router-view v-slot="{Component}">
-                    <!--max指定最多缓存10 个组件-->
-                    <KeepAlive :max="10">
-                        <component :is="Component"></component>
-                    </KeepAlive>
+                <router-view v-slot="{ Component }">
+                    <Transition name="fade">
+                        <!-- max 指定最多缓存 10 个组件 -->
+                        <KeepAlive :max="10">
+                            <component :is="Component"></component>
+                        </KeepAlive>
+                    </Transition>
+                    
                 </router-view>
             </el-main>
             
@@ -35,9 +36,7 @@
             </el-footer>
         </el-container>
     </el-container>
- </Transition>
 </template>
-
 
 <script setup>
 // 引入组件
@@ -45,15 +44,18 @@ import AdminFooter from './components/AdminFooter.vue';
 import AdminHeader from './components/AdminHeader.vue';
 import AdminMenu from './components/AdminMenu.vue';
 import AdminTagList from './components/AdminTagList.vue';
+
 import { useMenuStore } from '@/stores/menu'
 
 const menuStore = useMenuStore()
 </script>
+
 <style scoped>
-.el-header{
+.el-header {
     padding: 0!important;
 }
-.el-footer{
+
+.el-footer {
     padding: 0!important;
 }
 

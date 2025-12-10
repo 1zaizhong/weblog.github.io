@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia'
-
+import { ref } from 'vue'
 import { getUserInfo } from '@/api/admin/user'
 import { removeToken } from '@/composables/cookie'
-import { ref } from 'vue'
 
 export const useUserStore = defineStore('user', () => {
   // 用户信息

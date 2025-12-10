@@ -27,7 +27,6 @@
 </template>
 
 <script setup>
-//tagList 具体实现放入 useTagList.js 文件中
 import { useTabList } from '@/composables/useTagList.js'
 
 const { menuStore, activeTab, tabList, tabChange, removeTab, handleCloseTab } = useTabList()

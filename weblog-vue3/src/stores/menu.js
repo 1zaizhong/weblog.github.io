@@ -11,10 +11,9 @@ export const useMenuStore = defineStore('menu', () => {
   }
   
   return { menuWidth, handleMenuWidth }
-},
-
+}, 
 {
-  //开启持久化
+  // 开启持久化
   persist: true,
 }
 )

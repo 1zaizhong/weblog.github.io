@@ -17,7 +17,7 @@ public class BasePageQuery {
 
    /*每页展示的数据数量,默认是10个数据
    */
-   private Long size = 10L;
+   private Long size = 4L;
 
 
 
