@@ -4,83 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/ArchiveController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/archive/FindArchiveArticlePageListReqVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/archive/FindArchiveArticlePageListRspVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/archive/FindArchiveArticleRspVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/category/FindCategoryArticlePageListReqVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/category/FindCategoryArticlePageListRspVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/tag/FindTagArticlePageListReqVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/tag/FindTagArticlePageListRspVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/ArchiveService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArchiveServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/frontend/archive.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/frontend/article.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/frontend/blogsettings.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/frontend/category.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/frontend/tag.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/assets/developer.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/assets/no-data.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/assets/weblog-logo-mini.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/CategoryListCard.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/Footer.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/TagListCard.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/UserInfoCard.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/archive-list.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/article-detail.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/category-article-list.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/category-list.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/tag-article-list.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/tag-list.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/stores/blogsettings.js" afterDir="false" />
+    <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="前台博客首页的接口更新">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/config/JacksonConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/config/JacksonConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/ArticleCategoryRelMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/ArticleCategoryRelMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/ArticleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/ArticleMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/ArticleTagRelMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/ArticleTagRelMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/model/BasePageQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/model/BasePageQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/CategoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/TagController.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/TagController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/convert/ArticleConvert.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/convert/ArticleConvert.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/article/FindIndexArticlePageListRspVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/article/FindIndexArticlePageListRspVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/CategoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/TagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/TagService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CategoryServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/TagServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/TagServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/.vscode/extensions.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/api/admin/article.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/admin/article.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/api/admin/blogsettings.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/admin/blogsettings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/api/admin/category.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/admin/category.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/api/admin/file.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/admin/file.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/api/admin/tag.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/admin/tag.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/api/admin/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/admin/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/assets/login.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/assets/weblog-logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/assets/weblog-logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/axios.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/axios.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/components/FormDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/components/FormDialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/composables/useTagList.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/composables/useTagList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/composables/util.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/composables/util.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/layouts/admin/admin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/admin/admin.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/layouts/admin/components/AdminFooter.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/admin/components/AdminFooter.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/layouts/admin/components/AdminHeader.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/admin/components/AdminHeader.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/layouts/admin/components/AdminMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/admin/components/AdminMenu.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/layouts/admin/components/AdminTagList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/admin/components/AdminTagList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/Header.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/article-list.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/article-list.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/blog-settings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/blog-settings.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/category-list.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/category-list.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/tag-list.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/tag-list.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/permission.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/permission.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/stores/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/stores/menu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/stores/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/stores/user.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,34 +70,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Maven.weblog-springboot [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.weblog-springboot [install].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.WeblogModuleCommonApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.WeblogWebApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;blog&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/aacoding/weblog-springboot&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDK&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
-    &quot;应用程序.WeblogWebApplication.executor&quot;: &quot;Run&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Maven.weblog-springboot [clean].executor": "Run",
+    "Maven.weblog-springboot [install].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.WeblogModuleCommonApplication.executor": "Run",
+    "Spring Boot.WeblogWebApplication.executor": "Run",
+    "git-widget-placeholder": "blog",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "E:/aacoding/weblog-springboot",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "SDK",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "vcs.Git",
+    "vue.rearranger.settings.migration": "true",
+    "应用程序.WeblogWebApplication.executor": "Run"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Spring Boot.WeblogWebApplication">
     <configuration name="WeblogWebApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.zifengliu.weblog.web.WeblogWebApplication" />
@@ -259,7 +184,7 @@
       <workItem from="1765209004951" duration="164000" />
       <workItem from="1765269957360" duration="91000" />
       <workItem from="1765270064414" duration="18219000" />
-      <workItem from="1765355216048" duration="7988000" />
+      <workItem from="1765355216048" duration="12669000" />
     </task>
     <task id="LOCAL-00001" summary="更改">
       <option name="closed" value="true" />
@@ -341,7 +266,23 @@
       <option name="project" value="LOCAL" />
       <updated>1765282342331</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="前台博客首页的接口更新">
+      <option name="closed" value="true" />
+      <created>1765388034986</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1765388034986</updated>
+    </task>
+    <task id="LOCAL-00012" summary="前台博客首页的接口更新">
+      <option name="closed" value="true" />
+      <created>1765388711739</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1765388711739</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
