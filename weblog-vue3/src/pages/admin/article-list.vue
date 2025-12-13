@@ -31,7 +31,7 @@
 
             <!-- 分页列表 -->
             <el-table :data="tableData" border stripe style="width: 100%" v-loading="tableLoading">
-                <el-table-column prop="title" label="标题" width="380" />
+                <el-table-column prop="id" label="ID" width="50" />
                 <el-table-column prop="cover" label="封面" width="180">
                     <template #default="scope">
                         <el-image style="width: 100px;" :src="scope.row.cover" />
@@ -45,6 +45,11 @@
                                 <Edit />
                             </el-icon>
                             编辑</el-button>
+                        <el-button size="small" @click="goArticleDetailPage(scope.row.id)">
+                            <el-icon class="mr-1">
+                                <View />
+                            </el-icon>
+                            预览</el-button>
                         <el-button type="danger" size="small" @click="deleteArticleSubmit(scope.row)">
                             <el-icon class="mr-1">
                                 <Delete />
@@ -206,11 +211,14 @@ import moment from 'moment'
 import { showMessage, showModel } from '@/composables/util'
 import { MdEditor } from 'md-editor-v3'
 import 'md-editor-v3/lib/style.css'
+import { useRouter } from 'vue-router'
 
 // 模糊搜索的文章标题
 const searchArticleTitle = ref('')
 // 日期
 const pickDate = ref('')
+
+const router = useRouter()
 
 // 查询条件：开始结束时间
 const startDate = reactive({})
@@ -540,7 +548,10 @@ const updateSubmit = () => {
         })
     })
 }
-
+// 跳转文章详情页
+const goArticleDetailPage = (articleId) => {
+                    router.push('/article/' + articleId)
+                }
 </script>
 
 <style scoped>

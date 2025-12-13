@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @author 粟英朝
  * @version 0.0.3
  * @date 2025/12/13 下午7:45
- * @description
+ * @ddescription  阅读文章事件订阅者 escription
  **/
 
 @Component

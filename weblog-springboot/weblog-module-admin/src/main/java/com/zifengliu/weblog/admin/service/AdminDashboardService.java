@@ -1,0 +1,18 @@
+package com.zifengliu.weblog.admin.service;
+
+import com.zifengliu.weblog.common.utils.Response;
+
+/**
+ * @author 粟英朝
+ * @version 0.0.3
+ * @date 2025/12/13 下午8:12
+ * @description
+ **/
+public interface AdminDashboardService {
+
+    /**
+     * 获取仪表盘基础统计信息
+     * @return
+     */
+    Response findDashboardStatistics();
+}
