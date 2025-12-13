@@ -180,9 +180,16 @@ const article = ref({})
 // 获取文章详情
 function refreshArticleDetail(articleId) {
     getArticleDetail(articleId).then((res) => {
-        if (res.success) {
-            article.value = res.data
+        // 该文章不存在(错误码为 20010)
+        if (!res.success && res.errorCode == '20010') {
+        	// 手动跳转 404 页面
+            router.push({name : 'NotFound'})
+            return
         }
+
+        article.value = res.data
+
+
         // 正文 div 引用
 const articleContentRef = ref(null)
 onMounted(() => {
@@ -222,28 +229,7 @@ const goTagArticleListPage = (id, name) => {
     router.push({path: '/tag/article/list', query: {id, name}})
 }
 
-// 正文 div 引用
-const articleContentRef = ref(null)
-onMounted(() => {
-    // 使用 MutationObserver 监视 DOM 的变化
-    const observer = new MutationObserver(mutationsList => {
-        for (let mutation of mutationsList) {
-            if (mutation.type === 'childList') {
-            	// 获取所有 pre code 节点
-                let highlight = document.querySelectorAll('pre code')
-                // 循环高亮
-                highlight.forEach((block) => {
-                    hljs.highlightBlock(block)
-                })
-            }
-        }
-    })
 
-	// 配置监视子节点的变化
-    const config = { childList: true, subtree: true }
-    // 开始观察正文内容变化
-    observer.observe(articleContentRef.value, config)
-})
 
 </script>
 

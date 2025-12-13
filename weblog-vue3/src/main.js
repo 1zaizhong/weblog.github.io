@@ -1,6 +1,8 @@
 import '@/assets/main.css'
 import 'animate.css';
 import 'nprogress/nprogress.css'
+import 'viewerjs/dist/viewer.css'
+import VueViewer from 'v-viewer'
 
 import { createApp } from 'vue'
 // 引入全局状态管理 Pinia
@@ -19,6 +21,8 @@ const app = createApp(App)
 app.use(router)
 // 应用 Pinia
 app.use(pinia)
+app.use(VueViewer)
+
 
 // 引入图标
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
