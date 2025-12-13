@@ -72,10 +72,9 @@
                         </div>
 
                     <!-- 正文 -->
-                    <div class="mt-5 article-content" v-html="article.content"></div>
+                  <div ref="articleContentRef" class="mt-5 article-content" v-viewer v-html="article.content"></div>
 
-
-                       <!-- 标签集合 -->
+                      
                       <!-- 标签集合 -->
                       <div v-if="article.tags && article.tags.length > 0" class="mt-5">
                             <span @click="goTagArticleListPage(tag.id, tag.name)" v-for="(tag, index) in article.tags" :key="index"
@@ -156,7 +155,12 @@ import TagListCard from '@/layouts/frontend/components/TagListCard.vue'
 import CategoryListCard from '@/layouts/frontend/components/CategoryListCard.vue'
 import { getArticleDetail } from '@/api/frontend/article'
 import { useRoute, useRouter } from 'vue-router'
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
+import hljs from 'highlight.js'
+
+
+// 代码高亮样式
+import 'highlight.js/styles/tokyo-night-dark.css'
 
 
 const route = useRoute()
@@ -179,6 +183,28 @@ function refreshArticleDetail(articleId) {
         if (res.success) {
             article.value = res.data
         }
+        // 正文 div 引用
+const articleContentRef = ref(null)
+onMounted(() => {
+    // 使用 MutationObserver 监视 DOM 的变化
+    const observer = new MutationObserver(mutationsList => {
+        for (let mutation of mutationsList) {
+            if (mutation.type === 'childList') {
+            	// 获取所有 pre code 节点
+                let highlight = document.querySelectorAll('pre code')
+                // 循环高亮
+                highlight.forEach((block) => {
+                    hljs.highlightBlock(block)
+                })
+            }
+        }
+    })
+
+	// 配置监视子节点的变化
+    const config = { childList: true, subtree: true }
+    // 开始观察正文内容变化
+    observer.observe(articleContentRef.value, config)
+})
     })
 }
 refreshArticleDetail(route.params.articleId)
@@ -195,6 +221,29 @@ const goTagArticleListPage = (id, name) => {
     // 跳转时通过 query 携带参数（标签 ID、标签名称）
     router.push({path: '/tag/article/list', query: {id, name}})
 }
+
+// 正文 div 引用
+const articleContentRef = ref(null)
+onMounted(() => {
+    // 使用 MutationObserver 监视 DOM 的变化
+    const observer = new MutationObserver(mutationsList => {
+        for (let mutation of mutationsList) {
+            if (mutation.type === 'childList') {
+            	// 获取所有 pre code 节点
+                let highlight = document.querySelectorAll('pre code')
+                // 循环高亮
+                highlight.forEach((block) => {
+                    hljs.highlightBlock(block)
+                })
+            }
+        }
+    })
+
+	// 配置监视子节点的变化
+    const config = { childList: true, subtree: true }
+    // 开始观察正文内容变化
+    observer.observe(articleContentRef.value, config)
+})
 
 </script>
 
@@ -354,6 +403,7 @@ img:focus) {
     background-color: rgba(27, 31, 35, 0.05);
     font-family: Operator Mono, Consolas, Monaco, Menlo, monospace;
 }
+
 /* 表格样式 */
 ::v-deep(table) {
     margin-bottom: 20px;
@@ -381,6 +431,34 @@ img:focus) {
 /* hr 横线 */
 ::v-deep(hr) {
     margin-bottom: 20px;
+}
+/* pre code 样式 */
+::v-deep(code) {
+    font-size: 98%;
+}
+
+::v-deep(pre) {
+    margin-bottom: 20px;
+}
+
+::v-deep(pre code.hljs) {
+    padding-top: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 0.7rem;
+    border-radius: 6px;
+}
+
+::v-deep(pre:before) {
+    background: #fc625d;
+    border-radius: 50%;
+    box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+    content: ' ';
+    height: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    position: absolute;
+    width: 10px;
 }
 
 </style>

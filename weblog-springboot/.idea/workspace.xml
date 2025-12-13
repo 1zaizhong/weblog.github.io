@@ -6,14 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/ArticleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/ArticleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/markdown/MarkdownHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/markdown/MarkdownHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/markdown/renderer/ImageNodeRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/markdown/renderer/ImageNodeRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/api/frontend/article.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/frontend/article.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/Footer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/Footer.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/Header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../weblog-vue3/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../weblog-vue3/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/article-detail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/article-detail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/router/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -229,7 +224,7 @@
       <workItem from="1765606649961" duration="2458000" />
       <workItem from="1765609559008" duration="279000" />
       <workItem from="1765614056226" duration="119000" />
-      <workItem from="1765615228765" duration="5755000" />
+      <workItem from="1765615228765" duration="6813000" />
     </task>
     <task id="LOCAL-00001" summary="更改">
       <option name="closed" value="true" />
@@ -351,7 +346,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765617625408</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="文章正文设计">
+      <option name="closed" value="true" />
+      <created>1765621256625</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1765621256625</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -401,7 +404,8 @@
     <MESSAGE value="Markdown 转换 HTML 的工具类封装" />
     <MESSAGE value="获取文章详情后端接口" />
     <MESSAGE value="前台文章详情页设计" />
-    <option name="LAST_COMMIT_MESSAGE" value="前台文章详情页设计" />
+    <MESSAGE value="文章正文设计" />
+    <option name="LAST_COMMIT_MESSAGE" value="文章正文设计" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
