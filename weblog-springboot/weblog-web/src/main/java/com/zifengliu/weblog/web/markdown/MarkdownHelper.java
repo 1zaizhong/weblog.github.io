@@ -87,7 +87,7 @@ public class MarkdownHelper {
         System.out.println(MarkdownHelper.convertMarkdown2Html(markdow));
 
         ////markdown 图片大小
-        String q = "![text](/url.png){width=640 height=480}";
+        String q = "![text](/url.png){width=300}";
         System.out.println(MarkdownHelper.convertMarkdown2Html(q));
 
         String mwn = "[个人网站域名](http://www.xxx.com \"个人网站域名\")\n" +

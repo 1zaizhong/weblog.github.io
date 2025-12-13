@@ -14,6 +14,8 @@ import AdminBlogSettings from '@/pages/admin/blog-settings.vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Admin from '@/layouts/admin/admin.vue'
 
+
+
 // 统一在这里声明所有路由
 const routes = [
     {
@@ -72,7 +74,8 @@ const routes = [
             title: 'Weblog 登录页'
         }
     },
-    
+   
+
     {
         path: "/admin", // 后台首页
         component: Admin,
