@@ -128,8 +128,8 @@
 
             
                    <!-- 右边侧边栏，占用一列 -->
-            <aside class="col-span-4 md:col-span-1">
-                <div class="sticky top-[5.5rem]">
+                <aside class="col-span-4 md:col-span-1">
+                <div class="">
                 <!-- 博主信息 -->
                 <UserInfoCard></UserInfoCard>
 
@@ -139,10 +139,16 @@
                 <!-- 标签 -->
                 <TagListCard></TagListCard>
                 </div>
-            </aside>
+                
+                 <!-- 文章目录 -->
+                 <Toc></Toc>
+               </aside>
         </div>
 
     </main>
+
+    <!-- 返回顶部 -->
+    <ScrollToTopButton></ScrollToTopButton>
 
     <Footer></Footer>
 </template>
@@ -157,7 +163,8 @@ import { getArticleDetail } from '@/api/frontend/article'
 import { useRoute, useRouter } from 'vue-router'
 import { ref, watch, onMounted } from 'vue'
 import hljs from 'highlight.js'
-
+import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
+import Toc from '@/layouts/frontend/components/Toc.vue'
 
 // 代码高亮样式
 import 'highlight.js/styles/tokyo-night-dark.css'
