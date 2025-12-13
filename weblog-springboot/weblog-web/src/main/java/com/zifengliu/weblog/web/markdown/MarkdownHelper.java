@@ -65,7 +65,8 @@ public class MarkdownHelper {
     }
 
     public static void main(String[] args) {
-        String markdown = "[http://www.quanxiaoha.com1](http://www.xxx.com \"http://www.xxx.com2\")";
+        String markdown = "# 一级标题\n" +
+                "## 二级标题\n";
         System.out.println(MarkdownHelper.convertMarkdown2Html(markdown));
     }
 
