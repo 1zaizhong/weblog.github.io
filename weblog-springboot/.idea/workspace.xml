@@ -4,19 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="前台博客首页的接口更新">
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/_2025_12_11_9_07____.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/___.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[更改]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/在进行更新之前于_2025_12_11_下午9_07_取消提交了更改_[更改]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/markdown/MarkdownHelper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/markdown/provider/NofollowLinkAttributeProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/.vscode/extensions.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+    <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/article/FindArticleDetailReqVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/article/FindArticleDetailRspVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/article/FindPreNextArticleRspVO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/ArticleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/ArticleMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/TagMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/TagMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/ArticleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/ArticleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/ArticleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/ArticleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArticleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArticleServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,37 +78,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Maven.weblog-springboot [clean].executor": "Run",
-    "Maven.weblog-springboot [install].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.WeblogModuleCommonApplication.executor": "Run",
-    "Spring Boot.WeblogWebApplication.executor": "Run",
-    "git-widget-placeholder": "blog",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "E:/aacoding/weblog-springboot",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "SDK",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "vcs.Git",
-    "vue.rearranger.settings.migration": "true",
-    "应用程序.MarkdownHelper.executor": "Run",
-    "应用程序.PasswordEncoderConfig.executor": "Run",
-    "应用程序.WeblogWebApplication.executor": "Run"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Maven.weblog-springboot [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.weblog-springboot [install].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.WeblogModuleCommonApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.WeblogWebApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;blog&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/aacoding/weblog-springboot&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDK&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;应用程序.MarkdownHelper.executor&quot;: &quot;Run&quot;,
+    &quot;应用程序.PasswordEncoderConfig.executor&quot;: &quot;Run&quot;,
+    &quot;应用程序.WeblogWebApplication.executor&quot;: &quot;Run&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="应用程序.MarkdownHelper">
+}</component>
+  <component name="RunManager" selected="Spring Boot.WeblogWebApplication">
     <configuration name="MarkdownHelper" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.zifengliu.weblog.web.markdown.MarkdownHelper" />
       <module name="weblog-web" />
@@ -230,6 +227,9 @@
       <workItem from="1765516052775" duration="4059000" />
       <workItem from="1765551225379" duration="454000" />
       <workItem from="1765606649961" duration="2458000" />
+      <workItem from="1765609559008" duration="279000" />
+      <workItem from="1765614056226" duration="119000" />
+      <workItem from="1765615228765" duration="903000" />
     </task>
     <task id="LOCAL-00001" summary="更改">
       <option name="closed" value="true" />
@@ -327,7 +327,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765388711739</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Markdown 转换 HTML 的工具类封装">
+      <option name="closed" value="true" />
+      <created>1765609830800</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1765609830800</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -354,7 +362,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="weblog/master" />
+                        <option value="origin/blog" />
                       </list>
                     </value>
                   </entry>
@@ -374,7 +382,8 @@
     <MESSAGE value="修改注释" />
     <MESSAGE value="前台博客设置的接口更新" />
     <MESSAGE value="前台博客首页的接口更新" />
-    <option name="LAST_COMMIT_MESSAGE" value="前台博客首页的接口更新" />
+    <MESSAGE value="Markdown 转换 HTML 的工具类封装" />
+    <option name="LAST_COMMIT_MESSAGE" value="Markdown 转换 HTML 的工具类封装" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

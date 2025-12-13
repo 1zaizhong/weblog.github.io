@@ -2,6 +2,7 @@ package com.zifengliu.weblog.web.controller;
 
 import com.zifengliu.weblog.common.aspect.ApiOperationLog;
 import com.zifengliu.weblog.common.utils.Response;
+import com.zifengliu.weblog.web.model.vo.article.FindArticleDetailReqVO;
 import com.zifengliu.weblog.web.model.vo.article.FindIndexArticlePageListReqVO;
 import com.zifengliu.weblog.web.service.ArticleService;
 import io.swagger.annotations.Api;
@@ -31,4 +32,10 @@ public class ArticleController {
         return articleService.findArticlePageList(findIndexArticlePageListReqVO);
     }
 
+    @PostMapping("/detail")
+    @ApiOperation(value = "获取文章详情")
+    @ApiOperationLog(description = "获取文章详情")
+    public Response findArticleDetail(@RequestBody FindArticleDetailReqVO findArticleDetailReqVO) {
+        return articleService.findArticleDetail(findArticleDetailReqVO);
+    }
 }
