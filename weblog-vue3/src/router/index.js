@@ -72,6 +72,7 @@ const routes = [
             title: 'Weblog 登录页'
         }
     },
+    
     {
         path: "/admin", // 后台首页
         component: Admin,
