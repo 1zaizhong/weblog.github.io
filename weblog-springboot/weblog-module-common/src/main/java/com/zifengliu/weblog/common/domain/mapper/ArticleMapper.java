@@ -9,6 +9,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zifengliu.weblog.common.domain.dos.ArticleContentDO;
 import com.zifengliu.weblog.common.domain.dos.ArticleDO;
 import com.zifengliu.weblog.common.domain.dos.ArticleDO;
+import com.zifengliu.weblog.common.domain.dos.ArticlePublishCountDO;
+import org.apache.ibatis.annotations.Select;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -109,5 +111,20 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
         return selectList(Wrappers.<ArticleDO>lambdaQuery()
                 .select(ArticleDO::getReadNum));
     }
+
+    /**
+     * 按日分组，并统计每日发布的文章数量
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    @Select("SELECT DATE(create_time) AS date, COUNT(*) AS count\n" +
+            "FROM t_article\n" +
+            "WHERE create_time >= #{startDate} AND create_time < #{endDate}\n" +
+            "GROUP BY DATE(create_time)")
+    List<ArticlePublishCountDO> selectDateArticlePublishCount(LocalDate startDate, LocalDate endDate);
+
+
+
 
 }
