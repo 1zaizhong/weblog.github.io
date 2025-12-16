@@ -5,7 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-search.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-search/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/LuceneHelper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/config/LuceneProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/index/ArticleIndex.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/run/InitLuceneIndexRunner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/constant/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/constant/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/resources/application-prod.yml" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/resources/application-prod.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,36 +84,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Maven.weblog-springboot [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.weblog-springboot [install].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.WeblogModuleCommonApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.WeblogWebApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;blog&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/aacoding/weblog-springboot&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDK&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
-    &quot;应用程序.MarkdownHelper.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.PasswordEncoderConfig.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.WeblogWebApplication.executor&quot;: &quot;Run&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
+    "Maven.weblog-springboot [clean].executor": "Run",
+    "Maven.weblog-springboot [install].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.WeblogModuleCommonApplication.executor": "Run",
+    "Spring Boot.WeblogWebApplication.executor": "Run",
+    "git-widget-placeholder": "blog",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "E:/aacoding/weblog-springboot",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "模块",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "vcs.Git",
+    "vue.rearranger.settings.migration": "true",
+    "应用程序.MarkdownHelper.executor": "Run",
+    "应用程序.PasswordEncoderConfig.executor": "Run",
+    "应用程序.WeblogWebApplication.executor": "Run"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Spring Boot.WeblogWebApplication">
     <configuration name="MarkdownHelper" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.zifengliu.weblog.web.markdown.MarkdownHelper" />
@@ -227,7 +243,7 @@
       <workItem from="1765640057432" duration="1605000" />
       <workItem from="1765735131408" duration="246000" />
       <workItem from="1765785039759" duration="19000" />
-      <workItem from="1765867042159" duration="1290000" />
+      <workItem from="1765867042159" duration="5075000" />
     </task>
     <task id="LOCAL-00001" summary="更改">
       <option name="closed" value="true" />
@@ -445,7 +461,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765867566151</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="首页标签,分类等统计">
+      <option name="closed" value="true" />
+      <created>1765868750543</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1765868750543</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -527,7 +551,8 @@
     <MESSAGE value="后台首页设计（静态资源）" />
     <MESSAGE value="首页渲染数据" />
     <MESSAGE value="后端:首页标签,分类等统计" />
-    <option name="LAST_COMMIT_MESSAGE" value="后端:首页标签,分类等统计" />
+    <MESSAGE value="首页标签,分类等统计" />
+    <option name="LAST_COMMIT_MESSAGE" value="首页标签,分类等统计" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

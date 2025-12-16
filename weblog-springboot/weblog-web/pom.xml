@@ -94,6 +94,11 @@
             <artifactId>commonmark-ext-task-list-items</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.zifengliu</groupId>
+            <artifactId>weblog-module-search</artifactId>
+        </dependency>
+
 
 
     </dependencies>

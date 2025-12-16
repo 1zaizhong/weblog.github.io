@@ -16,14 +16,12 @@
           <entry name="$PROJECT_DIR$/../../../java_tools/maven/repository/org/projectlombok/lombok/1.18.22/lombok-1.18.22.jar" />
           <entry name="$PROJECT_DIR$/../../../java_tools/maven/repository/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar" />
           <entry name="$PROJECT_DIR$/../../../java_tools/maven/repository/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
-          <entry name="$PROJECT_DIR$/../../../java_tools/maven/repository/org/projectlombok/lombok/1.18.22/lombok-1.18.22.jar" />
-          <entry name="$PROJECT_DIR$/../../../java_tools/maven/repository/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar" />
-          <entry name="$PROJECT_DIR$/../../../java_tools/maven/repository/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
         </processorPath>
         <module name="weblog-module-admin" />
         <module name="weblog-module-common" />
-        <module name="weblog-module-jwt" />
         <module name="weblog-web" />
+        <module name="weblog-module-search" />
+        <module name="weblog-module-jwt" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -35,6 +33,7 @@
       <module name="weblog-module-admin" options="-parameters" />
       <module name="weblog-module-common" options="-parameters" />
       <module name="weblog-module-jwt" options="-parameters" />
+      <module name="weblog-module-search" options="-parameters" />
       <module name="weblog-springboot" options="" />
       <module name="weblog-web" options="-parameters" />
     </option>
