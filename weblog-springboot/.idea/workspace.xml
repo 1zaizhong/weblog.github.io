@@ -5,21 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-search.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-search/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/LuceneHelper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/config/LuceneProperties.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/index/ArticleIndex.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/run/InitLuceneIndexRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/SearchController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/search/SearchArticlePageListReqVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/search/SearchArticlePageListRspVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/SearchService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/SearchServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/constant/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/constant/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/resources/application-prod.yml" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/resources/application-prod.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/utils/PageResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/utils/PageResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/LuceneHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/LuceneHelper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -243,7 +236,7 @@
       <workItem from="1765640057432" duration="1605000" />
       <workItem from="1765735131408" duration="246000" />
       <workItem from="1765785039759" duration="19000" />
-      <workItem from="1765867042159" duration="5075000" />
+      <workItem from="1765867042159" duration="7087000" />
     </task>
     <task id="LOCAL-00001" summary="更改">
       <option name="closed" value="true" />
@@ -469,7 +462,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765868750543</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="项目启动任务：初始化 Lucene 文章索引">
+      <option name="closed" value="true" />
+      <created>1765872481570</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1765872481570</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -552,7 +553,8 @@
     <MESSAGE value="首页渲染数据" />
     <MESSAGE value="后端:首页标签,分类等统计" />
     <MESSAGE value="首页标签,分类等统计" />
-    <option name="LAST_COMMIT_MESSAGE" value="首页标签,分类等统计" />
+    <MESSAGE value="项目启动任务：初始化 Lucene 文章索引" />
+    <option name="LAST_COMMIT_MESSAGE" value="项目启动任务：初始化 Lucene 文章索引" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

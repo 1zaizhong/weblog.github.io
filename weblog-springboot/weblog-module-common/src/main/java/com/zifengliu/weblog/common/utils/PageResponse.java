@@ -10,7 +10,7 @@ import java.util.Objects;
  * @author 粟英朝
  * @version 0.0.3
  * @date 2025/4/20 下午3:32
- * @description
+ * @description 分页响应参数工具类
  **/
 @Data
 public class PageResponse <T>  extends  Response<List<T>>{
@@ -29,7 +29,7 @@ public class PageResponse <T>  extends  Response<List<T>>{
 
     /*总页数
     * */
-    private  long page ;
+    private  long pages ;
 
     /*成功响应
     * @param page Mybatis Plus 提供的接口
@@ -42,7 +42,7 @@ public class PageResponse <T>  extends  Response<List<T>>{
         response.setSuccess(true);
         response.setCurrent(Objects.isNull(page)? 1L : page.getCurrent());
         response.setSize(Objects.isNull(page)? 10L : page.getSize());
-        response.setPage(Objects.isNull(page)? 0L : page.getPages());
+        response.setPages(Objects.isNull(page)? 0L : page.getPages());
         response.setTotal(Objects.isNull(page)? 0L : page.getTotal());
         response.setData(data);
 
@@ -50,5 +50,17 @@ public class PageResponse <T>  extends  Response<List<T>>{
     }
 
 
+    public static <T> PageResponse<T> success(long total, long current, long size, List<T> data) {
+        PageResponse<T> response = new PageResponse<>();
+        response.setSuccess(true);
+        response.setCurrent(current);
+        response.setSize(size);
+        // 计算总页数
+        int pages = (int) Math.ceil((double) total / size);
+        response.setPages(pages);
+        response.setTotal(total);
+        response.setData(data);
+        return response;
+    }
 
 }
