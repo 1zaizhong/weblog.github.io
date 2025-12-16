@@ -5,8 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/event/DeleteArticleEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/event/PublishArticleEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/event/UpdateArticleEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/event/subscriber/DeleteArticleSubscriber.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/event/subscriber/PublishArticleSubscriber.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/event/subscriber/UpdateArticleSubscriber.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/Header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminArticleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminArticleServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/LuceneHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/LuceneHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/run/InitLuceneIndexRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/run/InitLuceneIndexRunner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/SearchServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/SearchServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -230,7 +241,7 @@
       <workItem from="1765640057432" duration="1605000" />
       <workItem from="1765735131408" duration="246000" />
       <workItem from="1765785039759" duration="19000" />
-      <workItem from="1765867042159" duration="8726000" />
+      <workItem from="1765867042159" duration="11607000" />
     </task>
     <task id="LOCAL-00001" summary="更改">
       <option name="closed" value="true" />
@@ -472,7 +483,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765874418290</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="前台搜索框">
+      <option name="closed" value="true" />
+      <created>1765876052331</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1765876052331</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -492,6 +511,11 @@
               <RecentGroup>
                 <option name="FILTER_VALUES">
                   <option value="weblog/blog" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/blog" />
                 </option>
               </RecentGroup>
               <RecentGroup>
@@ -519,7 +543,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/master" />
+                        <option value="weblog/blog" />
                       </list>
                     </value>
                   </entry>
@@ -557,7 +581,8 @@
     <MESSAGE value="首页标签,分类等统计" />
     <MESSAGE value="项目启动任务：初始化 Lucene 文章索引" />
     <MESSAGE value="中文分词检索接口" />
-    <option name="LAST_COMMIT_MESSAGE" value="中文分词检索接口" />
+    <MESSAGE value="前台搜索框" />
+    <option name="LAST_COMMIT_MESSAGE" value="前台搜索框" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

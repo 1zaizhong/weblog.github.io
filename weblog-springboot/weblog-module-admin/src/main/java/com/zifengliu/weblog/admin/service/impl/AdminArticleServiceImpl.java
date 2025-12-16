@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.zifengliu.weblog.admin.convert.ArticleDetailConvert;
+import com.zifengliu.weblog.admin.event.DeleteArticleEvent;
+import com.zifengliu.weblog.admin.event.PublishArticleEvent;
+import com.zifengliu.weblog.admin.event.UpdateArticleEvent;
 import com.zifengliu.weblog.admin.model.vo.article.*;
 import com.zifengliu.weblog.admin.service.AdminArticleService;
 import com.zifengliu.weblog.common.domain.dos.*;
@@ -17,6 +20,7 @@ import com.zifengliu.weblog.common.utils.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +33,7 @@ import java.util.stream.Collectors;
  * @author 粟英朝
  * @version 0.0.3
  * @date 2025/5/13 下午10:00
- * @description
+ * @description 文章管理
  **/
 @Service
 @Slf4j
@@ -48,7 +52,8 @@ public class AdminArticleServiceImpl implements AdminArticleService {
    private ArticleContentMapper articleContentMapper;
     @Autowired
     private TagMapper tagMapper;
-
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
 
     /*
     * 发布文章
@@ -101,6 +106,9 @@ public class AdminArticleServiceImpl implements AdminArticleService {
 
         List<String> publishTags = publishArticleReqVO.getTags();
         insertTags(articleId,publishTags);
+
+        // 发送文章发布事件
+        eventPublisher.publishEvent(new PublishArticleEvent(this, articleId));
 
     return Response.success();
 
@@ -205,18 +213,20 @@ public class AdminArticleServiceImpl implements AdminArticleService {
     @Transactional(rollbackFor = Exception.class)
     public Response deleteArticle(DeleteArticleReqVO deleteArticleReqVO) {
 
-        Long articleID = deleteArticleReqVO.getId();
+        Long articleId = deleteArticleReqVO.getId();
         //删除文章
-        articleMapper.deleteById(articleID);
+        articleMapper.deleteById(articleId);
 
         //删除文章内容
-        articleContentMapper.deleteByArticleId(articleID);
+        articleContentMapper.deleteByArticleId(articleId);
 
         //删除文章分类联系
-        articleCategoryRelMapper.deleteByArticleId(articleID);
+        articleCategoryRelMapper.deleteByArticleId(articleId);
 
         //删除文章标签联系
-        articleTagRelMapper.deleteByArticleId(articleID);
+        articleTagRelMapper.deleteByArticleId(articleId);
+        // 发布文章删除事件
+        eventPublisher.publishEvent(new DeleteArticleEvent(this, articleId));
         return Response.success();
 
     }
@@ -349,6 +359,9 @@ public class AdminArticleServiceImpl implements AdminArticleService {
         articleTagRelMapper.deleteByArticleId(articleId);
         List<String> Tags = updateArticleReqVO.getTags();
         insertTags(articleId, Tags);
+
+        // 发布文章修改事件
+        eventPublisher.publishEvent(new UpdateArticleEvent(this, articleId));
         return  Response.success();
 
 

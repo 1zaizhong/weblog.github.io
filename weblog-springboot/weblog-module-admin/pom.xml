@@ -17,6 +17,7 @@
     <description>weblog-module-admin(负责管理后台相关的代码)</description>
 
     <dependencies>
+
         <dependency>
             <groupId>com.zifengliu</groupId>
             <artifactId>weblog-module-common</artifactId>
@@ -26,6 +27,11 @@
         <dependency>
             <groupId>com.zifengliu</groupId>
             <artifactId>weblog-module-jwt</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zifengliu</groupId>
+            <artifactId>weblog-module-search</artifactId>
         </dependency>
 
         <!-- 免写冗余的 Java 样板式代码 -->
