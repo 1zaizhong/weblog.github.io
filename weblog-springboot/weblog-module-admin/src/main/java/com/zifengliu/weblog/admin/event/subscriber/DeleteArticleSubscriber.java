@@ -48,5 +48,9 @@ public class DeleteArticleSubscriber implements ApplicationListener<DeleteArticl
        //重新统计分类数
         statisticsService.statisticsCategoryArticleTotal();
         log.info("==> 重新统计分类数结束");
+        // 重新统计各标签下文章总数
+        statisticsService.statisticsTagArticleTotal();
+        log.info("==> 重新统计各标签下文章总数");
+
     }
 }

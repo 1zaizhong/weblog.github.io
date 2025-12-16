@@ -4,25 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="ton">
-      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/runner/StatisticsCategoryArticleTotalRunner.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/AdminStatisticsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminStatisticsServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/utils/MarkdownStatsUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/runner/StatisticsTagArticleTotalRunner.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/event/subscriber/DeleteArticleSubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/event/subscriber/DeleteArticleSubscriber.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/event/subscriber/PublishArticleSubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/event/subscriber/PublishArticleSubscriber.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/event/subscriber/UpdateArticleSubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/event/subscriber/UpdateArticleSubscriber.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/category/FindCategoryPageListRspVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/category/FindCategoryPageListRspVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminCategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminCategoryServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/CategoryDO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/CategoryDO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/markdown/MarkdownHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/markdown/MarkdownHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/markdown/provider/NofollowLinkAttributeProvider.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/markdown/renderer/LinkNodeRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/markdown/renderer/LinkNodeRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/article/FindArticleDetailRspVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/article/FindArticleDetailRspVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/category/FindCategoryListRspVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/category/FindCategoryListRspVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArticleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArticleServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CategoryServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/AdminStatisticsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/AdminStatisticsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminStatisticsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminStatisticsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/TagDO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/TagDO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -260,7 +249,7 @@
       <workItem from="1765640057432" duration="1605000" />
       <workItem from="1765735131408" duration="246000" />
       <workItem from="1765785039759" duration="19000" />
-      <workItem from="1765867042159" duration="19022000" />
+      <workItem from="1765867042159" duration="19326000" />
     </task>
     <task id="LOCAL-00001" summary="更改">
       <option name="closed" value="true" />
@@ -518,7 +507,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765878926985</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="分类所包含的文章">
+      <option name="closed" value="true" />
+      <created>1765889906381</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1765889906381</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -584,8 +581,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="重置远程为本地代码结构" />
-    <MESSAGE value="无" />
     <MESSAGE value="修改注释" />
     <MESSAGE value="前台博客设置的接口更新" />
     <MESSAGE value="前台博客首页的接口更新" />
@@ -609,7 +604,9 @@
     <MESSAGE value="中文分词检索接口" />
     <MESSAGE value="前台搜索框" />
     <MESSAGE value="实现Lunch一致性" />
-    <option name="LAST_COMMIT_MESSAGE" value="实现Lunch一致性" />
+    <MESSAGE value="ton" />
+    <MESSAGE value="分类所包含的文章" />
+    <option name="LAST_COMMIT_MESSAGE" value="分类所包含的文章" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
