@@ -5,11 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/statistics/FindStatisticsInfoRspVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/StatisticsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/_2025_12_11_9_07____.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/_2025_12_11_9_07____.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/___.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/___.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,8 +15,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -232,7 +227,7 @@
       <workItem from="1765640057432" duration="1605000" />
       <workItem from="1765735131408" duration="246000" />
       <workItem from="1765785039759" duration="19000" />
-      <workItem from="1765867042159" duration="306000" />
+      <workItem from="1765867042159" duration="1290000" />
     </task>
     <task id="LOCAL-00001" summary="更改">
       <option name="closed" value="true" />
@@ -442,7 +437,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765637084110</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="后端:首页标签,分类等统计">
+      <option name="closed" value="true" />
+      <created>1765867566151</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1765867566151</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -523,7 +526,8 @@
     <MESSAGE value="获取7日访问量" />
     <MESSAGE value="后台首页设计（静态资源）" />
     <MESSAGE value="首页渲染数据" />
-    <option name="LAST_COMMIT_MESSAGE" value="首页渲染数据" />
+    <MESSAGE value="后端:首页标签,分类等统计" />
+    <option name="LAST_COMMIT_MESSAGE" value="后端:首页标签,分类等统计" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
