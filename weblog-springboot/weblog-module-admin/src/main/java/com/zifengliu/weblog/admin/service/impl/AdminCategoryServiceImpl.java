@@ -86,6 +86,7 @@ public class AdminCategoryServiceImpl  implements AdminCategoryService {
         LocalDate startDate = findCategoryPageListReqVO.getStartDate();
         LocalDate endDate = findCategoryPageListReqVO.getEndDate();
 
+
         // 执行分页查询
         Page<CategoryDO> categoryDOPage = categoryMapper.selectPageList(current, size,  name, startDate, endDate);
 
@@ -99,6 +100,7 @@ public class AdminCategoryServiceImpl  implements AdminCategoryService {
                             .id(categoryDO.getId())
                             .name(categoryDO.getName())
                             .createTime(categoryDO.getCreateTime())
+                            .articlesTotal(categoryDO.getArticlesTotal())
                             .build())
                     .collect(Collectors.toList());
         }

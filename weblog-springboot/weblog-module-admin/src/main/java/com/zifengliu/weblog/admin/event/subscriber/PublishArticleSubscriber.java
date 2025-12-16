@@ -1,6 +1,7 @@
 package com.zifengliu.weblog.admin.event.subscriber;
 
 import com.zifengliu.weblog.admin.event.PublishArticleEvent;
+import com.zifengliu.weblog.admin.service.AdminStatisticsService;
 import com.zifengliu.weblog.common.constant.Constants;
 import com.zifengliu.weblog.common.domain.dos.ArticleContentDO;
 import com.zifengliu.weblog.common.domain.dos.ArticleDO;
@@ -16,11 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
+
 /**
  * @author 粟英朝
  * @version 0.0.3
  * @date 2025/12/16 下午5:29
- * @description
+ * @description 发布文章事件订阅者
  **/
 
 @Component
@@ -33,6 +37,8 @@ public class PublishArticleSubscriber implements ApplicationListener<PublishArti
     private ArticleMapper articleMapper;
     @Autowired
     private ArticleContentMapper articleContentMapper;
+    @Autowired
+    private AdminStatisticsService statisticsService;
 
     @Override
     @Async("threadPoolTaskExecutor")
@@ -64,5 +70,8 @@ public class PublishArticleSubscriber implements ApplicationListener<PublishArti
         long count = luceneHelper.addDocument(ArticleIndex.NAME, document);
 
         log.info("==> 添加文章对应 Lucene 文档结束，articleId: {}，受影响行数: {}", articleId, count);
+        //重新统计分类数
+        statisticsService.statisticsCategoryArticleTotal();
+        log.info("==> 重新统计分类数结束");
     }
 }

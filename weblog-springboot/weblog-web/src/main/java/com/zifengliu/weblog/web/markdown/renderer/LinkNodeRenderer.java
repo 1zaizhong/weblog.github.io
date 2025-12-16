@@ -25,7 +25,7 @@ public class LinkNodeRenderer implements NodeRenderer {
     /**
      * 网站域名（上线后需要改成自己的域名）
      */
-    private final static String DOMAIN = "www.quanxiaoha.com";
+    private final static String DOMAIN = "www.xxx.com";
 
 
     public LinkNodeRenderer(HtmlNodeRendererContext context) {
@@ -45,7 +45,7 @@ public class LinkNodeRenderer implements NodeRenderer {
 
             // 链接的内容
             String linkDescription = null;
-            if (Objects.nonNull(link.getFirstChild()) && link.getFirstChild() instanceof Text) {
+            if (Objects.nonNull(link.getFirstChild())) {
                 Text text = (Text) link.getFirstChild();
                 linkDescription = text.getLiteral();
             }
@@ -85,4 +85,3 @@ public class LinkNodeRenderer implements NodeRenderer {
         }
     }
 }
-

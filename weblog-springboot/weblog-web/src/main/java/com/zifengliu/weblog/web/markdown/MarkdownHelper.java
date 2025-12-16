@@ -1,6 +1,5 @@
 package com.zifengliu.weblog.web.markdown;
 
-import com.zifengliu.weblog.web.markdown.provider.NofollowLinkAttributeProvider;
 import com.zifengliu.weblog.web.markdown.renderer.ImageNodeRenderer;
 import com.zifengliu.weblog.web.markdown.renderer.LinkNodeRenderer;
 import org.commonmark.Extension;
@@ -43,6 +42,7 @@ public class MarkdownHelper {
                 HeadingAnchorExtension.create(), // 标题锚定项
                 ImageAttributesExtension.create(), // 图片宽高
                 TaskListItemsExtension.create() // 任务列表
+
         );
 
         PARSER = Parser.builder().extensions(extensions).build();
