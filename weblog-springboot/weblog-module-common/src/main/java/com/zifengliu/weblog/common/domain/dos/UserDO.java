@@ -36,4 +36,5 @@ public class UserDO {
 
     private  Boolean isDeleted;
 
+
 }

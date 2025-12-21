@@ -31,3 +31,5 @@ minio:
 #=================================================================
 lucene:
   indexDir: E:\\java_workspace\\lucene-index # lucene 索引存放的位置
+# API 密钥(替换为你自己的)
+api-key: 9022a0d5b113a956

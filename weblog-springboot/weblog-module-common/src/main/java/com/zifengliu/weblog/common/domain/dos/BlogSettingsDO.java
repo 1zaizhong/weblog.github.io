@@ -47,6 +47,11 @@ public class BlogSettingsDO {
     //知乎地址
     private String zhihuHomepage;
 
+    private String mail;
+
+    private Boolean isCommentSensiWordOpen;
+
+    private Boolean isCommentExamineOpen;
 
 
 }
