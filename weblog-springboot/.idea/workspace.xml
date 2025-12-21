@@ -5,23 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/CommentDO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/CommentMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/enums/CommentStatusEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/CommentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/comment/FindQQUserInfoReqVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/comment/FindQQUserInfoRspVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/comment/PublishCommentReqVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/CommentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CommentServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/utils/StringUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/config/ToolGoodConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/resources/word/sensi_words.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/blogSettings/FindBlogSettingsRspVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/blogSettings/FindBlogSettingsRspVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/blogSettings/UpdateBlogSettingsReqVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/blogSettings/UpdateBlogSettingsReqVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/BlogSettingsDO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/BlogSettingsDO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/UserDO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/UserDO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/enums/ResponseCodeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/enums/ResponseCodeEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CommentServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,38 +78,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.weblog-springboot [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.weblog-springboot [install].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.WeblogModuleCommonApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.WeblogWebApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;blog&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/aacoding/weblog-springboot&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
-    &quot;应用程序.MarkdownHelper.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.PasswordEncoderConfig.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.WeblogWebApplication.executor&quot;: &quot;Run&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
+    "Maven.weblog-springboot [clean].executor": "Run",
+    "Maven.weblog-springboot [install].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.WeblogModuleCommonApplication.executor": "Run",
+    "Spring Boot.WeblogWebApplication.executor": "Run",
+    "git-widget-placeholder": "blog",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "E:/workSpaceIDEA/weblog/weblog-springboot/weblog-web/src/main/resources/word",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "模块",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "vcs.Git",
+    "vue.rearranger.settings.migration": "true",
+    "应用程序.MarkdownHelper.executor": "Run",
+    "应用程序.PasswordEncoderConfig.executor": "Run",
+    "应用程序.WeblogWebApplication.executor": "Run"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\workSpaceIDEA\weblog\weblog-springboot\weblog-web\src\main\resources\word" />
+    </key>
+  </component>
   <component name="RunAnythingCache">
     <myKeys>
       <visibility group="Gradle 任务" flag="true" />
@@ -261,7 +257,7 @@
       <workItem from="1765735131408" duration="246000" />
       <workItem from="1765785039759" duration="19000" />
       <workItem from="1765867042159" duration="19657000" />
-      <workItem from="1766303437367" duration="18289000" />
+      <workItem from="1766303437367" duration="19572000" />
     </task>
     <task id="LOCAL-00001" summary="更改">
       <option name="closed" value="true" />
@@ -575,7 +571,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766324092920</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="发布评论">
+      <option name="closed" value="true" />
+      <created>1766326805025</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1766326805025</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -641,7 +645,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="文章正文设计" />
     <MESSAGE value="代码块高亮，点击图片变大" />
     <MESSAGE value="404找不到界面" />
     <MESSAGE value="目录功能" />
@@ -666,7 +669,8 @@
     <MESSAGE value="知识库新增接口" />
     <MESSAGE value="后台管理知识库功能" />
     <MESSAGE value="知识库功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="知识库功能" />
+    <MESSAGE value="发布评论" />
+    <option name="LAST_COMMIT_MESSAGE" value="发布评论" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -678,7 +682,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CommentServiceImpl.java</url>
-          <line>51</line>
+          <line>58</line>
           <properties class="com.zifengliu.weblog.web.service.impl.CommentServiceImpl" method="findQQUserInfo">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />

@@ -40,6 +40,9 @@ public enum ResponseCodeEnum implements BaseExceptionInterface {
     TAG_CAN_NOT_DELETE("20012", "该标签下包含文章，请先删除对应文章，才能删除！"),
     TAG_NOT_EXISTED("20007", "该标签不存在"),
     NOT_QQ_NUMBER("20014", "QQ 号格式不正确"),
+
+    COMMENT_CONTAIN_SENSITIVE_WORD("20015", "评论内容中包含敏感词，请重新编辑后再提交"),
+    COMMENT_WAIT_EXAMINE("20016", "评论已提交, 等待博主审核通过"),
     WIKI_NOT_FOUND("20013", "该知识库不存在");
 
 

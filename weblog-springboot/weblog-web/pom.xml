@@ -99,6 +99,11 @@
             <artifactId>weblog-module-search</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>io.github.toolgood</groupId>
+            <artifactId>toolgood-words</artifactId>
+        </dependency>
+
 
 
     </dependencies>
