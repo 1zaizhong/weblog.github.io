@@ -1,6 +1,7 @@
 package com.zifengliu.weblog.admin.controller;
 
 import com.zifengliu.weblog.admin.model.vo.comment.DeleteCommentReqVO;
+import com.zifengliu.weblog.admin.model.vo.comment.ExamineCommentReqVO;
 import com.zifengliu.weblog.admin.model.vo.comment.FindCommentPageListReqVO;
 import com.zifengliu.weblog.admin.service.AdminCommentService;
 import com.zifengliu.weblog.common.aspect.ApiOperationLog;
@@ -42,6 +43,13 @@ public class AdminCommentController {
     @ApiOperationLog(description = "评论删除")
     public Response deleteComment(@RequestBody @Validated DeleteCommentReqVO deleteCommentReqVO) {
         return commentService.deleteComment(deleteCommentReqVO);
+    }
+
+    @PostMapping("/examine")
+    @ApiOperation(value = "评论审核")
+    @ApiOperationLog(description = "评论审核")
+    public Response examinePass(@RequestBody @Validated ExamineCommentReqVO examineCommentReqVO) {
+        return commentService.examine(examineCommentReqVO);
     }
 
 }

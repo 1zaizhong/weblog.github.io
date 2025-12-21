@@ -1,6 +1,7 @@
 package com.zifengliu.weblog.admin.service;
 
 import com.zifengliu.weblog.admin.model.vo.comment.DeleteCommentReqVO;
+import com.zifengliu.weblog.admin.model.vo.comment.ExamineCommentReqVO;
 import com.zifengliu.weblog.admin.model.vo.comment.FindCommentPageListReqVO;
 import com.zifengliu.weblog.common.utils.Response;
 
@@ -26,5 +27,12 @@ public interface AdminCommentService {
      * @return
      */
     Response deleteComment(DeleteCommentReqVO deleteCommentReqVO);
+
+    /**
+     * 评论审核
+     * @param examineCommentReqVO
+     * @return
+     */
+    Response examine(ExamineCommentReqVO examineCommentReqVO);
 
 }

@@ -44,6 +44,7 @@ public enum ResponseCodeEnum implements BaseExceptionInterface {
     COMMENT_CONTAIN_SENSITIVE_WORD("20015", "评论内容中包含敏感词，请重新编辑后再提交"),
     COMMENT_WAIT_EXAMINE("20016", "评论已提交, 等待博主审核通过"),
     COMMENT_NOT_FOUND("20017", "该评论不存在"),
+    COMMENT_STATUS_NOT_WAIT_EXAMINE("20018", "该评论未处于待审核状态"),
     WIKI_NOT_FOUND("20013", "该知识库不存在");
 
 

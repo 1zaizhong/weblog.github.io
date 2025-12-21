@@ -3,11 +3,13 @@ package com.zifengliu.weblog.admin.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zifengliu.weblog.admin.convert.CommentConvert;
 import com.zifengliu.weblog.admin.model.vo.comment.DeleteCommentReqVO;
+import com.zifengliu.weblog.admin.model.vo.comment.ExamineCommentReqVO;
 import com.zifengliu.weblog.admin.model.vo.comment.FindCommentPageListReqVO;
 import com.zifengliu.weblog.admin.model.vo.comment.FindCommentPageListRspVO;
 import com.zifengliu.weblog.admin.service.AdminCommentService;
 import com.zifengliu.weblog.common.domain.dos.CommentDO;
 import com.zifengliu.weblog.common.domain.mapper.CommentMapper;
+import com.zifengliu.weblog.common.enums.CommentStatusEnum;
 import com.zifengliu.weblog.common.enums.ResponseCodeEnum;
 import com.zifengliu.weblog.common.exception.BizException;
 import com.zifengliu.weblog.common.utils.PageResponse;
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -133,6 +136,53 @@ public class AdminCommentServiceImpl implements AdminCommentService {
             deleteAllChildComment(childCommentId);
         });
 
+    }
+
+
+    /**
+     * 评论审核
+     *
+     * @param examineCommentReqVO
+     * @return
+     * 逻辑:
+     * 通过提交上来的评论 ID 查询对应的评论；
+     * 若为空，则主动抛出业务异常，提示前端该评论不存在；
+     * 否则，获取这条评论的状态，判断其状态，如果不等于待审核状态，提示前端状态不正确，无法被审核；
+     * 最后，更新数据库中的该条评论；
+     */
+    @Override
+    public Response examine(ExamineCommentReqVO examineCommentReqVO) {
+        Long commentId = examineCommentReqVO.getId();
+        Integer status = examineCommentReqVO.getStatus();
+        String reason = examineCommentReqVO.getReason();
+
+        // 根据提交的评论 ID 查询该条评论
+        CommentDO commentDO = commentMapper.selectById(commentId);
+
+        // 判空
+        if (Objects.isNull(commentDO)) {
+            log.warn("该评论不存在, commentId: {}", commentId);
+            throw new BizException(ResponseCodeEnum.COMMENT_NOT_FOUND);
+        }
+
+        // 评论当前状态
+        Integer currStatus = commentDO.getStatus();
+
+        // 若未处于待审核状态
+        if (!Objects.equals(currStatus, CommentStatusEnum.WAIT_EXAMINE.getCode())) {
+            log.warn("该评论未处于待审核状态, commentId: {}", commentId);
+            throw new BizException(ResponseCodeEnum.COMMENT_STATUS_NOT_WAIT_EXAMINE);
+        }
+
+        // 更新评论
+        commentMapper.updateById(CommentDO.builder()
+                .id(commentId)
+                .status(status)
+                .reason(reason)
+                .updateTime(LocalDateTime.now())
+                .build());
+
+        return Response.success();
     }
 
 }
