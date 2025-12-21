@@ -67,5 +67,9 @@ public class FindArticleDetailRspVO {
      */
     private String readTime;
 
+    /**
+     * 最后更新时间
+     */
+    private LocalDateTime updateTime;
 
 }

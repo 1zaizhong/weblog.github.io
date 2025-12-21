@@ -387,6 +387,7 @@ const isExpand = ref(true)
 const shrinkAndExpand = () => {
     isExpand.value = !isExpand.value
 }
+
 </script>
 
 <style scoped>
