@@ -243,9 +243,10 @@ public class AdminArticleServiceImpl implements AdminArticleService {
         Long size = findArticlePageListReqVO.getSize();
         LocalDate startDate = findArticlePageListReqVO.getStartDate();
         LocalDate endDate = findArticlePageListReqVO.getEndDate();
+        Integer type = findArticlePageListReqVO.getType();
 
-        //之星分页查询
-        Page<ArticleDO> articleDOPage = articleMapper.selectPageList(current, size, title, startDate, endDate);
+        //执行分页查询
+        Page<ArticleDO> articleDOPage = articleMapper.selectPageList(current, size, title, startDate, endDate,type);
         List<ArticleDO> articleDOS = articleDOPage.getRecords();
 
         // DO 转 VO

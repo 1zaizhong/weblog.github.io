@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * @version 0.0.3
  * @description UserMapper
  * @date 2025/3/3 下午7:07
- * @description
+ * @description 用户
  **/
     public interface UserMapper extends BaseMapper<UserDO> {
 

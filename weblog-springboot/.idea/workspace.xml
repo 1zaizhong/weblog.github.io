@@ -5,30 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/wiki/AddWikiReqVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/AdminWikiService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminWikiServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/WikiCatalogDO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/WikiCatalogMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/WikiMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/admin/comment.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/admin/wiki.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/frontend/comment.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/frontend/search.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/frontend/wiki.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/assets/loading.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/components/Comment.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/components/WikiCatalogEditDialog.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/WikiFooter.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/WikiHeader.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/WikiToc.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/comment-list.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/wiki-list.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/wiki-detail.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/wiki-list.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/stores/comment.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/convert/WikiConvert.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/wiki/DeleteWikiReqVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/wiki/FindWikiCatalogListReqVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/wiki/FindWikiCatalogListRspVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/wiki/FindWikiPageListReqVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/wiki/FindWikiPageListRspVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/wiki/UpdateWikiCatalogItemReqVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/wiki/UpdateWikiCatalogReqVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/wiki/UpdateWikiIsPublishReqVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/wiki/UpdateWikiIsTopReqVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/wiki/UpdateWikiReqVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/enums/ArticleTypeEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/enums/WikiCatalogLevelEnum.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/WikiDO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/WikiDO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/controller/AdminWikiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/controller/AdminWikiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/article/FindArticlePageListReqVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/article/FindArticlePageListReqVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/AdminWikiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/AdminWikiService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminArticleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminArticleServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminWikiServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminWikiServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/ArticleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/ArticleMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/WikiCatalogMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/WikiCatalogMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/WikiMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/WikiMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/enums/ResponseCodeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/enums/ResponseCodeEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArchiveServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArchiveServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArticleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArticleServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../weblog-vue3/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/package-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +41,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
       </list>
@@ -267,7 +271,7 @@
       <workItem from="1765735131408" duration="246000" />
       <workItem from="1765785039759" duration="19000" />
       <workItem from="1765867042159" duration="19657000" />
-      <workItem from="1766303437367" duration="4003000" />
+      <workItem from="1766303437367" duration="9463000" />
     </task>
     <task id="LOCAL-00001" summary="更改">
       <option name="closed" value="true" />
@@ -557,7 +561,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766306614244</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="知识库新增接口">
+      <option name="closed" value="true" />
+      <created>1766307709283</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1766307709283</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -623,7 +635,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Markdown 转换 HTML 的工具类封装" />
     <MESSAGE value="获取文章详情后端接口" />
     <MESSAGE value="前台文章详情页设计" />
     <MESSAGE value="文章正文设计" />
@@ -648,7 +659,8 @@
     <MESSAGE value="标签下文章总数统计" />
     <MESSAGE value="文章置顶" />
     <MESSAGE value="前端代码更新" />
-    <option name="LAST_COMMIT_MESSAGE" value="前端代码更新" />
+    <MESSAGE value="知识库新增接口" />
+    <option name="LAST_COMMIT_MESSAGE" value="知识库新增接口" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
