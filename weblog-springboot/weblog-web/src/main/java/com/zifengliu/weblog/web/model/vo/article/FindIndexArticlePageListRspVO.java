@@ -36,4 +36,8 @@ public class FindIndexArticlePageListRspVO {
      * 文章标签
      */
     private List<FindTagListRspVO> tags;
+    /**
+     * 是否置顶
+     */
+    private Boolean isTop;
 }

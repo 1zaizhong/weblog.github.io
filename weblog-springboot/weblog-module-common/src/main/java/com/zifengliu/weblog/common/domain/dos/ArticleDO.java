@@ -40,4 +40,8 @@ public class ArticleDO {
     private boolean isDeleted;
 
     private  Long readNum;
+    //置顶权重
+    private Integer weight;
+    //文章类型 1普通文章 2 知识库
+    private Integer type;
 }

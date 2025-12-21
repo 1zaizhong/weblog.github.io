@@ -66,4 +66,6 @@ public class FindArticleDetailRspVO {
      * 阅读时长
      */
     private String readTime;
+
+
 }

@@ -3,15 +3,16 @@ package com.zifengliu.weblog.admin.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zifengliu.weblog.admin.model.vo.article.UpdateArticleIsTopReqVO;
 import com.zifengliu.weblog.admin.model.vo.category.AddCategoryReqVO;
 import com.zifengliu.weblog.admin.model.vo.category.DeleteCategoryReqVO;
 import com.zifengliu.weblog.admin.model.vo.category.FindCategoryPageListReqVO;
 import com.zifengliu.weblog.admin.model.vo.category.FindCategoryPageListRspVO;
 import com.zifengliu.weblog.admin.service.AdminCategoryService;
 import com.zifengliu.weblog.common.domain.dos.ArticleCategoryRelDO;
+import com.zifengliu.weblog.common.domain.dos.ArticleDO;
 import com.zifengliu.weblog.common.domain.dos.CategoryDO;
-import com.zifengliu.weblog.common.domain.mapper.ArticleCategoryRelMapper;
-import com.zifengliu.weblog.common.domain.mapper.CategoryMapper;
+import com.zifengliu.weblog.common.domain.mapper.*;
 import com.zifengliu.weblog.common.enums.ResponseCodeEnum;
 import com.zifengliu.weblog.common.exception.BizException;
 import com.zifengliu.weblog.common.model.vo.SelectRspVO;
@@ -21,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -41,9 +43,19 @@ import java.util.stream.Collectors;
 public class AdminCategoryServiceImpl  implements AdminCategoryService {
 
     @Autowired
-    private CategoryMapper categoryMapper;
+    private ArticleMapper articleMapper;
+    @Autowired
+    private ArticleContentMapper articleContentMapper;
     @Autowired
     private ArticleCategoryRelMapper articleCategoryRelMapper;
+    @Autowired
+    private CategoryMapper categoryMapper;
+    @Autowired
+    private TagMapper tagMapper;
+    @Autowired
+    private ArticleTagRelMapper articleTagRelMapper;
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
 
 
     /*

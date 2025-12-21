@@ -38,5 +38,9 @@ private  String cover;
 
 
 
+    /**
+     * 是否置顶
+     */
+    private Boolean isTop;
 
 }
