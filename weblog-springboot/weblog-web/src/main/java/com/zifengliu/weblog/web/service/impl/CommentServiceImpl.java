@@ -65,8 +65,9 @@ public class CommentServiceImpl implements CommentService {
         }
 
         // 请求第三方接口
-        String url = String.format("https://v1.nsuuu.com/api/qq/query?qq=%s&key=%s", qq, apiKey);
+        String url = String.format("https://v1.nsuuu.com/api/qqv1?key=%s&qq=%s", apiKey, qq);
         String result = restTemplate.getForObject(url, String.class);
+        System.out.println(url);
 
         log.info("通过 QQ 号获取用户信息: {}", result);
 
@@ -84,7 +85,6 @@ public class CommentServiceImpl implements CommentService {
                     return Response.success(FindQQUserInfoRspVO.builder()
                             .avatar(String.valueOf(data.get("avatar")))
                             .nickname(String.valueOf(data.get("nick")))
-                            .mail(String.valueOf(data.get("email")))
                             .build());
                 }
             }

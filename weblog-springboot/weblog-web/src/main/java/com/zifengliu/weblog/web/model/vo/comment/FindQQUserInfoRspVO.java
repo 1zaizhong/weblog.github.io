@@ -30,6 +30,6 @@ public class FindQQUserInfoRspVO {
     /**
      * 邮箱
      */
-    private String mail;
+    //private String mail;
 
 }
