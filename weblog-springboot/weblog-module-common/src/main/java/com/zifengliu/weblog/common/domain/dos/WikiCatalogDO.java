@@ -13,32 +13,34 @@ import java.time.LocalDateTime;
 /**
  * @author 粟英朝
  * @version 0.0.3
- * @date 2025/12/21 下午4:41
+ * @date 2025/12/21 下午4:45
  * @description
  **/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@TableName("t_wiki")
-public class WikiDO {
+@TableName("t_wiki_catalog")
+public class WikiCatalogDO {
 
     @TableId(type = IdType.AUTO)
     private Long id;
 
+    private Long wikiId;
+
+    private Long articleId;
+
     private String title;
 
-    private String cover;
+    private Integer level;
 
-    private String summary;
+    private Long parentId;
+
+    private Integer sort;
 
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
 
     private Boolean isDeleted;
-
-    private Integer weight;
-
-    private Boolean isPublish;
 }
