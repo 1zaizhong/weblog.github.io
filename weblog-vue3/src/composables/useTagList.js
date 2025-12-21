@@ -91,6 +91,9 @@ export function useTabList() {
 
         // 存储到 cookie 中
         setTabList(tabList.value)
+        
+        // 切换标签页
+        tabChange(activeTab.value)
     }
 
     // 处理关闭标签菜单事件
@@ -106,6 +109,8 @@ export function useTabList() {
             activeTab.value = indexPath
             // 只保留首页
             tabList.value = tabList.value.filter((tab) => tab.path == indexPath)
+            // 切换标签页
+            tabChange(activeTab.value)
         }
 
         // 设置到 cookie 中

@@ -2,16 +2,16 @@
     <Header></Header>
 
     <!-- 主内容区域 -->
-    <main class="container max-w-screen-xl mx-auto p-4 px-6">
+    <main class="container max-w-screen-xl mx-auto px-4 md:px-6 py-4">
         <!-- grid 表格布局，分为 4 列 -->
         <div class="grid grid-cols-4 gap-7">
             <!-- 左边栏，占用 3 列 -->
             <div class="col-span-4 md:col-span-3 mb-3">
                 <!-- 标签 -->
-                <div v-if="tags.length > 1"
-                    class="w-full p-5 mb-3 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700">
+                <div v-if="tags && tags.length > 0"
+                    class="w-full p-5 pb-7 mb-3 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700">
                     <!-- 标签标题 -->
-                    <h2 class="flex items-center mb-2 font-bold text-gray-900 uppercase dark:text-white">
+                    <h2 class="flex items-center mb-5 font-bold text-gray-900 uppercase dark:text-white">
                         <!-- 标签图标 -->
                         <svg t="1698980289658" class="icon w-4 h-4 mr-2" viewBox="0 0 1024 1024" version="1.1"
                             xmlns="http://www.w3.org/2000/svg" p-id="13858" width="200" height="200">
@@ -26,26 +26,47 @@
                                 fill="#4F4F4F" p-id="13861"></path>
                         </svg>
                         标签
+                        <span class="ml-2 text-gray-600 font-normal dark:text-gray-300">( {{ tags.length }} )</span>
                     </h2>
                     <!-- 标签列表 -->
-                    <span v-for="(tag, index) in tags" :key="index" @click="goTagArticleListPage(tag.id, tag.name)"
-                        class="inline-block mb-1 cursor-pointer bg-green-100 text-green-800 text-xs font-medium mr-2 px-3 py-1 rounded-full hover:bg-green-200 hover:text-green-900 dark:bg-green-900 dark:text-green-300">
+                    <!-- <span v-for="(tag, index) in tags" :key="index" @click="goTagArticleListPage(tag.id, tag.name)"
+                        class="inline-block mb-1 cursor-pointer bg-green-100 text-green-800 text-xs font-medium mr-2 px-3 py-1 
+                        rounded-full hover:bg-green-200 hover:text-green-900 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-950">
                         {{ tag.name }}
-                    </span>
+                    </span> -->
+
+                    <div class="flex flex-wrap gap-3">
+                        <a v-for="(tag, index) in tags" :key="index" @click="goTagArticleListPage(tag.id, tag.name)" class="cursor-pointer inline-flex items-center px-3.5 py-1.5 text-xs font-medium text-center border rounded-[12px]
+            hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-300 
+            dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:focus:ring-gray-800 
+            dark:border-gray-700 dark:hover:text-white">
+                            {{ tag.name }}
+                            <span
+                                class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-sky-800 bg-sky-200 rounded-full">
+                                {{ tag.articlesTotal }}
+                            </span>
+                        </a>
+                    </div>
+
                 </div>
             </div>
 
             <!-- 右边侧边栏，占用一列 -->
             <aside class="col-span-4 md:col-span-1">
-                <!-- 博主信息 -->
-                <UserInfoCard></UserInfoCard>
+                <div class="sticky top-[5.5rem]">
+                    <!-- 博主信息 -->
+                    <UserInfoCard></UserInfoCard>
 
-                <!-- 分类 -->
-                <CategoryListCard></CategoryListCard>
+                    <!-- 分类 -->
+                    <CategoryListCard></CategoryListCard>
+                </div>
             </aside>
         </div>
 
     </main>
+
+    <!-- 返回顶部 -->
+    <ScrollToTopButton></ScrollToTopButton>
 
     <Footer></Footer>
 </template>
@@ -55,6 +76,7 @@ import Header from '@/layouts/frontend/components/Header.vue'
 import Footer from '@/layouts/frontend/components/Footer.vue'
 import UserInfoCard from '@/layouts/frontend/components/UserInfoCard.vue'
 import CategoryListCard from '@/layouts/frontend/components/CategoryListCard.vue'
+import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
 import { getTagList } from '@/api/frontend/tag'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -63,7 +85,7 @@ const router = useRouter()
 
 // 所有标签
 const tags = ref([])
-getTagList().then((res) => {
+getTagList({}).then((res) => {
     if (res.success) {
         tags.value = res.data
     }
@@ -72,6 +94,6 @@ getTagList().then((res) => {
 // 跳转标签文章列表页
 const goTagArticleListPage = (id, name) => {
     // 跳转时通过 query 携带参数（标签 ID、标签名称）
-    router.push({path: '/tag/article/list', query: {id, name}})
+    router.push({ path: '/tag/article/list', query: { id, name } })
 }
 </script>

@@ -5,10 +5,10 @@ export function getArticlePageList(data) {
     return axios.post("/article/list", data)
 }
 
-// 获取文章详情内容
+// 获取文章详情
 export function getArticleDetail(articleId) {
     return axios.post("/article/detail", {articleId})
-    
 }
+
 
 

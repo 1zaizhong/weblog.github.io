@@ -2,29 +2,65 @@
     <Header></Header>
 
     <!-- 主内容区域 -->
-    <main class="container max-w-screen-xl mx-auto p-4 px-6">
+    <main class="container max-w-screen-xl mx-auto px-4 md:px-6 py-4">
         <!-- grid 表格布局，分为 4 列 -->
         <div class="grid grid-cols-4 gap-7">
             <!-- 左边栏，占用 3 列 -->
             <div class="col-span-4 md:col-span-3 mb-3">
+
+                  <!-- 标签 -->
+                  <div v-if="tags && tags.length > 0"
+                    class="w-full p-5 pb-7 mb-3 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700">
+
+                    <!-- 标签标题 -->
+                    <h2 class="flex items-center mb-5 font-bold text-gray-900 uppercase dark:text-white">
+                        <!-- 标签图标 -->
+                        <svg t="1698980289658" class="icon w-[1.2rem] h-[1.2rem] mr-2" viewBox="0 0 1024 1024" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" p-id="13858" width="200" height="200">
+                            <path
+                                d="M646.4512 627.5584m-298.1888 0a298.1888 298.1888 0 1 0 596.3776 0 298.1888 298.1888 0 1 0-596.3776 0Z"
+                                fill="#C7ACEF" p-id="13859"></path>
+                            <path
+                                d="M467.6096 962.5088c-34.4064 0-68.7616-13.1072-94.976-39.2704l-276.48-276.48c-52.3776-52.3776-52.3776-137.5744 0-189.9008L465.4592 87.552a105.216 105.216 0 0 1 76.8512-30.6176l308.6336 8.3456c55.3472 1.4848 100.096 46.0288 101.7856 101.376l9.5744 310.1696c0.8704 28.7744-10.2912 56.9344-30.6176 77.2608l-369.2032 369.2032c-26.112 26.112-60.4672 39.2192-94.8736 39.2192z m71.8848-844.1856c-11.4176 0-22.4768 4.5568-30.5664 12.6464L139.6224 500.2752c-28.416 28.416-28.416 74.6496 0 103.0144l276.48 276.48c28.416 28.416 74.6496 28.416 103.0144 0l369.2032-369.2032a43.4176 43.4176 0 0 0 12.6464-31.8976l-9.5744-310.1696c-0.7168-22.8864-19.2-41.2672-42.0352-41.8816l-308.6336-8.3456c-0.4608 0.0512-0.8192 0.0512-1.2288 0.0512z"
+                                fill="#4F4F4F" p-id="13860"></path>
+                            <path
+                                d="M676.4032 445.5424c-62.208 0-112.8448-50.6368-112.8448-112.8448s50.6368-112.8448 112.8448-112.8448c62.208 0 112.8448 50.6368 112.8448 112.8448s-50.6368 112.8448-112.8448 112.8448z m0-164.1984c-28.3648 0-51.4048 23.04-51.4048 51.4048s23.04 51.4048 51.4048 51.4048c28.3648 0 51.4048-23.04 51.4048-51.4048s-23.0912-51.4048-51.4048-51.4048z"
+                                fill="#4F4F4F" p-id="13861"></path>
+                        </svg>
+                        标签
+                        <span class="ml-2 text-gray-600 font-normal dark:text-gray-300">( {{ tags.length }} )</span>
+
+                    </h2>
+
+                    <div class="flex flex-wrap gap-3">
+                        <a v-for="(tag, index) in tags" :key="index" @click="goTagArticleListPage(tag.id, tag.name)"
+                            :class="[route.query.name == tag.name ? 'bg-sky-100 hover:bg-sky-200' : 'hover:bg-gray-100']"
+                            class="cursor-pointer inline-flex items-center px-3.5 py-1.5 text-xs font-medium text-center border rounded-[12px]
+             focus:ring-4 focus:outline-none focus:ring-gray-300 
+            dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:focus:ring-gray-800 
+            dark:border-gray-700 dark:hover:text-white">
+                            {{ tag.name }}
+                            <span
+                                class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-sky-800 bg-sky-200 rounded-full">
+                                {{ tag.articlesTotal }}
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
                 <!-- 标签文章列表 -->
                 <div class="p-5 mb-4 border border-gray-200 rounded-lg bg-white dark:bg-gray-800 dark:border-gray-700">
-                    <h1 class="flex items-center text-lg font-semibold text-gray-900 dark:text-white">
-                        <!-- 标签图标 -->
-                        <svg t="1698980289658" class="icon w-5 h-5 mr-2" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="13858" width="200" height="200"><path d="M646.4512 627.5584m-298.1888 0a298.1888 298.1888 0 1 0 596.3776 0 298.1888 298.1888 0 1 0-596.3776 0Z" fill="#C7ACEF" p-id="13859"></path><path d="M467.6096 962.5088c-34.4064 0-68.7616-13.1072-94.976-39.2704l-276.48-276.48c-52.3776-52.3776-52.3776-137.5744 0-189.9008L465.4592 87.552a105.216 105.216 0 0 1 76.8512-30.6176l308.6336 8.3456c55.3472 1.4848 100.096 46.0288 101.7856 101.376l9.5744 310.1696c0.8704 28.7744-10.2912 56.9344-30.6176 77.2608l-369.2032 369.2032c-26.112 26.112-60.4672 39.2192-94.8736 39.2192z m71.8848-844.1856c-11.4176 0-22.4768 4.5568-30.5664 12.6464L139.6224 500.2752c-28.416 28.416-28.416 74.6496 0 103.0144l276.48 276.48c28.416 28.416 74.6496 28.416 103.0144 0l369.2032-369.2032a43.4176 43.4176 0 0 0 12.6464-31.8976l-9.5744-310.1696c-0.7168-22.8864-19.2-41.2672-42.0352-41.8816l-308.6336-8.3456c-0.4608 0.0512-0.8192 0.0512-1.2288 0.0512z" fill="#4F4F4F" p-id="13860"></path><path d="M676.4032 445.5424c-62.208 0-112.8448-50.6368-112.8448-112.8448s50.6368-112.8448 112.8448-112.8448c62.208 0 112.8448 50.6368 112.8448 112.8448s-50.6368 112.8448-112.8448 112.8448z m0-164.1984c-28.3648 0-51.4048 23.04-51.4048 51.4048s23.04 51.4048 51.4048 51.4048c28.3648 0 51.4048-23.04 51.4048-51.4048s-23.0912-51.4048-51.4048-51.4048z" fill="#4F4F4F" p-id="13861"></path></svg>
-                        {{ tagName }}
-                    </h1>
-                    <ol v-if="articles && articles.length > 0" class="mt-3 divide-y divider-gray-200 dark:divide-gray-700">
+                    <ol v-if="articles && articles.length > 0" class="divide-y divider-gray-200 dark:divide-gray-700">
                         <li v-for="(article, index) in articles" :key="index">
-                            <a href="#" class="items-center block p-3 sm:flex hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <a @click="goArticleDetailPage(article.id)" class="cursor-pointer items-center block p-3 sm:flex hover:bg-gray-100 hover:rounded-lg dark:hover:bg-gray-700">
                                 <img class="w-24 h-12 mb-3 mr-3 rounded-lg sm:mb-0" :src="article.cover" />
                                 <div class="text-gray-600 dark:text-gray-400">
-                                    <h2 class="text-base font-normal text-gray-900">
+                                    <h2 class="text-base font-normal text-gray-900 dark:text-white">
                                         {{ article.title }}
                                     </h2>
                                     <span
                                         class="inline-flex items-center text-xs font-normal text-gray-500 dark:text-gray-400">
-                                        <svg class="inline w-2.5 h-2.5 mr-2 text-gray-400 dark:text-white"
+                                        <svg class="inline w-2.5 h-2.5 mr-2 text-gray-400"
                                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                             viewBox="0 0 20 20">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -163,115 +199,121 @@
                                 fill="#acb4c2" fill-rule="nonzero" group-id="4" id="路径" node-id="46" stroke="none"
                                 target-height="29.987915" target-width="26.985718" target-x="358.01428"
                                 target-y="351.9996" />
-                        <path
-                            d="M 420.56 343.34 L 423.17 342.07 L 424.35 341.44 L 425.67 340.89 L 428.72 339.87 L 430.94 339.39 L 434.56 339.04 L 438.06 339.10 L 439.39 339.42 L 439.91 339.87 L 439.96 340.57 L 439.60 341.41 L 438.67 342.49 L 436.92 343.93 L 434.61 345.50 L 430.05 348.23 L 427.34 350.01 L 424.88 351.66 L 422.55 353.53 L 418.56 357.32 L 415.78 360.14 L 414.82 361.27 L 413.86 362.72 L 412.16 365.60 L 410.80 367.89 L 409.28 369.98 L 407.87 371.28 L 407.08 371.73 L 406.25 371.97 L 405.28 371.93 L 404.35 371.54 L 403.54 370.86 L 402.89 369.89 L 402.22 368.13 L 402.01 366.70 L 402.20 363.35 L 402.49 361.53 L 403.08 359.50 L 403.51 358.64 L 403.93 358.14 L 405.10 356.83 L 406.25 355.50 L 406.78 354.90 L 407.03 354.31 L 407.31 353.05 L 407.53 352.41 L 408.00 351.71 L 409.15 350.47 L 410.92 348.69 L 412.16 347.67 L 413.92 346.81 L 416.19 345.55 L 417.93 344.63 L 420.56 343.34 Z"
-                            fill="#909aa9" fill-rule="nonzero" group-id="4" id="路径" node-id="47" stroke="none"
-                            target-height="32.93387" target-width="37.947357" target-x="402.0098" target-y="339.0409" />
-                        <path
-                            d="M 413.92 374.61 L 415.54 373.15 L 417.29 371.98 L 421.00 370.03 L 423.35 369.03 L 425.64 368.57 L 427.94 368.63 L 430.67 369.17 L 432.03 369.21 L 433.41 368.81 L 433.84 368.41 L 433.81 367.93 L 433.53 367.19 L 432.94 365.97 L 432.23 364.54 L 431.28 363.33 L 430.11 362.31 L 428.78 361.53 L 427.31 361.00 L 425.73 360.74 L 423.83 360.79 L 421.93 361.16 L 419.98 361.87 L 417.28 363.43 L 414.83 365.52 L 412.78 368.01 L 411.14 370.78 L 409.91 373.75 L 409.09 376.78 L 408.92 378.46 L 409.19 380.03 L 409.44 380.34 L 409.82 380.44 L 410.49 380.02 L 411.35 378.88 L 412.06 377.61 L 413.50 375.10 L 413.92 374.61 Z"
-                            fill="#9da5b5" fill-rule="nonzero" group-id="4,5" id="路径" node-id="48" stroke="none"
-                            target-height="19.704224" target-width="24.921417" target-x="408.91635"
-                            target-y="360.7389" />
-                        <path
-                            d="M 390.14 354.00 L 391.38 362.05 L 392.32 370.20 L 393.81 387.00 L 395.07 404.12 L 396.06 421.37 L 396.17 423.56 L 396.40 424.30 L 396.92 424.60 L 397.49 424.32 L 397.74 423.62 L 396.77 406.19 L 395.52 388.70 L 394.04 371.62 L 393.15 363.46 L 391.99 355.38 L 390.42 347.30 L 388.32 339.49 L 387.69 337.60 L 387.23 337.11 L 386.63 337.19 L 386.25 337.79 L 386.30 338.57 L 388.50 346.14 L 390.14 354.00 Z"
-                            fill="#a2abb9" fill-rule="nonzero" group-id="4,6" id="路径" node-id="49" stroke="none"
-                            target-height="87.49216" target-width="11.486877" target-x="386.2541"
-                            target-y="337.11166" />
-                        <path
-                            d="M 399.79 348.58 L 396.69 356.31 L 394.12 364.42 L 392.05 372.95 L 390.51 381.70 L 389.42 391.44 L 388.91 401.27 L 388.93 411.12 L 389.44 420.94 L 389.63 423.32 L 389.97 423.95 L 390.57 424.08 L 391.04 423.63 L 391.16 422.83 L 390.57 413.26 L 390.44 403.64 L 390.80 394.03 L 391.72 384.48 L 393.11 375.69 L 395.05 367.10 L 397.42 359.17 L 400.28 351.58 L 402.50 346.66 L 404.95 341.97 L 407.61 337.53 L 408.68 335.92 L 408.92 335.20 L 408.72 334.47 L 408.17 334.15 L 407.87 334.20 L 407.61 334.43 L 404.78 338.89 L 402.17 343.60 L 399.79 348.58 Z"
-                            fill="#a2abb9" fill-rule="nonzero" group-id="4,7" id="路径" node-id="50" stroke="none"
-                            target-height="89.92609" target-width="20.01233" target-x="388.90866"
-                            target-y="334.14902" />
-                        <path
-                            d="M 407.65 362.31 L 405.45 365.99 L 403.50 369.92 L 401.80 374.11 L 400.33 378.61 L 399.14 383.25 L 398.23 388.03 L 397.51 393.66 L 397.10 399.32 L 397.00 405.04 L 397.34 413.63 L 398.16 422.15 L 398.43 424.26 L 398.80 424.87 L 399.40 424.97 L 399.86 424.50 L 399.95 423.71 L 399.06 415.45 L 398.62 407.10 L 398.61 401.55 L 398.89 396.05 L 399.45 390.59 L 400.06 386.75 L 400.85 382.98 L 401.67 379.78 L 402.63 376.68 L 403.77 373.57 L 405.04 370.57 L 406.46 367.68 L 407.24 366.26 L 407.95 365.05 L 410.30 361.55 L 412.82 358.49 L 415.52 355.82 L 416.61 354.90 L 416.97 354.28 L 416.90 353.50 L 416.41 353.04 L 415.81 353.14 L 412.88 355.80 L 410.16 358.84 L 407.65 362.31 Z"
-                            fill="#a2abb9" fill-rule="nonzero" group-id="4" id="路径" node-id="51" stroke="none"
-                            target-height="71.930725" target-width="19.96933" target-x="397.0023"
-                            target-y="353.03717" />
-                        <path
-                            d="M 409.04 378.10 L 406.80 382.84 L 404.86 387.84 L 403.22 393.10 L 401.91 398.52 L 400.94 404.05 L 400.31 409.67 L 400.02 415.15 L 400.07 420.64 L 400.14 421.97 L 400.39 422.70 L 400.64 422.93 L 400.96 423.00 L 401.54 422.69 L 401.78 421.97 L 401.64 416.54 L 401.84 411.10 L 402.07 408.36 L 402.13 407.71 L 402.15 407.54 L 402.13 407.66 L 402.14 407.57 L 402.19 407.16 L 403.22 400.43 L 404.41 395.10 L 405.92 389.93 L 406.02 389.62 L 406.08 389.47 L 406.11 389.38 L 406.10 389.40 L 406.09 389.43 L 406.12 389.34 L 406.17 389.18 L 406.29 388.84 L 407.70 385.11 L 409.86 380.31 L 412.34 375.77 L 412.66 375.25 L 412.70 375.18 L 412.65 375.26 L 412.73 375.14 L 412.91 374.85 L 413.59 373.80 L 415.76 370.74 L 416.00 370.01 L 415.76 369.29 L 415.18 369.00 L 414.60 369.29 L 411.68 373.52 L 409.04 378.10 Z"
-                            fill="#a2abb9" fill-rule="nonzero" group-id="4" id="路径" node-id="52" stroke="none"
-                            target-height="53.99884" target-width="15.979828" target-x="400.02" target-y="369.0002" />
-                        <path
-                            d="M 376.17 368.89 L 376.36 369.18 L 376.43 369.28 L 376.45 369.32 L 376.48 369.37 L 377.18 370.48 L 378.53 372.80 L 380.93 377.58 L 383.00 382.63 L 383.11 382.92 L 383.14 383.00 L 383.11 382.92 L 383.17 383.09 L 383.86 385.07 L 384.69 387.67 L 386.17 393.06 L 387.43 398.57 L 388.49 404.18 L 389.38 409.86 L 389.68 411.95 L 389.73 412.32 L 389.76 412.55 L 390.14 415.42 L 390.83 421.12 L 391.00 422.53 L 391.26 423.24 L 391.51 423.46 L 391.82 423.52 L 392.38 423.20 L 392.59 422.47 L 391.11 410.71 L 389.21 399.30 L 388.00 393.73 L 386.56 388.26 L 384.83 382.87 L 382.79 377.68 L 380.42 372.74 L 377.73 368.14 L 376.89 366.88 L 376.63 366.66 L 376.32 366.60 L 375.77 366.92 L 375.57 367.65 L 375.81 368.36 L 376.17 368.89 Z"
-                            fill="#a2abb9" fill-rule="nonzero" group-id="4,8" id="路径" node-id="53" stroke="none"
-                            target-height="56.921204" target-width="17.021759" target-x="375.567"
-                            target-y="366.60376" />
-                        <path
-                            d="M 400.43 411.72 L 403.32 417.29 L 404.31 418.81 L 404.87 419.43 L 405.46 419.84 L 406.13 420.00 L 406.79 419.83 L 407.34 419.37 L 407.78 418.50 L 408.00 416.36 L 407.93 411.22 L 407.63 406.12 L 407.04 401.09 L 406.11 396.32 L 404.76 391.75 L 402.98 387.61 L 401.72 385.60 L 400.24 383.91 L 398.57 382.61 L 397.08 382.04 L 396.15 382.05 L 395.36 382.47 L 394.65 383.40 L 394.25 384.57 L 394.02 386.48 L 394.10 389.41 L 394.94 395.24 L 396.38 401.03 L 398.28 406.63 L 400.43 411.72 Z"
-                            fill="#acb4c2" fill-rule="nonzero" group-id="4" id="路径" node-id="54" stroke="none"
-                            target-height="37.964294" target-width="13.975433" target-x="394.0235"
-                            target-y="382.03568" />
-                        <path
-                            d="M 382.50 467.00 L 410.50 467.00 L 411.48 467.20 L 412.27 467.73 L 412.80 468.52 L 413.00 469.50 L 413.00 469.50 L 412.80 470.48 L 412.27 471.27 L 411.48 471.80 L 410.50 472.00 L 382.50 472.00 L 381.52 471.80 L 380.73 471.27 L 380.20 470.48 L 380.00 469.50 L 380.00 469.50 L 380.20 468.52 L 380.73 467.73 L 381.52 467.20 L 382.50 467.00 Z"
-                            fill="#d1d6e2" fill-rule="nonzero" group-id="4" id="矩形" node-id="55" stroke="none"
-                            target-height="5" target-width="33" target-x="380" target-y="467" />
-                        <path
-                            d="M 386.81 423.00 L 408.19 423.00 L 409.82 423.23 L 411.22 423.81 L 412.43 424.76 L 413.38 425.97 L 413.96 427.37 L 414.19 429.00 L 414.14 429.75 L 409.83 463.75 L 409.45 465.21 L 408.80 466.45 L 407.85 467.50 L 406.68 468.31 L 405.37 468.81 L 403.88 469.00 L 391.12 469.00 L 389.63 468.81 L 388.32 468.31 L 387.15 467.50 L 386.20 466.45 L 385.55 465.21 L 385.17 463.75 L 380.86 429.75 L 380.88 428.11 L 381.28 426.65 L 382.07 425.32 L 383.15 424.24 L 384.47 423.48 L 386.05 423.05 L 386.81 423.00 Z"
-                            fill="#c0c7d2" fill-rule="evenodd" group-id="4" id="矩形" node-id="56" stroke="none"
-                            target-height="46" target-width="33.334473" target-x="380.8566" target-y="423" />
-                    </svg>
-                    <p class="mt-2 mb-16 text-gray-400">此标签下还未发布文章哟~</p>
+                            <path
+                                d="M 420.56 343.34 L 423.17 342.07 L 424.35 341.44 L 425.67 340.89 L 428.72 339.87 L 430.94 339.39 L 434.56 339.04 L 438.06 339.10 L 439.39 339.42 L 439.91 339.87 L 439.96 340.57 L 439.60 341.41 L 438.67 342.49 L 436.92 343.93 L 434.61 345.50 L 430.05 348.23 L 427.34 350.01 L 424.88 351.66 L 422.55 353.53 L 418.56 357.32 L 415.78 360.14 L 414.82 361.27 L 413.86 362.72 L 412.16 365.60 L 410.80 367.89 L 409.28 369.98 L 407.87 371.28 L 407.08 371.73 L 406.25 371.97 L 405.28 371.93 L 404.35 371.54 L 403.54 370.86 L 402.89 369.89 L 402.22 368.13 L 402.01 366.70 L 402.20 363.35 L 402.49 361.53 L 403.08 359.50 L 403.51 358.64 L 403.93 358.14 L 405.10 356.83 L 406.25 355.50 L 406.78 354.90 L 407.03 354.31 L 407.31 353.05 L 407.53 352.41 L 408.00 351.71 L 409.15 350.47 L 410.92 348.69 L 412.16 347.67 L 413.92 346.81 L 416.19 345.55 L 417.93 344.63 L 420.56 343.34 Z"
+                                fill="#909aa9" fill-rule="nonzero" group-id="4" id="路径" node-id="47" stroke="none"
+                                target-height="32.93387" target-width="37.947357" target-x="402.0098" target-y="339.0409" />
+                            <path
+                                d="M 413.92 374.61 L 415.54 373.15 L 417.29 371.98 L 421.00 370.03 L 423.35 369.03 L 425.64 368.57 L 427.94 368.63 L 430.67 369.17 L 432.03 369.21 L 433.41 368.81 L 433.84 368.41 L 433.81 367.93 L 433.53 367.19 L 432.94 365.97 L 432.23 364.54 L 431.28 363.33 L 430.11 362.31 L 428.78 361.53 L 427.31 361.00 L 425.73 360.74 L 423.83 360.79 L 421.93 361.16 L 419.98 361.87 L 417.28 363.43 L 414.83 365.52 L 412.78 368.01 L 411.14 370.78 L 409.91 373.75 L 409.09 376.78 L 408.92 378.46 L 409.19 380.03 L 409.44 380.34 L 409.82 380.44 L 410.49 380.02 L 411.35 378.88 L 412.06 377.61 L 413.50 375.10 L 413.92 374.61 Z"
+                                fill="#9da5b5" fill-rule="nonzero" group-id="4,5" id="路径" node-id="48" stroke="none"
+                                target-height="19.704224" target-width="24.921417" target-x="408.91635"
+                                target-y="360.7389" />
+                            <path
+                                d="M 390.14 354.00 L 391.38 362.05 L 392.32 370.20 L 393.81 387.00 L 395.07 404.12 L 396.06 421.37 L 396.17 423.56 L 396.40 424.30 L 396.92 424.60 L 397.49 424.32 L 397.74 423.62 L 396.77 406.19 L 395.52 388.70 L 394.04 371.62 L 393.15 363.46 L 391.99 355.38 L 390.42 347.30 L 388.32 339.49 L 387.69 337.60 L 387.23 337.11 L 386.63 337.19 L 386.25 337.79 L 386.30 338.57 L 388.50 346.14 L 390.14 354.00 Z"
+                                fill="#a2abb9" fill-rule="nonzero" group-id="4,6" id="路径" node-id="49" stroke="none"
+                                target-height="87.49216" target-width="11.486877" target-x="386.2541"
+                                target-y="337.11166" />
+                            <path
+                                d="M 399.79 348.58 L 396.69 356.31 L 394.12 364.42 L 392.05 372.95 L 390.51 381.70 L 389.42 391.44 L 388.91 401.27 L 388.93 411.12 L 389.44 420.94 L 389.63 423.32 L 389.97 423.95 L 390.57 424.08 L 391.04 423.63 L 391.16 422.83 L 390.57 413.26 L 390.44 403.64 L 390.80 394.03 L 391.72 384.48 L 393.11 375.69 L 395.05 367.10 L 397.42 359.17 L 400.28 351.58 L 402.50 346.66 L 404.95 341.97 L 407.61 337.53 L 408.68 335.92 L 408.92 335.20 L 408.72 334.47 L 408.17 334.15 L 407.87 334.20 L 407.61 334.43 L 404.78 338.89 L 402.17 343.60 L 399.79 348.58 Z"
+                                fill="#a2abb9" fill-rule="nonzero" group-id="4,7" id="路径" node-id="50" stroke="none"
+                                target-height="89.92609" target-width="20.01233" target-x="388.90866"
+                                target-y="334.14902" />
+                            <path
+                                d="M 407.65 362.31 L 405.45 365.99 L 403.50 369.92 L 401.80 374.11 L 400.33 378.61 L 399.14 383.25 L 398.23 388.03 L 397.51 393.66 L 397.10 399.32 L 397.00 405.04 L 397.34 413.63 L 398.16 422.15 L 398.43 424.26 L 398.80 424.87 L 399.40 424.97 L 399.86 424.50 L 399.95 423.71 L 399.06 415.45 L 398.62 407.10 L 398.61 401.55 L 398.89 396.05 L 399.45 390.59 L 400.06 386.75 L 400.85 382.98 L 401.67 379.78 L 402.63 376.68 L 403.77 373.57 L 405.04 370.57 L 406.46 367.68 L 407.24 366.26 L 407.95 365.05 L 410.30 361.55 L 412.82 358.49 L 415.52 355.82 L 416.61 354.90 L 416.97 354.28 L 416.90 353.50 L 416.41 353.04 L 415.81 353.14 L 412.88 355.80 L 410.16 358.84 L 407.65 362.31 Z"
+                                fill="#a2abb9" fill-rule="nonzero" group-id="4" id="路径" node-id="51" stroke="none"
+                                target-height="71.930725" target-width="19.96933" target-x="397.0023"
+                                target-y="353.03717" />
+                            <path
+                                d="M 409.04 378.10 L 406.80 382.84 L 404.86 387.84 L 403.22 393.10 L 401.91 398.52 L 400.94 404.05 L 400.31 409.67 L 400.02 415.15 L 400.07 420.64 L 400.14 421.97 L 400.39 422.70 L 400.64 422.93 L 400.96 423.00 L 401.54 422.69 L 401.78 421.97 L 401.64 416.54 L 401.84 411.10 L 402.07 408.36 L 402.13 407.71 L 402.15 407.54 L 402.13 407.66 L 402.14 407.57 L 402.19 407.16 L 403.22 400.43 L 404.41 395.10 L 405.92 389.93 L 406.02 389.62 L 406.08 389.47 L 406.11 389.38 L 406.10 389.40 L 406.09 389.43 L 406.12 389.34 L 406.17 389.18 L 406.29 388.84 L 407.70 385.11 L 409.86 380.31 L 412.34 375.77 L 412.66 375.25 L 412.70 375.18 L 412.65 375.26 L 412.73 375.14 L 412.91 374.85 L 413.59 373.80 L 415.76 370.74 L 416.00 370.01 L 415.76 369.29 L 415.18 369.00 L 414.60 369.29 L 411.68 373.52 L 409.04 378.10 Z"
+                                fill="#a2abb9" fill-rule="nonzero" group-id="4" id="路径" node-id="52" stroke="none"
+                                target-height="53.99884" target-width="15.979828" target-x="400.02" target-y="369.0002" />
+                            <path
+                                d="M 376.17 368.89 L 376.36 369.18 L 376.43 369.28 L 376.45 369.32 L 376.48 369.37 L 377.18 370.48 L 378.53 372.80 L 380.93 377.58 L 383.00 382.63 L 383.11 382.92 L 383.14 383.00 L 383.11 382.92 L 383.17 383.09 L 383.86 385.07 L 384.69 387.67 L 386.17 393.06 L 387.43 398.57 L 388.49 404.18 L 389.38 409.86 L 389.68 411.95 L 389.73 412.32 L 389.76 412.55 L 390.14 415.42 L 390.83 421.12 L 391.00 422.53 L 391.26 423.24 L 391.51 423.46 L 391.82 423.52 L 392.38 423.20 L 392.59 422.47 L 391.11 410.71 L 389.21 399.30 L 388.00 393.73 L 386.56 388.26 L 384.83 382.87 L 382.79 377.68 L 380.42 372.74 L 377.73 368.14 L 376.89 366.88 L 376.63 366.66 L 376.32 366.60 L 375.77 366.92 L 375.57 367.65 L 375.81 368.36 L 376.17 368.89 Z"
+                                fill="#a2abb9" fill-rule="nonzero" group-id="4,8" id="路径" node-id="53" stroke="none"
+                                target-height="56.921204" target-width="17.021759" target-x="375.567"
+                                target-y="366.60376" />
+                            <path
+                                d="M 400.43 411.72 L 403.32 417.29 L 404.31 418.81 L 404.87 419.43 L 405.46 419.84 L 406.13 420.00 L 406.79 419.83 L 407.34 419.37 L 407.78 418.50 L 408.00 416.36 L 407.93 411.22 L 407.63 406.12 L 407.04 401.09 L 406.11 396.32 L 404.76 391.75 L 402.98 387.61 L 401.72 385.60 L 400.24 383.91 L 398.57 382.61 L 397.08 382.04 L 396.15 382.05 L 395.36 382.47 L 394.65 383.40 L 394.25 384.57 L 394.02 386.48 L 394.10 389.41 L 394.94 395.24 L 396.38 401.03 L 398.28 406.63 L 400.43 411.72 Z"
+                                fill="#acb4c2" fill-rule="nonzero" group-id="4" id="路径" node-id="54" stroke="none"
+                                target-height="37.964294" target-width="13.975433" target-x="394.0235"
+                                target-y="382.03568" />
+                            <path
+                                d="M 382.50 467.00 L 410.50 467.00 L 411.48 467.20 L 412.27 467.73 L 412.80 468.52 L 413.00 469.50 L 413.00 469.50 L 412.80 470.48 L 412.27 471.27 L 411.48 471.80 L 410.50 472.00 L 382.50 472.00 L 381.52 471.80 L 380.73 471.27 L 380.20 470.48 L 380.00 469.50 L 380.00 469.50 L 380.20 468.52 L 380.73 467.73 L 381.52 467.20 L 382.50 467.00 Z"
+                                fill="#d1d6e2" fill-rule="nonzero" group-id="4" id="矩形" node-id="55" stroke="none"
+                                target-height="5" target-width="33" target-x="380" target-y="467" />
+                            <path
+                                d="M 386.81 423.00 L 408.19 423.00 L 409.82 423.23 L 411.22 423.81 L 412.43 424.76 L 413.38 425.97 L 413.96 427.37 L 414.19 429.00 L 414.14 429.75 L 409.83 463.75 L 409.45 465.21 L 408.80 466.45 L 407.85 467.50 L 406.68 468.31 L 405.37 468.81 L 403.88 469.00 L 391.12 469.00 L 389.63 468.81 L 388.32 468.31 L 387.15 467.50 L 386.20 466.45 L 385.55 465.21 L 385.17 463.75 L 380.86 429.75 L 380.88 428.11 L 381.28 426.65 L 382.07 425.32 L 383.15 424.24 L 384.47 423.48 L 386.05 423.05 L 386.81 423.00 Z"
+                                fill="#c0c7d2" fill-rule="evenodd" group-id="4" id="矩形" node-id="56" stroke="none"
+                                target-height="46" target-width="33.334473" target-x="380.8566" target-y="423" />
+                        </svg>
+                        <p class="mt-2 mb-16 text-gray-400">此标签下还未发布文章哟~</p>
+                    </div>
                 </div>
+
+                <!-- 分页 -->
+                <nav aria-label="Page navigation example" class="mt-10 flex justify-center" v-if="total > 0">
+                    <ul class="flex items-center -space-x-px h-10 text-base">
+                        <!-- 上一页 -->
+                        <li>
+                            <a @click="getTagArticles(current - 1)"
+                                class="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                :class="[current > 1 ? '' : 'cursor-not-allowed']">
+
+                                <span class="sr-only">上一页</span>
+                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 6 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M5 1 1 5l4 4" />
+                                </svg>
+                            </a>
+                        </li>
+                        <!-- 页码 -->
+                        <li v-for="(pageNo, index) in pages" :key="index">
+                            <a @click="getTagArticles(pageNo)"
+                                class="flex items-center justify-center px-4 h-10 leading-tight border  dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                :class="[pageNo == current ? 'text-sky-600  bg-sky-50 border-sky-500 hover:bg-sky-100 hover:text-sky-700' : 'text-gray-500 border-gray-300 bg-white hover:bg-gray-100 hover:text-gray-700']">
+                                {{ index + 1 }}
+                            </a>
+                        </li>
+                        <!-- 下一页 -->
+                        <li>
+                            <a @click="getTagArticles(current + 1)"
+                                class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                :class="[current < pages ? '' : 'cursor-not-allowed']">
+                                <span class="sr-only">下一页</span>
+                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 6 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m1 9 4-4-4-4" />
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
 
-            <!-- 分页 -->
-            <nav aria-label="Page navigation example" class="mt-10 flex justify-center" v-if="pages > 1">
-                <ul class="flex items-center -space-x-px h-10 text-base">
-                    <!-- 上一页 -->
-                    <li>
-                        <a @click="getTagArticles(current - 1)"
-                            class="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                            :class="[current > 1 ? '' : 'cursor-not-allowed']">
+            <!-- 右边侧边栏，占用一列 -->
+            <aside class="col-span-4 md:col-span-1">
+                <div class="sticky top-[5.5rem]">
+                    <!-- 博主信息 -->
+                    <UserInfoCard></UserInfoCard>
 
-                            <span class="sr-only">上一页</span>
-                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 6 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M5 1 1 5l4 4" />
-                            </svg>
-                        </a>
-                    </li>
-                    <!-- 页码 -->
-                    <li v-for="(pageNo, index) in pages" :key="index">
-                        <a @click="getTagArticles(pageNo)"
-                            class="flex items-center justify-center px-4 h-10 leading-tight border  dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                            :class="[pageNo == current ? 'text-blue-600  bg-blue-50 border-blue-300 hover:bg-blue-100 hover:text-blue-700' : 'text-gray-500 border-gray-300 bg-white hover:bg-gray-100 hover:text-gray-700']">
-                            {{ index + 1 }}
-                        </a>
-                    </li>
-                    <!-- 下一页 -->
-                    <li>
-                        <a @click="getTagArticles(current + 1)"
-                            class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                            :class="[current < pages ? '' : 'cursor-not-allowed']">
-                            <span class="sr-only">下一页</span>
-                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 6 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m1 9 4-4-4-4" />
-                            </svg>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+                    <!-- 分类 -->
+                    <CategoryListCard></CategoryListCard>
+
+                    <!-- 标签 -->
+                    <TagListCard></TagListCard>
+                </div>
+            </aside>
         </div>
 
-        <!-- 右边侧边栏，占用一列 -->
-        <aside class="col-span-4 md:col-span-1">
-            <!-- 博主信息 -->
-            <UserInfoCard></UserInfoCard>
+    </main>
 
-            <!-- 分类 -->
-            <CategoryListCard></CategoryListCard>
+    <!-- 返回顶部 -->
+    <ScrollToTopButton></ScrollToTopButton>
 
-            <!-- 标签 -->
-            <TagListCard></TagListCard>
-        </aside>
-    </div>
-
-</main>
-
-<Footer></Footer></template>
+    <Footer></Footer>
+</template>
 
 <script setup>
 import Header from '@/layouts/frontend/components/Header.vue'
@@ -279,11 +321,13 @@ import Footer from '@/layouts/frontend/components/Footer.vue'
 import UserInfoCard from '@/layouts/frontend/components/UserInfoCard.vue'
 import TagListCard from '@/layouts/frontend/components/TagListCard.vue'
 import CategoryListCard from '@/layouts/frontend/components/CategoryListCard.vue'
+import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
 import { ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
-import { getTagArticlePageList } from '@/api/frontend/tag'
+import { useRoute, useRouter } from 'vue-router'
+import { getTagArticlePageList, getTagList } from '@/api/frontend/tag'
 
 const route = useRoute()
+const router = useRouter()
 
 // 文章集合
 const articles = ref([])
@@ -302,7 +346,7 @@ watch(route, (newRoute, oldRoute) => {
 // 当前页码
 const current = ref(1)
 // 每页显示的文章数
-const size = ref(1)
+const size = ref(10)
 // 总文章数
 const total = ref(0)
 // 总共多少页
@@ -323,4 +367,23 @@ function getTagArticles(currentNo) {
     })
 }
 getTagArticles(current.value)
+
+// 跳转文章详情页
+const goArticleDetailPage = (articleId) => {
+    router.push('/article/' + articleId)
+}
+
+// 所有标签
+const tags = ref([])
+getTagList({}).then((res) => {
+    if (res.success) {
+        tags.value = res.data
+    }
+})
+
+// 跳转标签文章列表页
+const goTagArticleListPage = (id, name) => {
+    // 跳转时通过 query 携带参数（标签 ID、标签名称）
+    router.push({ path: '/tag/article/list', query: { id, name } })
+}
 </script>

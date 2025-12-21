@@ -32,9 +32,21 @@
             <!-- 分页列表 -->
             <el-table :data="tableData" border stripe style="width: 100%" v-loading="tableLoading">
                 <el-table-column prop="id" label="ID" width="50" />
+                <el-table-column prop="title" label="标题" width="380" />
                 <el-table-column prop="cover" label="封面" width="180">
                     <template #default="scope">
                         <el-image style="width: 100px;" :src="scope.row.cover" />
+                    </template>
+                </el-table-column>
+                <el-table-column prop="isTop" label="是否置顶" width="100">
+                    <template #default="scope">
+                        <el-switch
+                            @change="handleIsTopChange(scope.row)"
+                            v-model="scope.row.isTop"
+                            inline-prompt
+                            :active-icon="Check"
+                            :inactive-icon="Close"
+                        />
                     </template>
                 </el-table-column>
                 <el-table-column prop="createTime" label="发布时间" width="180" />
@@ -45,7 +57,7 @@
                                 <Edit />
                             </el-icon>
                             编辑</el-button>
-                        <el-button size="small" @click="goArticleDetailPage(scope.row.id)">
+                            <el-button size="small" @click="goArticleDetailPage(scope.row.id)">
                             <el-icon class="mr-1">
                                 <View />
                             </el-icon>
@@ -202,8 +214,8 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-import { Search, RefreshRight } from '@element-plus/icons-vue'
-import { getArticlePageList, deleteArticle, publishArticle, getArticleDetail, updateArticle } from '@/api/admin/article'
+import { Search, RefreshRight, Check, Close } from '@element-plus/icons-vue'
+import { getArticlePageList, deleteArticle, publishArticle, getArticleDetail, updateArticle, updateArticleIsTop } from '@/api/admin/article'
 import { uploadFile } from '@/api/admin/file'
 import { getCategorySelectList } from '@/api/admin/category'
 import { searchTags, getTagSelectList } from '@/api/admin/tag'
@@ -213,12 +225,13 @@ import { MdEditor } from 'md-editor-v3'
 import 'md-editor-v3/lib/style.css'
 import { useRouter } from 'vue-router'
 
+
+const router = useRouter()
+
 // 模糊搜索的文章标题
 const searchArticleTitle = ref('')
 // 日期
 const pickDate = ref('')
-
-const router = useRouter()
 
 // 查询条件：开始结束时间
 const startDate = reactive({})
@@ -548,10 +561,30 @@ const updateSubmit = () => {
         })
     })
 }
+
+
 // 跳转文章详情页
 const goArticleDetailPage = (articleId) => {
-                    router.push('/article/' + articleId)
-                }
+    router.push('/article/' + articleId)
+}
+
+// 点击置顶
+const handleIsTopChange = (row) => {
+    updateArticleIsTop({id: row.id, isTop: row.isTop}).then((res) => {
+        // 重新请求分页接口，渲染列表数据
+        getTableData()
+
+        if (res.success == false) {
+            // 获取服务端返回的错误消息
+            let message = res.message
+            // 提示错误消息
+            showMessage(message, 'error')
+            return
+        }
+
+        showMessage(row.isTop ? '置顶成功' : "已取消置顶")
+    })
+}
 </script>
 
 <style scoped>
