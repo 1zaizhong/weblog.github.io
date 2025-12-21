@@ -1,11 +1,30 @@
 spring:
+  profiles:
+    active: dev
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
-  profiles:
-    # 默认激活 dev 环境
-    active: dev
+  mail:
+    host: smtp.qq.com
+    username: 2279470978@qq.com
+    password: abjuamkfsascebff
+    default-encoding: utf-8
+    protocol: smtps
+    port: 465
+    # 添加以下配置
+    properties:
+      mail:
+        smtp:
+          auth: true  # 需要身份验证
+          ssl:
+            enable: true  # 启用SSL
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory  # SSL Socket Factory
+            fallback: false
+          starttls:
+            enable: true  # 启用STARTTLS
+            required: true
 
 jwt:
   # 签发人
