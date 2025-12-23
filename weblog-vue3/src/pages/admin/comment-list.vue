@@ -39,7 +39,7 @@
                     </template>
                 </el-table-column>
                
-                <el-table-column prop="nickname" label="昵称"  width="60" />
+                <el-table-column prop="nickname" label="昵称"  width="150" />
                 <el-table-column prop="content" label="评论内容" />
                 <el-table-column prop="createTime" label="发布时间" width="200" />
                 <el-table-column prop="status" label="状态">
