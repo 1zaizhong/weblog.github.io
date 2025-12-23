@@ -98,13 +98,7 @@
                         <el-text class="mx-1" type="info"  size="small">开启后，评论需要博主后台审核通过后，才会展示出来</el-text>
                     </div>
                 </el-form-item>
-                <el-form-item label="博主邮箱">
-                    <el-input v-model="form.mail" clearable placeholder="请输入博主邮箱地址" />
-                    <div class="flex items-center">
-                        <el-icon class="mr-2" color="#909399"><InfoFilled /></el-icon>
-                        <el-text class="mx-1" type="info"  size="small">当被评论后，用于主动发送邮件通知博主</el-text>
-                    </div>
-                </el-form-item>
+            
 
                 <el-form-item>
                     <el-button type="primary" :loading="btnLoading" @click="onSubmit">保存</el-button>

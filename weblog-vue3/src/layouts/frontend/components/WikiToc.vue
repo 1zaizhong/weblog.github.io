@@ -2,8 +2,7 @@
     <!-- text-sm/[30px] 表示文字小号，行高为 30px -->
     <div v-if="titles && titles.length > 0"
         class="sticky text-sm/[30px] w-full mb-3 transition-all"
-        :class="[currScrollY > 0 ? 'top-0' : 'top-[5.5rem]']"
-        >
+        :class="[currScrollY > 0 ? 'top-0' : 'top-[5.5rem]']">
         <!-- 目录标题 -->
         <h2 class="flex items-center mb-2 font-bold text-gray-900 uppercase dark:text-gray-400">
             文章目录

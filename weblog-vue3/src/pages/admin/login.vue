@@ -7,9 +7,9 @@
             <div
                 class="flex justify-center items-center h-full flex-col animate__animated animate__bounceInLeft animate__fast">
                 <h2 class="font-bold text-4xl mb-7 text-white">Weblog 博客登录</h2>
-                <p class="text-white">一款由 Spring Boot + Mybaits Plus + Vue 3.2 + Vite 4 开发的前后端分离博客。</p>
+                <p class="text-white"></p>
                 <!-- 指定图片宽度为父级元素的 1/2 -->
-                <img src="@/assets/developer.png" class="w-1/2">
+                <img src="@/assets/login.png" class="w-1/2">
             </div>
         </div>
         <div class="flex flex-col col-span-2 order-1 md:col-span-1 md:order-2 bg-white dark:bg-gray-800">

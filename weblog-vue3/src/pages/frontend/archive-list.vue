@@ -128,7 +128,7 @@ const size = ref(10)
 // 总文章数
 const total = ref(0)
 // 总共多少页
-const pages = ref(0)
+const pages = ref(2)
 
 function getArchives(currentNo) {
     // 上下页是否能点击判断，当要跳转上一页且页码小于 1 时，则不允许跳转；当要跳转下一页且页码大于总页数时，则不允许跳转

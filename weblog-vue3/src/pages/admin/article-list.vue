@@ -32,7 +32,7 @@
             <!-- 分页列表 -->
             <el-table :data="tableData" border stripe style="width: 100%" v-loading="tableLoading">
                 <el-table-column prop="id" label="ID" width="50" />
-                <el-table-column prop="title" label="标题" width="380" />
+                <el-table-column prop="title" label="标题" width="200" />
                 <el-table-column prop="cover" label="封面" width="180">
                     <template #default="scope">
                         <el-image style="width: 100px;" :src="scope.row.cover" />
@@ -108,7 +108,7 @@
             <el-form :model="form" ref="publishArticleFormRef" label-position="top" size="large" :rules="rules">
                 <el-form-item label="标题" prop="title">
                     <el-input v-model="form.title" autocomplete="off" size="large" maxlength="40" show-word-limit
-                        clearable />
+                        clearable :style="{ width: '200px' }" />
                 </el-form-item>
                 <el-form-item label="内容" prop="content">
                     <!-- Markdown 编辑器 -->
