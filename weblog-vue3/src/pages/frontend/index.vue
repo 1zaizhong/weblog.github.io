@@ -180,7 +180,7 @@ function getArticles(currentNo) {
     getArticlePageList({
         current: currentNo, 
         size: size.value,
-        status: 2 // 
+        
     }).then((res) => {
         if (res.success) {
             articles.value = res.data

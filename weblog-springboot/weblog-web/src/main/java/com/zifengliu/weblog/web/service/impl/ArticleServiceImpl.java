@@ -66,8 +66,13 @@ public class ArticleServiceImpl implements ArticleService {
 
 
         // 第一步：分页查询文章主体记录
-        Page<ArticleDO> articleDOPage = articleMapper.selectPageList(current, size, null, null, null,null,null,null);
-
+        Page<ArticleDO> articleDOPage = articleMapper.selectPageList(
+                findIndexArticlePageListReqVO.getCurrent(),
+                findIndexArticlePageListReqVO.getSize(),
+                null, null, null, null,
+                null, // userId 传 null，查全站
+                2     // status 传 2，只查已公布文章
+        );
         // 返回的分页数据
         List<ArticleDO> articleDOS = articleDOPage.getRecords();
 
@@ -162,8 +167,7 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleDO articleDO = articleMapper.selectById(articleId);
 
         // 判断文章是否存在
-        if (Objects.isNull(articleDO)) {
-            log.warn("==> 该文章不存在, articleId: {}", articleId);
+        if (articleDO == null || Objects.equals(articleDO.getStatus(), 1)) {
             throw new BizException(ResponseCodeEnum.ARTICLE_NOT_EXISTED);
         }
 

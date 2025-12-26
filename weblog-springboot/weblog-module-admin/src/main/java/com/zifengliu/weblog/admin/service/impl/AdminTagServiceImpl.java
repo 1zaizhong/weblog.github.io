@@ -87,7 +87,7 @@ public class AdminTagServiceImpl extends ServiceImpl<TagMapper, TagDO> implement
 
 
         // 执行分页查询
-        Page<TagDO> page = tagMapper.selectPageList(current, size,name, startDate, endDate);
+        Page<TagDO> page = tagMapper.selectPageList(current, size,name, startDate, endDate,null);
 
         List<TagDO> records = page.getRecords();
 
