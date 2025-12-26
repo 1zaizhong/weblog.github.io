@@ -12,8 +12,10 @@ import com.zifengliu.weblog.admin.service.AdminTagService;
 import com.zifengliu.weblog.common.domain.dos.ArticleTagRelDO;
 import com.zifengliu.weblog.common.domain.dos.TagDO;
 import com.zifengliu.weblog.common.domain.dos.TagDO;
+import com.zifengliu.weblog.common.domain.dos.UserDO;
 import com.zifengliu.weblog.common.domain.mapper.ArticleTagRelMapper;
 import com.zifengliu.weblog.common.domain.mapper.TagMapper;
+import com.zifengliu.weblog.common.domain.mapper.UserMapper;
 import com.zifengliu.weblog.common.enums.ResponseCodeEnum;
 import com.zifengliu.weblog.common.exception.BizException;
 import com.zifengliu.weblog.common.model.vo.SelectRspVO;
@@ -21,6 +23,8 @@ import com.zifengliu.weblog.common.utils.PageResponse;
 import com.zifengliu.weblog.common.utils.Response;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -42,7 +46,20 @@ public class AdminTagServiceImpl extends ServiceImpl<TagMapper, TagDO> implement
     private TagMapper tagMapper;
     @Autowired
     private ArticleTagRelMapper articleTagRelMapper;
+    @Autowired
+    private UserMapper  userMapper;
 
+
+    //拿到登录信息id,用来后面用
+    private Long getLoginUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
+                .eq(UserDO::getUsername, authentication.getName()));
+        if (userDO == null) {
+            throw new BizException(ResponseCodeEnum.USERNAME_NOT_FOUND);
+        }
+        return userDO.getUserId();
+    }
     /*
     * 添加标签集合
     * @param addTagReqVO
@@ -50,21 +67,30 @@ public class AdminTagServiceImpl extends ServiceImpl<TagMapper, TagDO> implement
     @Override
     public Response addTags(AddTagReqVO addTagReqVO) {
 
-        //VO 转成DO
-        List<TagDO> tagDOS = addTagReqVO.getTags()
-                .stream().map(tagName -> TagDO.builder()
-                        .name(tagName.trim())//去掉前后空格
+        Long loginUserId = getLoginUserId();
+        List<String> tags = addTagReqVO.getTags();
+
+        // 循环处理前端传来的标签集合
+        tags.forEach(tagName -> {
+            // 校验该用户下是否已存在同名标签
+            TagDO existsTag = tagMapper.selectOne(Wrappers.<TagDO>lambdaQuery()
+                    .eq(TagDO::getName, tagName)
+                    .eq(TagDO::getUserId, loginUserId));
+
+            if (Objects.isNull(existsTag)) {
+                TagDO tagDO = TagDO.builder()
+                        .name(tagName)
+                        .userId(loginUserId) // 绑定当前用户
+                        .articlesTotal(0)
                         .createTime(LocalDateTime.now())
                         .updateTime(LocalDateTime.now())
-                        .build())
-                .collect(Collectors.toList());
-        //批量插入
-      try {
-          saveBatch(tagDOS);
-      }catch (Exception e){
-          log.warn("标签已经存在");
-          throw new BizException(ResponseCodeEnum.TAG_CANT_DUPLICATE);
-      }
+                        .isDeleted(false)
+                        .build();
+                tagMapper.insert(tagDO);
+            } else {
+                new BizException(ResponseCodeEnum.TAG_CANT_DUPLICATE);
+            }
+        });
 
         return Response.success();
     }
@@ -83,19 +109,26 @@ public class AdminTagServiceImpl extends ServiceImpl<TagMapper, TagDO> implement
         String name = findTagePageListReqVO.getName();
         LocalDate startDate = findTagePageListReqVO.getStartDate();
         LocalDate endDate = findTagePageListReqVO.getEndDate();
+        Long loginUserId = getLoginUserId();
 
 
 
         // 执行分页查询
-        Page<TagDO> page = tagMapper.selectPageList(current, size,name, startDate, endDate,null);
-
-        List<TagDO> records = page.getRecords();
+        Page<TagDO> tagDOPage = tagMapper.selectPageList(
+                current,
+                size,
+                name,
+                startDate,
+                endDate,
+                loginUserId
+        );
+        List<TagDO> tagDOS = tagDOPage.getRecords();
 
         // DO 转 VO
         List<FindTagPageListRspVO> vos = null;
         //如果标签数据不为空
-        if (!CollectionUtils.isEmpty(records)) {
-            vos = records.stream()
+        if (!CollectionUtils.isEmpty(tagDOS)) {
+            vos = tagDOS.stream()
                     .map(tagDO -> FindTagPageListRspVO.builder()
                             .id(tagDO.getId())
                             .name(tagDO.getName())
@@ -105,7 +138,7 @@ public class AdminTagServiceImpl extends ServiceImpl<TagMapper, TagDO> implement
                     .collect(Collectors.toList());
         }
 
-        return PageResponse.success(page, vos);
+        return PageResponse.success(tagDOPage, vos);
     }
 
 
@@ -115,25 +148,24 @@ public class AdminTagServiceImpl extends ServiceImpl<TagMapper, TagDO> implement
     * */
     @Override
     public Response searchTag(SearchTagReqVO searchTagReqVO) {
+        Long loginUserId = getLoginUserId();
         String key = searchTagReqVO.getKey();
 
+        // 只在当前用户的标签库中模糊搜索
+        List<TagDO> tagDOS = tagMapper.selectList(Wrappers.<TagDO>lambdaQuery()
+                .eq(TagDO::getUserId, loginUserId)
+                .like(TagDO::getName, key));
 
-        //执行模糊查询
-       List<TagDO> tagDOS=  tagMapper.selectByKey(key);
-
-       //DO 转 VO
-       List<SelectRspVO> vos = null;
-       if (!CollectionUtils.isEmpty(tagDOS)){
-           vos = tagDOS.stream()
-                   .map(tagDO -> SelectRspVO.builder()
-                           .label(tagDO.getName())
-                           .value(tagDO.getId())
-                           .build())
-                   .collect(Collectors.toList());
-       }
-
-
-       return  Response.success(vos);
+        List<SelectRspVO> vos = null;
+        if (!CollectionUtils.isEmpty(tagDOS)) {
+            vos = tagDOS.stream()
+                    .map(tagDO -> SelectRspVO.builder()
+                            .label(tagDO.getName())
+                            .value(tagDO.getId())
+                            .build())
+                    .collect(Collectors.toList());
+        }
+        return Response.success(vos);
 
     }
     /**
@@ -144,18 +176,36 @@ public class AdminTagServiceImpl extends ServiceImpl<TagMapper, TagDO> implement
      */
     @Override
     public Response deleteTag(DeleteTagReqVO deleteTagReqVO) {
-        // 标签 ID
+        // 1. 获取标签 ID
         Long tagId = deleteTagReqVO.getId();
 
-        // 校验该标签下是否有关联的文章，若有，则不允许删除，提示用户需要先删除标签下的文章
+        // 2. 获取当前登录用户的 ID
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // 假设你有一个方法可以通过用户名获取 UserDO
+        UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
+                .eq(UserDO::getUsername, authentication.getName()));
+        Long loginUserId = userDO.getUserId();
+
+        // 3. 权限校验：先查询该标签是否存在，且是否属于当前用户
+        TagDO tagDO = tagMapper.selectById(tagId);
+        if (Objects.isNull(tagDO)) {
+            return Response.fail(ResponseCodeEnum.TAG_NOT_EXISTED);
+        }
+
+        // 如果不是管理员(假设ID为1)，且标签的归属者不是当前登录人，则无权删除
+        if (!Objects.equals(loginUserId, 1L) && !Objects.equals(tagDO.getUserId(), loginUserId)) {
+            return Response.fail("无权删除该标签");
+        }
+
+        // 引用校验：校验该标签下是否有关联的文章
+        //如果有文章正关联着它，不能直接删除
         ArticleTagRelDO articleTagRelDO = articleTagRelMapper.selectOneByTagId(tagId);
 
         if (Objects.nonNull(articleTagRelDO)) {
-            log.warn("==> 此标签下包含文章，无法删除，tagId: {}");
             throw new BizException(ResponseCodeEnum.TAG_CAN_NOT_DELETE);
         }
 
-        // 根据标签 ID 删除
+
         int count = tagMapper.deleteById(tagId);
 
         return count == 1 ? Response.success() : Response.fail(ResponseCodeEnum.TAG_NOT_EXISTED);
@@ -167,10 +217,12 @@ public class AdminTagServiceImpl extends ServiceImpl<TagMapper, TagDO> implement
     * */
     @Override
     public Response findTagSelectList() {
-        // 查询所有标签, Wrappers.emptyWrapper() 表示查询条件为空
-        List<TagDO> tagDOS = tagMapper.selectList(Wrappers.emptyWrapper());
+        Long loginUserId = getLoginUserId();
 
-        // DO 转 VO
+        // 只返回当前用户的标签
+        List<TagDO> tagDOS = tagMapper.selectList(Wrappers.<TagDO>lambdaQuery()
+                .eq(TagDO::getUserId, loginUserId));
+
         List<SelectRspVO> vos = null;
         if (!CollectionUtils.isEmpty(tagDOS)) {
             vos = tagDOS.stream()
@@ -180,8 +232,6 @@ public class AdminTagServiceImpl extends ServiceImpl<TagMapper, TagDO> implement
                             .build())
                     .collect(Collectors.toList());
         }
-
         return Response.success(vos);
     }
-
 }

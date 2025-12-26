@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArticleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArticleServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/tag/AddTagReqVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/tag/AddTagReqVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminTagServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminTagServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -261,7 +261,7 @@
       <workItem from="1766513456268" duration="125000" />
       <workItem from="1766520657979" duration="358000" />
       <workItem from="1766687541960" duration="52000" />
-      <workItem from="1766736508290" duration="8780000" />
+      <workItem from="1766736508290" duration="10598000" />
     </task>
     <task id="LOCAL-00001" summary="更改">
       <option name="closed" value="true" />
@@ -631,7 +631,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766744791719</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="文章公布完成">
+      <option name="closed" value="true" />
+      <created>1766745974835</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1766745974835</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -697,7 +705,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="定时任务 + 事件发布订阅：实现当日 PV 访问量累加" />
     <MESSAGE value="获取7日访问量" />
     <MESSAGE value="后台首页设计（静态资源）" />
     <MESSAGE value="首页渲染数据" />
@@ -722,7 +729,8 @@
     <MESSAGE value="评论删除,获取列表" />
     <MESSAGE value="区分不同用户,查看不同文章功能" />
     <MESSAGE value="后台文章公布功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="后台文章公布功能" />
+    <MESSAGE value="文章公布完成" />
+    <option name="LAST_COMMIT_MESSAGE" value="文章公布完成" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
