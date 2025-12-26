@@ -68,4 +68,10 @@ public class AdminArticleController {
     public Response updateArticleIsTop(@RequestBody @Validated UpdateArticleIsTopReqVO updateArticleIsTopReqVO) {
         return articleService.updateArticleIsTop(updateArticleIsTopReqVO);
     }
+    @PostMapping("/status/update")
+    @ApiOperation(value = "更新文章公布状态")
+    @ApiOperationLog(description = "更新文章公布状态")
+    public Response updateArticleStatus(@RequestBody @Validated UpdateArticleStatusReqVO updateArticleStatusReqVO) {
+        return articleService.updateArticleStatus(updateArticleStatusReqVO);
+    }
 }

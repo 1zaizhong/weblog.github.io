@@ -49,7 +49,24 @@
                         />
                     </template>
                 </el-table-column>
+
                 <el-table-column prop="createTime" label="发布时间" width="180" />
+
+              <el-table-column prop="status" label="是否公布" width="100" align="center">
+                   <template #default="scope">
+                     <el-switch
+                        v-model="scope.row.status"
+                        :active-value="2"
+                        :inactive-value="1"
+                        inline-prompt
+                        :active-icon="Check"
+                        :inactive-icon="Close"
+                        @change="handleStatusChange(scope.row)"
+                        :loading="scope.row.statusLoading" 
+                      />
+                   </template>
+                </el-table-column>
+                
                 <el-table-column label="操作">
                     <template #default="scope">
                         <el-button size="small" @click="showArticleUpdateEditor(scope.row)">
@@ -68,6 +85,7 @@
                             </el-icon>
                             删除
                         </el-button>
+
                     </template>
                 </el-table-column>
             </el-table>
@@ -213,9 +231,9 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive ,onMounted} from 'vue'
 import { Search, RefreshRight, Check, Close } from '@element-plus/icons-vue'
-import { getArticlePageList, deleteArticle, publishArticle, getArticleDetail, updateArticle, updateArticleIsTop } from '@/api/admin/article'
+import { getArticlePageList, deleteArticle, publishArticle, getArticleDetail, updateArticle, updateArticleIsTop,updateArticleStatus } from '@/api/admin/article'
 import { uploadFile } from '@/api/admin/file'
 import { getCategorySelectList } from '@/api/admin/category'
 import { searchTags, getTagSelectList } from '@/api/admin/tag'
@@ -224,10 +242,25 @@ import { showMessage, showModel } from '@/composables/util'
 import { MdEditor } from 'md-editor-v3'
 import 'md-editor-v3/lib/style.css'
 import { useRouter } from 'vue-router'
+import { getUserInfo } from "@/api/admin/user"
 
 
 const router = useRouter()
+// 定义当前登录用户信息
+const currentUser = ref({})
+// 获取当前登录用户信息
+const fetchUserInfo = () => {
+    getUserInfo().then(res => {
+        if (res.success) {
+            currentUser.value = res.data
+        }
+    })
+}
 
+onMounted(() => {
+    fetchUserInfo() // 组件挂载时获取用户信息
+    getTableData()   // 获取文章列表
+})
 // 模糊搜索的文章标题
 const searchArticleTitle = ref('')
 // 日期
@@ -583,6 +616,36 @@ const handleIsTopChange = (row) => {
         }
 
         showMessage(row.isTop ? '置顶成功' : "已取消置顶")
+    })
+}
+
+// 点击切换公布状态
+const handleStatusChange = (row) => {
+    // 构造请求参数
+    const data = {
+        id: row.id,
+        status: row.status // 这里的 status 已经是开关切换后的新值 (1 或 2)
+    }
+
+   
+    updateArticleStatus(data).then((res) => {
+        // 1. 无论成功失败，最好刷新一次列表数据，保证前端状态与后端同步
+        getTableData()
+
+        if (res.success == false) {
+            // 获取服务端返回的错误消息
+            let message = res.message
+            // 提示错误消息
+            showMessage(message, 'error')
+            return
+        }
+
+        // 2. 成功提示
+        const msg = row.status == 2 ? '文章已公布' : '文章已设为私人'
+        showMessage(msg)
+    }).catch(() => {
+        // 异常处理：比如网络报错，强制刷新数据恢复开关状态
+        getTableData()
     })
 }
 </script>

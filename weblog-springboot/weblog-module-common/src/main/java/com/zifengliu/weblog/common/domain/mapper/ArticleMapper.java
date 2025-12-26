@@ -32,24 +32,20 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
      */
     default Page<ArticleDO> selectPageList(long current, long size, String title,
                                            LocalDate startDate, LocalDate endDate,
-                                           Integer type, Long userId) {
+                                           Integer type, Long userId, Integer status) {
 
         // 1. 创建分页对象
         Page<ArticleDO> page = new Page<>(current, size);
-
-        // 2. 构建查询条件
+        //构建查询
         LambdaQueryWrapper<ArticleDO> wrapper = Wrappers.<ArticleDO>lambdaQuery()
-                // --- 原有过滤条件 ---
                 .like(StringUtils.isNotBlank(title), ArticleDO::getTitle, title)
                 .ge(Objects.nonNull(startDate), ArticleDO::getCreateTime, startDate)
                 .le(Objects.nonNull(endDate), ArticleDO::getCreateTime, endDate)
                 .eq(Objects.nonNull(type), ArticleDO::getType, type)
-
-                // --- 核心新增逻辑：权限隔离 ---
-                // 只有当 userId 不为 null 时，才生效 (管理员传入 null，普通用户传入其 ID)
+                // 权限过滤：用户 ID
                 .eq(Objects.nonNull(userId), ArticleDO::getUserId, userId)
-
-                // --- 排序逻辑 ---
+                // 公布状态过滤：如果是前台查询会传 2，后台查询传 null 则查全部
+                .eq(Objects.nonNull(status), ArticleDO::getStatus, status)
                 .orderByDesc(ArticleDO::getWeight)
                 .orderByDesc(ArticleDO::getCreateTime);
 

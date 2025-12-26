@@ -56,6 +56,12 @@ public interface AdminArticleService {
      * @return
      */
     Response updateArticleIsTop(UpdateArticleIsTopReqVO updateArticleIsTopReqVO);
+    /**
+     * 更新文章是否公开
+     * @param updateArticleStatusReqVO
+     * @return
+     */
+    Response updateArticleStatus(UpdateArticleStatusReqVO updateArticleStatusReqVO);
 
 
 }

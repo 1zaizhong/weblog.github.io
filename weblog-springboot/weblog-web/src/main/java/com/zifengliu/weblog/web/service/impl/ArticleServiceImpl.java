@@ -66,7 +66,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 
         // 第一步：分页查询文章主体记录
-        Page<ArticleDO> articleDOPage = articleMapper.selectPageList(current, size, null, null, null,null,null);
+        Page<ArticleDO> articleDOPage = articleMapper.selectPageList(current, size, null, null, null,null,null,null);
 
         // 返回的分页数据
         List<ArticleDO> articleDOS = articleDOPage.getRecords();

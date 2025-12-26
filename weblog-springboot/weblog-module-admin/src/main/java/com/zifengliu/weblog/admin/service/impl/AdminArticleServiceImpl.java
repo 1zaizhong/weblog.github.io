@@ -243,52 +243,67 @@ public class AdminArticleServiceImpl implements AdminArticleService {
 *查询文章分页
 *
 * */
-    @Override
-    public PageResponse findArticlePageList(FindArticlePageListReqVO findArticlePageListReqVO) {
+@Override
+public PageResponse findArticlePageList(FindArticlePageListReqVO findArticlePageListReqVO) {
+    // --- (1) 获取当前登录人的身份信息 ---
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    String username = authentication.getName(); // 拿到登录的用户名
 
-        // 1. 获取当前登录用户名 (从 Spring Security 上下文中获取)
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+    // --- (2) 根据用户名从数据库获取完整的用户信息 ---
+    // 这里调用 UserMapper。由于你之前把字段改成了 userId(驼峰)，注意查询条件
+    UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
+            .eq(UserDO::getUsername, username));
 
-        // 2. 根据用户名查询用户信息（假设你已经在 UserMapper 实现了 findByUsername）
-        // 或者直接从你的缓存/Session中获取
-        UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery().eq(UserDO::getUsername, username));
-        Long loginUserId = userDO.getUserId();
-
-        // 3. 核心判断：如果是管理员(ID=1)，传 null 给 Mapper；否则传当前用户 ID
-        Long userIdParam = Objects.equals(loginUserId, 1L) ? null : loginUserId;
-
-        // 4. 调用上面修改后的 Mapper 方法
-        Page<ArticleDO> articleDOPage = articleMapper.selectPageList(
-                findArticlePageListReqVO.getCurrent(),
-                findArticlePageListReqVO.getSize(),
-                findArticlePageListReqVO.getTitle(),
-                findArticlePageListReqVO.getStartDate(),
-                findArticlePageListReqVO.getEndDate(),
-                findArticlePageListReqVO.getType(),
-                userIdParam // <--- 传入处理后的参数
-        );
-
-        List<ArticleDO> articleDOS = articleDOPage.getRecords();
-
-        // 5. 转换 VO 对象 (这部分保持你原来的代码逻辑)
-        // DO 转 VO
-        List<FindArticlePageListRspVO> vos = null;
-        if (!CollectionUtils.isEmpty(articleDOS)) {
-            vos = articleDOS.stream()
-                    .map(articleDO -> FindArticlePageListRspVO.builder()
-                            .id(articleDO.getId())
-                            .title(articleDO.getTitle())
-                            .cover(articleDO.getCover())
-                            .createTime(articleDO.getCreateTime())
-                            .isTop(articleDO.getWeight() > 0)
-                            .userId(articleDO.getUserId().intValue())
-                            .build())
-                    .collect(Collectors.toList());
-        }
-
-        return PageResponse.success(articleDOPage, vos);
+    if (userDO == null) {
+        throw new BizException(ResponseCodeEnum.USERNAME_NOT_FOUND);
     }
+
+    Long loginUserId = userDO.getUserId(); // 当前操作者的 ID
+
+    // --- (3) 核心权限决策 (重点！) ---
+    // 逻辑：如果是管理员(ID=1)，我们要看全部，所以 searchUserId 设为 null，让 Mapper 忽略 SQL 里的 user_id 过滤
+    // 如果是普通用户(ID!=1)，我们只能看自己的，所以 searchUserId 设为自己的 ID
+    Long searchUserId = Objects.equals(loginUserId, 1L) ? null : loginUserId;
+
+    // --- (4) 获取前端传来的查询参数 ---
+    String title = findArticlePageListReqVO.getTitle();
+    LocalDate startDate = findArticlePageListReqVO.getStartDate();
+    LocalDate endDate = findArticlePageListReqVO.getEndDate();
+    Integer type = findArticlePageListReqVO.getType();
+
+
+    // 我们在后台管理查询，status 传 null，表示不论是“私人(1)”还是“公开(2)”的文章都要显示出来
+    Page<ArticleDO> articleDOPage = articleMapper.selectPageList(
+            findArticlePageListReqVO.getCurrent(),
+            findArticlePageListReqVO.getSize(),
+            title,
+            startDate,
+            endDate,
+            type,
+            searchUserId, // 传入过滤 ID
+            null          // 传入 null，后台不按 status 过滤，私人/公开全查出来
+    );
+
+    // --- (6) 数据转换 (DO -> VO) ---
+    List<ArticleDO> articleDOS = articleDOPage.getRecords();
+    List<FindArticlePageListRspVO> vos = null;
+
+    if (!CollectionUtils.isEmpty(articleDOS)) {
+        vos = articleDOS.stream()
+                .map(articleDO -> FindArticlePageListRspVO.builder()
+                        .id(articleDO.getId())
+                        .title(articleDO.getTitle())
+                        .cover(articleDO.getCover())
+                        .createTime(articleDO.getCreateTime())
+                        .isTop(articleDO.getWeight() > 0)
+                        .userId(articleDO.getUserId().intValue()) // 返回 userId 供前端判断权限
+                        .status(articleDO.getStatus()) // 返回 status 显示“私人/公开”标签
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    return PageResponse.success(articleDOPage, vos);
+}
     /**
      * 查询文章详情
      *
@@ -424,4 +439,39 @@ public class AdminArticleServiceImpl implements AdminArticleService {
         return Response.success();
     }
 
+    /**
+     * 文章是否进行公布
+     *
+     * @param updateArticleStatusReqVO
+     * @return
+     */
+    @Override
+    public Response updateArticleStatus(UpdateArticleStatusReqVO updateArticleStatusReqVO) {
+        Long articleId = updateArticleStatusReqVO.getId();
+        Integer status = updateArticleStatusReqVO.getStatus();
+
+        // 1. 获取当前登录用户 ID
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
+                .eq(UserDO::getUsername, authentication.getName()));
+        Long loginUserId = userDO.getUserId();
+
+        // 2. 查询文章信息
+        ArticleDO articleDO = articleMapper.selectById(articleId);
+        if (articleDO == null) {
+            return Response.fail("该文章不存在");
+        }
+
+        // 3. 权限校验：如果不是管理员(1L)，且文章不属于当前用户，则无权修改
+        if (!Objects.equals(loginUserId, 1L) && !Objects.equals(articleDO.getUserId(), loginUserId)) {
+            return Response.fail("无权操作他人的文章");
+        }
+
+        // 4. 更新状态
+        articleMapper.update(null, Wrappers.<ArticleDO>lambdaUpdate()
+                .set(ArticleDO::getStatus, status)
+                .eq(ArticleDO::getId, articleId));
+
+        return Response.success();
+    }
 }

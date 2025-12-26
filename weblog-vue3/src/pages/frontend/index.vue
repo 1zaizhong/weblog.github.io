@@ -173,10 +173,15 @@ const pages = ref(0)
 
 
 function getArticles(currentNo) {
-    // 上下页是否能点击判断，当要跳转上一页且页码小于 1 时，则不允许跳转；当要跳转下一页且页码大于总页数时，则不允许跳转
     if (currentNo < 1 || (pages.value > 0 && currentNo > pages.value)) return
-    // 调用分页接口渲染数据
-    getArticlePageList({current: currentNo, size: size.value}).then((res) => {
+    
+    // 调用分页接口，新增 status: 2 参数
+    // 这样后端 Mapper 就会执行 AND status = 2，只查出公布的文章
+    getArticlePageList({
+        current: currentNo, 
+        size: size.value,
+        status: 2 // 
+    }).then((res) => {
         if (res.success) {
             articles.value = res.data
             current.value = res.current
@@ -186,6 +191,7 @@ function getArticles(currentNo) {
         }
     })
 }
+
 getArticles(current.value)
 
 // 跳转文章详情页

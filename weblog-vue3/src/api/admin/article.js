@@ -29,4 +29,7 @@ export function updateArticle(data) {
 export function updateArticleIsTop(data) {
     return axios.post("/admin/article/isTop/update", data)
 }
-
+// 更新文章状态（公开/私人）
+export function updateArticleStatus(data) {
+    return axios.post("/admin/article/status/update", data)
+}
