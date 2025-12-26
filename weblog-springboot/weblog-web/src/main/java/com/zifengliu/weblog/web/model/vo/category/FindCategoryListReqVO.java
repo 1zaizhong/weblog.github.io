@@ -16,6 +16,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class FindCategoryListReqVO {
-    private Long getUserId;
-
+    // 字段名直接叫 userId
+    private Long userId;
 }

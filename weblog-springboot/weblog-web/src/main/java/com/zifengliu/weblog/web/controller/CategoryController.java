@@ -31,7 +31,7 @@ public class CategoryController {
     @ApiOperation(value = "前台获取分类列表")
     @ApiOperationLog(description = "前台获取分类列表")
     public Response findCategoryList(@RequestBody FindCategoryListReqVO reqVO) {
-        return categoryService.findCategoryList(reqVO.getGetUserId());
+        return categoryService.findCategoryList(reqVO.getUserId());
     }
 
     @PostMapping("/article/list")
