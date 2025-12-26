@@ -31,24 +31,15 @@
 
             <!-- 分页列表 -->
             <el-table :data="tableData" border stripe style="width: 100%" v-loading="tableLoading">
-                <el-table-column prop="name" label="标签名称" width="180">
-                    <template #default="scope">
-                        <el-tag class="ml-2" type="success">{{ scope.row.name }}</el-tag>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="articlesTotal" label="文章数" width="100" />
-                <el-table-column prop="createTime" label="创建时间" width="180" />
-                <el-table-column label="操作">
-                    <template #default="scope">
-                        <el-button type="danger" size="small" @click="deleteTagSubmit(scope.row)">
-                            <el-icon class="mr-1">
-                                <Delete />
-                            </el-icon>
-                            删除
-                        </el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
+    <el-table-column prop="name" label="标签名称" align="center" />
+    <el-table-column prop="articlesTotal" label="文章总数" align="center" />
+    <el-table-column prop="createTime" label="创建时间" align="center" />
+    <el-table-column label="操作" width="160" align="center">
+        <template #default="scope">
+            <el-button type="danger" size="small" :icon="Delete" @click="deleteTagSubmit(scope.row)">删除</el-button>
+        </template>
+    </el-table-column>
+</el-table>
 
             <!-- 分页 -->
             <div class="mt-10 flex justify-center">
@@ -202,49 +193,39 @@ const form = reactive({
 
 
 const onSubmit = () => {
-    // 先验证 form 表单字段
+    // 先校验表单（虽然现在主要输入在 dynamicTags 里）
     formRef.value.validate((valid) => {
-        // 显示提交按钮 loading
+        if (!valid) return
+
         formDialogRef.value.showBtnLoading()
-        form.tags = dynamicTags.value
-        addTag(form).then((res) => {
+
+        // 核心改动：将 dynamicTags 数组封装进 tags 字段，匹配 AddTagReqVO
+        addTag({ tags: dynamicTags.value }).then((res) => {
             if (res.success == true) {
                 showMessage('添加成功')
-                // 将表单中标签数组置空
-                form.tags = []
+                // 清空已输入的标签
                 dynamicTags.value = []
-                // 隐藏对话框
                 formDialogRef.value.close()
-                // 重新请求分页接口，渲染数据
                 getTableData()
             } else {
-                // 获取服务端返回的错误消息
                 let message = res.message
-                // 提示错误消息
                 showMessage(message, 'error')
             }
-        }).finally(() => formDialogRef.value.closeBtnLoading()) // 隐藏提交按钮 loading
+        }).finally(() => formDialogRef.value.closeBtnLoading())
     })
 }
-
 // 删除标签
 const deleteTagSubmit = (row) => {
-    console.log(row)
-    showModel('是否确定要删除该标签？').then(() => {
+    showModel('是否确定要删除该标签？删除后不可恢复。').then(() => {
         deleteTag(row.id).then((res) => {
             if (res.success == true) {
                 showMessage('删除成功')
-                // 重新请求分页接口，渲染数据
                 getTableData()
             } else {
-                // 获取服务端返回的错误消息
-                let message = res.message
-                // 提示错误消息
-                showMessage(message, 'error')
+                // 后端抛出的“此标签下包含文章，无法删除”会在这里显示
+                showMessage(res.message, 'error')
             }
         })
-    }).catch(() => {
-        console.log('取消了')
     })
 }
 

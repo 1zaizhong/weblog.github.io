@@ -1,37 +1,35 @@
 package com.zifengliu.weblog.web.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zifengliu.weblog.common.domain.dos.ArticleDO;
 import com.zifengliu.weblog.common.domain.dos.ArticleTagRelDO;
 import com.zifengliu.weblog.common.domain.dos.TagDO;
+import com.zifengliu.weblog.common.domain.dos.UserDO;
 import com.zifengliu.weblog.common.domain.mapper.ArticleMapper;
 import com.zifengliu.weblog.common.domain.mapper.ArticleTagRelMapper;
 import com.zifengliu.weblog.common.domain.mapper.TagMapper;
+import com.zifengliu.weblog.common.domain.mapper.UserMapper;
 import com.zifengliu.weblog.common.enums.ResponseCodeEnum;
 import com.zifengliu.weblog.common.exception.BizException;
 import com.zifengliu.weblog.common.utils.PageResponse;
 import com.zifengliu.weblog.common.utils.Response;
-import com.zifengliu.weblog.web.convert.ArticleConvert;
 import com.zifengliu.weblog.web.model.vo.tag.FindTagArticlePageListReqVO;
 import com.zifengliu.weblog.web.model.vo.tag.FindTagArticlePageListRspVO;
+import com.zifengliu.weblog.web.model.vo.tag.FindTagListReqVO;
 import com.zifengliu.weblog.web.model.vo.tag.FindTagListRspVO;
 import com.zifengliu.weblog.web.service.TagService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-/**
- * @author: 粟英朝
- *  
- * @date:  2025-09-15 14:03
- * @description: 标签
- **/
 @Service
 @Slf4j
 public class TagServiceImpl implements TagService {
@@ -44,14 +42,26 @@ public class TagServiceImpl implements TagService {
     private ArticleMapper articleMapper;
 
     /**
-     * 获取标签列表
-     *
-     * @return
+     * 获取标签列表 (支持按用户 ID 过滤)
      */
     @Override
-    public Response findTagList() {
-        // 查询所有标签
-        List<TagDO> tagDOS = tagMapper.selectList(Wrappers.emptyWrapper());
+    public Response findTagList(FindTagListReqVO reqVO) {
+        Long targetUserId = reqVO.getUserId();
+        log.info("==> 前台查询标签列表, 目标用户 ID: {}", targetUserId);
+
+        // 如果没传 ID，直接返回空，确保安全性
+        if (targetUserId == null) {
+            targetUserId = null;
+        }
+
+        // 逻辑控制：Admin (ID=1) 查全站(11个)；普通博主只查自己的 (如 6个)
+        // 假设 Admin 的 userID 存的是 1L
+        Long filterUserId = Objects.equals(targetUserId, 1L) ? null : targetUserId;
+
+        // 执行 SQL 过滤
+        List<TagDO> tagDOS = tagMapper.selectList(Wrappers.<TagDO>lambdaQuery()
+                .eq(filterUserId != null, TagDO::getUserId, filterUserId)
+                .orderByDesc(TagDO::getArticlesTotal));
 
         // DO 转 VO
         List<FindTagListRspVO> vos = null;
@@ -67,49 +77,43 @@ public class TagServiceImpl implements TagService {
 
         return Response.success(vos);
     }
-
-
-    /**
-     * 获取标签下文章分页列表
-     *
-     * @param findTagArticlePageListReqVO
-     * @return
-     */
     @Override
-    public Response findTagPageList(FindTagArticlePageListReqVO findTagArticlePageListReqVO) {
+    public PageResponse findTagPageList(FindTagArticlePageListReqVO findTagArticlePageListReqVO) {
         Long current = findTagArticlePageListReqVO.getCurrent();
         Long size = findTagArticlePageListReqVO.getSize();
-        // 标签 ID
         Long tagId = findTagArticlePageListReqVO.getId();
 
-        // 判断该标签是否存在
+        // 1. 判断标签是否存在
         TagDO tagDO = tagMapper.selectById(tagId);
         if (Objects.isNull(tagDO)) {
             log.warn("==> 该标签不存在, tagId: {}", tagId);
             throw new BizException(ResponseCodeEnum.TAG_NOT_EXISTED);
         }
 
-        // 先查询该标签下所有关联的文章 ID
+        // 2. 获取关联关系 (完全保留你原本的逻辑)
         List<ArticleTagRelDO> articleTagRelDOS = articleTagRelMapper.selectByTagId(tagId);
 
-        // 若该标签下未发布任何文章
         if (CollectionUtils.isEmpty(articleTagRelDOS)) {
             log.info("==> 该标签下还未发布任何文章, tagId: {}", tagId);
-            return PageResponse.success(null, null);
+            return PageResponse.success(new Page<>(current, size), null);
         }
 
-        // 提取所有文章 ID
+        // 3. 提取文章 ID
         List<Long> articleIds = articleTagRelDOS.stream().map(ArticleTagRelDO::getArticleId).collect(Collectors.toList());
 
-        // 根据文章 ID 集合查询文章分页数据
+        // 4. 查询文章分页数据 (完全保留你原本的逻辑)
         Page<ArticleDO> page = articleMapper.selectPageListByArticleIds(current, size, articleIds);
         List<ArticleDO> articleDOS = page.getRecords();
 
-        // DO 转 VO
+        // 5. DO 转 VO (确保字段与 FindTagArticlePageListRspVO 匹配)
         List<FindTagArticlePageListRspVO> vos = null;
         if (!CollectionUtils.isEmpty(articleDOS)) {
-            vos = articleDOS.stream()
-                    .map(articleDO -> ArticleConvert.INSTANCE.convertDO2TagArticleVO(articleDO))
+            vos = articleDOS.stream().map(articleDO -> FindTagArticlePageListRspVO.builder()
+                            .id(articleDO.getId())
+                            .title(articleDO.getTitle())
+                            .cover(articleDO.getCover())
+                            .createDate(articleDO.getCreateTime().toLocalDate())
+                            .build())
                     .collect(Collectors.toList());
         }
 

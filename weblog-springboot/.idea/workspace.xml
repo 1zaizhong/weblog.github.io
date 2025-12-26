@@ -5,10 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/tag/FindTagListReqVO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminTagServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminTagServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/TagMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/TagMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/enums/ResponseCodeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/enums/ResponseCodeEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-jwt/src/main/java/com/zifengliu/weblog/jwt/handler/RestAuthenticationSuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-jwt/src/main/java/com/zifengliu/weblog/jwt/handler/RestAuthenticationSuccessHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-jwt/src/main/java/com/zifengliu/weblog/jwt/model/LoginRspVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-jwt/src/main/java/com/zifengliu/weblog/jwt/model/LoginRspVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/TagController.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/TagController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/TagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/TagService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/TagServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/TagServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/tag-list.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/tag-list.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -262,7 +267,7 @@
       <workItem from="1766513456268" duration="125000" />
       <workItem from="1766520657979" duration="358000" />
       <workItem from="1766687541960" duration="52000" />
-      <workItem from="1766736508290" duration="11522000" />
+      <workItem from="1766736508290" duration="20366000" />
     </task>
     <task id="LOCAL-00001" summary="更改">
       <option name="closed" value="true" />
@@ -648,7 +653,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766747899182</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="后台标签功能">
+      <option name="closed" value="true" />
+      <created>1766748752541</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1766748752541</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -714,7 +727,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="后台首页设计（静态资源）" />
     <MESSAGE value="首页渲染数据" />
     <MESSAGE value="后端:首页标签,分类等统计" />
     <MESSAGE value="首页标签,分类等统计" />
@@ -739,7 +751,8 @@
     <MESSAGE value="后台文章公布功能" />
     <MESSAGE value="文章公布完成" />
     <MESSAGE value="后台服务端标签功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="后台服务端标签功能" />
+    <MESSAGE value="后台标签功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="后台标签功能" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

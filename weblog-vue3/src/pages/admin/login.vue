@@ -69,8 +69,8 @@ const userStore = useUserStore()
 
 // 定义响应式的表单对象
 const form = reactive({
-    username: 'test',
-    password: 'test'
+    username: '',
+    password: ''
 })
 
 const router = useRouter()
@@ -97,48 +97,46 @@ const rules = {
     ]
 }
 
+// login.vue 中的 onSubmit 函数
 const onSubmit = () => {
-    console.log('登录')
-    // 先验证 form 表单字段
-    formRef.value.validate((valid) => {
-        if (!valid) {
-            console.log('表单验证不通过')
-            return false
-        }
-        // 开始加载
-        loading.value = true
+  console.log('登录')
+  formRef.value.validate((valid) => {
+    if (!valid) {
+      console.log('表单验证不通过')
+      return false
+    }
 
-        // 调用登录接口
-        login(form.username, form.password).then((res) => {
-            console.log(res)
-            // 判断是否成功
-            if (res.success == true) {
-                // 提示登录成功
-                showMessage('登录成功')
+    loading.value = true
+    login(form.username, form.password).then((res) => {
+      console.log('登录成功响应数据:', res)
+      if (res.success == true) {
+        showMessage('登录成功')
 
-                // 存储 Token 到 Cookie 中
-                let token = res.data.token
-                setToken(token)
+        // 1. 存储 Token
+        let token = res.data.token
+        setToken(token)
 
-                // 获取用户信息，并存储到全局状态中
-                userStore.setUserInfo()
-
-                // 跳转到后台首页
-                router.push('/admin/index')
-            } else {
-                // 获取服务端返回的错误消息
-                let message = res.message
-                // 提示消息
-                showMessage(message, 'error')
+        // 2. --- 关键修改：确保存入包含 userID 的用户信息 ---
+        // 注意：这里的 res.data.userID 必须和后端 LoginRspVO 里的字段名一致
+        localStorage.setItem('user', JSON.stringify({
+            token: token,
+            userInfo: {
+                username: form.username,
+                userID: res.data.userID  // 后端新加的字段
             }
-        })
-        .finally(() => {
-            // 结束加载
-            loading.value = false
-        })
-    })
-}
+        }))
 
+        // 3. 跳转到后台首页
+        router.push('/admin/index')
+      } else {
+        let message = res.message
+        showMessage(message, 'error')
+      }
+    }).finally(() => {
+      loading.value = false
+    })
+  })
+}
 // 按回车键后，执行登录事件
 function onKeyUp(e) {
     console.log(e)

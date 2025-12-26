@@ -2,6 +2,7 @@ package com.zifengliu.weblog.web.service;
 
 import com.zifengliu.weblog.common.utils.Response;
 import com.zifengliu.weblog.web.model.vo.tag.FindTagArticlePageListReqVO;
+import com.zifengliu.weblog.web.model.vo.tag.FindTagListReqVO;
 
 /**
  * @author: 粟英朝
@@ -14,7 +15,7 @@ public interface TagService {
      * 获取标签列表
      * @return
      */
-    Response findTagList();
+    Response findTagList(FindTagListReqVO findTagListReqVO);
 
 
     /**

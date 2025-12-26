@@ -1,5 +1,8 @@
 package com.zifengliu.weblog.jwt.handler;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.zifengliu.weblog.common.domain.dos.UserDO;
+import com.zifengliu.weblog.common.domain.mapper.UserMapper;
 import com.zifengliu.weblog.common.utils.Response;
 import com.zifengliu.weblog.jwt.JwtTokenHelper;
 import com.zifengliu.weblog.jwt.utils.ResultUtil;
@@ -26,22 +29,36 @@ import java.io.IOException;
 @Slf4j
 public class RestAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-    //jwtTokenHelper用于生成和验证JWT。
     @Autowired
     private JwtTokenHelper jwtTokenHelper;
 
+    @Autowired
+    private UserMapper userMapper; // 新增：注入 UserMapper
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-     //从authentication 对象中获取用户的UserDetails 实例,这里获取用户名;
-        UserDetails userDetails = (UserDetails)authentication.getPrincipal();
-
-        //通过用户名生成调用jwtTokenHelper 来生成ToKen
+        // 1. 获取用户名
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String username = userDetails.getUsername();
+
+        // 2. 生成 Token
         String token = jwtTokenHelper.generateToken(username);
 
-        //返回Token给客户端 LoginRspVO响应类
-        LoginRspVO loginRspVo = LoginRspVO.builder().token(token).build();
-        //返回响应ok
-        ResultUtil.ok(response,Response.success(loginRspVo));
+        // 3. --- 关键修改：从数据库获取对应的 userID ---
+        UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
+                .eq(UserDO::getUsername, username));
+
+        Long userID = (userDO != null) ? userDO.getUserId() : null;
+
+        // 4. 将 userID 封装到响应对象中
+        LoginRspVO loginRspVo = LoginRspVO.builder()
+                .token(token)
+                .userID(userID) // 这里的 Key 必须和前端取值的一致
+                .build();
+
+        log.info("==> 用户 {} 登录成功，userID 为 {}", username, userID);
+
+        // 返回响应
+        ResultUtil.ok(response, Response.success(loginRspVo));
     }
 }
