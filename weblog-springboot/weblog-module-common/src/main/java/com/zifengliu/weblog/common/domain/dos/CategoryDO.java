@@ -35,4 +35,6 @@ public class CategoryDO {
     private  Boolean isDeleted;
 
     private Integer articlesTotal;
+    // 新增字段：所属用户 ID
+    private Long userId;
 }

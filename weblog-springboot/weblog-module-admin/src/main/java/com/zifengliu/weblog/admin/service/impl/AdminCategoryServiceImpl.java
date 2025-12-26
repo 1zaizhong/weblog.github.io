@@ -2,6 +2,7 @@ package com.zifengliu.weblog.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zifengliu.weblog.admin.model.vo.article.UpdateArticleIsTopReqVO;
 import com.zifengliu.weblog.admin.model.vo.category.AddCategoryReqVO;
@@ -12,6 +13,7 @@ import com.zifengliu.weblog.admin.service.AdminCategoryService;
 import com.zifengliu.weblog.common.domain.dos.ArticleCategoryRelDO;
 import com.zifengliu.weblog.common.domain.dos.ArticleDO;
 import com.zifengliu.weblog.common.domain.dos.CategoryDO;
+import com.zifengliu.weblog.common.domain.dos.UserDO;
 import com.zifengliu.weblog.common.domain.mapper.*;
 import com.zifengliu.weblog.common.enums.ResponseCodeEnum;
 import com.zifengliu.weblog.common.exception.BizException;
@@ -23,6 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -56,8 +60,20 @@ public class AdminCategoryServiceImpl  implements AdminCategoryService {
     private ArticleTagRelMapper articleTagRelMapper;
     @Autowired
     private ApplicationEventPublisher eventPublisher;
+    @Autowired
+    private UserMapper userMapper;
 
 
+    //拿到登录信息id,用来后面用
+    private Long getLoginUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
+                .eq(UserDO::getUsername, authentication.getName()));
+        if (userDO == null) {
+            throw new BizException(ResponseCodeEnum.USERNAME_NOT_FOUND);
+        }
+        return userDO.getUserId();
+    }
     /*
     * 添加分类
     * @param addCategory
@@ -65,20 +81,26 @@ public class AdminCategoryServiceImpl  implements AdminCategoryService {
     * */
     @Override
     public Response addCategory(AddCategoryReqVO addCategoryReqVO) {
-        String categoryName = addCategoryReqVO.getName();
+        String name = addCategoryReqVO.getName();
 
-        //先判断分类是否存在
-        CategoryDO categoryDO = categoryMapper.selectByName(categoryName);
-        if(Objects.nonNull(categoryDO)){
-            log.warn("分类名字: {},该类已存在", categoryName);
-            throw  new BizException(ResponseCodeEnum.CATEGORY_NAME_IS_EXISTED);
+        Long userId = getLoginUserId();
+
+        // 校验：同一个用户下不能有同名的分类
+        CategoryDO categoryDO = categoryMapper.selectOne(Wrappers.<CategoryDO>lambdaQuery()
+                .eq(CategoryDO::getName, name)
+                .eq(CategoryDO::getUserId, userId)); // 加上用户 ID 校验
+
+        if (Objects.nonNull(categoryDO)) {
+            log.warn("==> 该分类已存在: {}, userId: {}", name, userId);
+            throw new BizException(ResponseCodeEnum.CATEGORY_NAME_IS_EXISTED);
         }
 
-        //构建DO类
+        // 构建 DO 并保存
         CategoryDO insertCategoryDO = CategoryDO.builder()
-                .name(addCategoryReqVO.getName().trim())
+                .name(name.trim())
+                .userId(userId) // 设置所属用户
                 .build();
-        //执行插入
+
         categoryMapper.insert(insertCategoryDO);
         return Response.success();
 
@@ -97,10 +119,12 @@ public class AdminCategoryServiceImpl  implements AdminCategoryService {
         String name  = findCategoryPageListReqVO.getName();
         LocalDate startDate = findCategoryPageListReqVO.getStartDate();
         LocalDate endDate = findCategoryPageListReqVO.getEndDate();
-
-
+        Long userId=getLoginUserId();
+         //判断是否是管理员
+        Long filterUserId = Objects.equals(userId, 1L) ? null : userId;
         // 执行分页查询
-        Page<CategoryDO> categoryDOPage = categoryMapper.selectPageList(current, size,  name, startDate, endDate);
+        Page<CategoryDO> categoryDOPage = categoryMapper.
+                selectPageList(current, size,  name, startDate, endDate,filterUserId);
 
         List<CategoryDO> categoryDOS = categoryDOPage.getRecords();
 
@@ -129,18 +153,30 @@ public class AdminCategoryServiceImpl  implements AdminCategoryService {
     public Response deleteCategory(DeleteCategoryReqVO deleteCategoryReqVO) {
         // 分类 ID
         Long categoryId = deleteCategoryReqVO.getId();
+        //用户id
+        Long userId=getLoginUserId();
+        // 1. 判断有无
+        CategoryDO categoryDO = categoryMapper.selectById(categoryId);
+        if (Objects.isNull(categoryDO)) {
+            return Response.fail("分类不存在");
+        }
 
-        // 校验该分类下是否已经有文章，若有，则提示需要先删除分类下所有文章，才能删除
+        if (!Objects.equals(userId, 1L) && !Objects.equals(categoryDO.getUserId(), userId)) {
+            log.warn("==> 用户 {} 尝试越权删除分类 {}", userId, categoryId);
+            return Response.fail("无权删除他人创建的分类");
+        }
+
+        if (Objects.isNull(categoryDO)) {
+            return Response.fail("分类不存在或无权操作");
+        }
+
+        // 2. 校验分类下是否有文章
         ArticleCategoryRelDO articleCategoryRelDO = articleCategoryRelMapper.selectOneByCategoryId(categoryId);
-
         if (Objects.nonNull(articleCategoryRelDO)) {
-            log.warn("==> 此分类下包含文章，无法删除，categoryId: {}", categoryId);
             throw new BizException(ResponseCodeEnum.CATEGORY_CAN_NOT_DELETE);
         }
 
-        // 删除分类
         categoryMapper.deleteById(categoryId);
-
         return Response.success();
     }
 

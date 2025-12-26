@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/tag-article-list.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/tag-article-list.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/utils/SecurityUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminCategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminCategoryServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/CategoryDO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/CategoryDO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/CategoryMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/CategoryMapper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -260,14 +264,6 @@
       <workItem from="1766520657979" duration="358000" />
       <workItem from="1766687541960" duration="52000" />
       <workItem from="1766736508290" duration="20366000" />
-    </task>
-    <task id="LOCAL-00002" summary="更改">
-      <option name="closed" value="true" />
-      <created>1749820519864</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1749820519864</updated>
     </task>
     <task id="LOCAL-00003" summary="更改">
       <option name="closed" value="true" />
@@ -653,7 +649,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766764126575</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="前台标签功能完善">
+      <option name="closed" value="true" />
+      <created>1766764589332</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1766764589332</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -719,7 +723,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="后端:首页标签,分类等统计" />
     <MESSAGE value="首页标签,分类等统计" />
     <MESSAGE value="项目启动任务：初始化 Lucene 文章索引" />
     <MESSAGE value="中文分词检索接口" />
@@ -744,16 +747,12 @@
     <MESSAGE value="后台服务端标签功能" />
     <MESSAGE value="后台标签功能" />
     <MESSAGE value="前台标签功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="前台标签功能" />
+    <MESSAGE value="前台标签功能完善" />
+    <option name="LAST_COMMIT_MESSAGE" value="前台标签功能完善" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminCategoryServiceImpl.java</url>
-          <line>109</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CommentServiceImpl.java</url>
           <line>67</line>
