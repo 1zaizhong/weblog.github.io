@@ -14,7 +14,7 @@ public interface CategoryService {
      * 获取分类列表
      * @return
      */
-    Response findCategoryList();
+    Response findCategoryList(Long userId);
 
 
     /**

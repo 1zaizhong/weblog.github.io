@@ -1,5 +1,6 @@
 package com.zifengliu.weblog.web.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zifengliu.weblog.common.domain.dos.ArticleCategoryRelDO;
@@ -51,9 +52,21 @@ public class CategoryServiceImpl implements CategoryService {
      * @return
      */
     @Override
-    public Response findCategoryList() {
+    public Response findCategoryList(Long userId) {
+
+        //构造查询条件
+        LambdaQueryWrapper<CategoryDO> wrapper = Wrappers.lambdaQuery();
+        //判断是不是管理员
+        if (userId != null && !Objects.equals(userId, 1L)) {
+            wrapper.eq(CategoryDO::getUserId, userId);
+            log.info("==> 前台查询分类列表, 目标用户 ID: {}", userId);
+        } else {
+            log.info("==> 前台查询分类列表, 管理员身份或未传 ID, 返回全部分类");
+        }
+
         // 查询所有分类
-        List<CategoryDO> categoryDOS = categoryMapper.selectList(Wrappers.emptyWrapper());
+        List<CategoryDO> categoryDOS = categoryMapper.selectList(wrapper);
+
 
         // DO 转 VO
         List<FindCategoryListRspVO> vos = null;

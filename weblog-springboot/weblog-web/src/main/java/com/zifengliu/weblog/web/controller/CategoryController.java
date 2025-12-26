@@ -3,6 +3,7 @@ package com.zifengliu.weblog.web.controller;
 import com.zifengliu.weblog.common.aspect.ApiOperationLog;
 import com.zifengliu.weblog.common.utils.Response;
 import com.zifengliu.weblog.web.model.vo.category.FindCategoryArticlePageListReqVO;
+import com.zifengliu.weblog.web.model.vo.category.FindCategoryListReqVO;
 import com.zifengliu.weblog.web.service.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,8 +30,8 @@ public class CategoryController {
     @PostMapping("/list")
     @ApiOperation(value = "前台获取分类列表")
     @ApiOperationLog(description = "前台获取分类列表")
-    public Response findCategoryList() {
-        return categoryService.findCategoryList();
+    public Response findCategoryList(@RequestBody FindCategoryListReqVO reqVO) {
+        return categoryService.findCategoryList(reqVO.getGetUserId());
     }
 
     @PostMapping("/article/list")
