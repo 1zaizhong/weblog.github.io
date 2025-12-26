@@ -30,7 +30,8 @@ public interface TagMapper extends BaseMapper<TagDO> {
         Page<TagDO> page = new Page<>(current, size);
         LambdaQueryWrapper<TagDO> wrapper = new LambdaQueryWrapper<>();
 
-        wrapper.eq(TagDO::getUserId, userId) // 核心：强制过滤用户
+        // 如果 userId 为空（Admin 情况），则不拼此条件，查全站
+        wrapper.eq(Objects.nonNull(userId), TagDO::getUserId, userId)
                 .like(Objects.nonNull(name), TagDO::getName, name)
                 .ge(Objects.nonNull(startDate), TagDO::getCreateTime, startDate)
                 .le(Objects.nonNull(endDate), TagDO::getCreateTime, endDate)

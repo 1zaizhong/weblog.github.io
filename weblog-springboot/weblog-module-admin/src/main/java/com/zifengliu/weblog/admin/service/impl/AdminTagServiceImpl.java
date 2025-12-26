@@ -70,9 +70,8 @@ public class AdminTagServiceImpl extends ServiceImpl<TagMapper, TagDO> implement
         Long loginUserId = getLoginUserId();
         List<String> tags = addTagReqVO.getTags();
 
-        // 循环处理前端传来的标签集合
         tags.forEach(tagName -> {
-            // 校验该用户下是否已存在同名标签
+            // 每个用户只能在自己名下创建不重名的标签
             TagDO existsTag = tagMapper.selectOne(Wrappers.<TagDO>lambdaQuery()
                     .eq(TagDO::getName, tagName)
                     .eq(TagDO::getUserId, loginUserId));
@@ -80,15 +79,13 @@ public class AdminTagServiceImpl extends ServiceImpl<TagMapper, TagDO> implement
             if (Objects.isNull(existsTag)) {
                 TagDO tagDO = TagDO.builder()
                         .name(tagName)
-                        .userId(loginUserId) // 绑定当前用户
+                        .userId(loginUserId)
                         .articlesTotal(0)
                         .createTime(LocalDateTime.now())
                         .updateTime(LocalDateTime.now())
                         .isDeleted(false)
                         .build();
                 tagMapper.insert(tagDO);
-            } else {
-                new BizException(ResponseCodeEnum.TAG_CANT_DUPLICATE);
             }
         });
 
@@ -103,30 +100,23 @@ public class AdminTagServiceImpl extends ServiceImpl<TagMapper, TagDO> implement
      * */
     @Override
     public PageResponse findTagPageList(FindTagPageListReqVO findTagePageListReqVO) {
-        // 获取当前页、以及每页需要展示的数据数量
-        Long current = findTagePageListReqVO.getCurrent();
-        Long size = findTagePageListReqVO.getSize();
-        String name = findTagePageListReqVO.getName();
-        LocalDate startDate = findTagePageListReqVO.getStartDate();
-        LocalDate endDate = findTagePageListReqVO.getEndDate();
         Long loginUserId = getLoginUserId();
 
+        // 特权逻辑：如果是 ID 为 1 的 Admin，则 userId 传 null 以查询全表
+        Long searchUserId = Objects.equals(loginUserId, 1L) ? null : loginUserId;
 
-
-        // 执行分页查询
+        // 注意：TagMapper.selectPageList 需要支持 userId 为 null 时的动态判断
         Page<TagDO> tagDOPage = tagMapper.selectPageList(
-                current,
-                size,
-                name,
-                startDate,
-                endDate,
-                loginUserId
+                findTagePageListReqVO.getCurrent(),
+                findTagePageListReqVO.getSize(),
+                findTagePageListReqVO.getName(),
+                findTagePageListReqVO.getStartDate(),
+                findTagePageListReqVO.getEndDate(),
+                searchUserId
         );
-        List<TagDO> tagDOS = tagDOPage.getRecords();
 
-        // DO 转 VO
+        List<TagDO> tagDOS = tagDOPage.getRecords();
         List<FindTagPageListRspVO> vos = null;
-        //如果标签数据不为空
         if (!CollectionUtils.isEmpty(tagDOS)) {
             vos = tagDOS.stream()
                     .map(tagDO -> FindTagPageListRspVO.builder()
@@ -149,12 +139,12 @@ public class AdminTagServiceImpl extends ServiceImpl<TagMapper, TagDO> implement
     @Override
     public Response searchTag(SearchTagReqVO searchTagReqVO) {
         Long loginUserId = getLoginUserId();
-        String key = searchTagReqVO.getKey();
+        // Admin 搜全，普通用户搜自己
+        Long searchUserId = Objects.equals(loginUserId, 1L) ? null : loginUserId;
 
-        // 只在当前用户的标签库中模糊搜索
         List<TagDO> tagDOS = tagMapper.selectList(Wrappers.<TagDO>lambdaQuery()
-                .eq(TagDO::getUserId, loginUserId)
-                .like(TagDO::getName, key));
+                .eq(Objects.nonNull(searchUserId), TagDO::getUserId, searchUserId)
+                .like(TagDO::getName, searchTagReqVO.getKey()));
 
         List<SelectRspVO> vos = null;
         if (!CollectionUtils.isEmpty(tagDOS)) {
@@ -176,39 +166,27 @@ public class AdminTagServiceImpl extends ServiceImpl<TagMapper, TagDO> implement
      */
     @Override
     public Response deleteTag(DeleteTagReqVO deleteTagReqVO) {
-        // 1. 获取标签 ID
         Long tagId = deleteTagReqVO.getId();
+        Long loginUserId = getLoginUserId();
 
-        // 2. 获取当前登录用户的 ID
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        // 假设你有一个方法可以通过用户名获取 UserDO
-        UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
-                .eq(UserDO::getUsername, authentication.getName()));
-        Long loginUserId = userDO.getUserId();
-
-        // 3. 权限校验：先查询该标签是否存在，且是否属于当前用户
         TagDO tagDO = tagMapper.selectById(tagId);
         if (Objects.isNull(tagDO)) {
             return Response.fail(ResponseCodeEnum.TAG_NOT_EXISTED);
         }
 
-        // 如果不是管理员(假设ID为1)，且标签的归属者不是当前登录人，则无权删除
+        // 越权校验：非 Admin 且 标签不属于自己
         if (!Objects.equals(loginUserId, 1L) && !Objects.equals(tagDO.getUserId(), loginUserId)) {
-            return Response.fail("无权删除该标签");
+            throw new BizException(ResponseCodeEnum.UNAUTHORIZED);
         }
 
-        // 引用校验：校验该标签下是否有关联的文章
-        //如果有文章正关联着它，不能直接删除
+        // 引用校验：只要全站有文章在引用此标签，谁都不能删
         ArticleTagRelDO articleTagRelDO = articleTagRelMapper.selectOneByTagId(tagId);
-
         if (Objects.nonNull(articleTagRelDO)) {
             throw new BizException(ResponseCodeEnum.TAG_CAN_NOT_DELETE);
         }
 
-
-        int count = tagMapper.deleteById(tagId);
-
-        return count == 1 ? Response.success() : Response.fail(ResponseCodeEnum.TAG_NOT_EXISTED);
+        tagMapper.deleteById(tagId);
+        return Response.success();
     }
 
     /*
@@ -218,8 +196,7 @@ public class AdminTagServiceImpl extends ServiceImpl<TagMapper, TagDO> implement
     @Override
     public Response findTagSelectList() {
         Long loginUserId = getLoginUserId();
-
-        // 只返回当前用户的标签
+        // 只有发布文章时需要此列表，用户发布文章只能选自己的标签（或者是全站公共标签，这里暂定私有）
         List<TagDO> tagDOS = tagMapper.selectList(Wrappers.<TagDO>lambdaQuery()
                 .eq(TagDO::getUserId, loginUserId));
 
@@ -233,5 +210,6 @@ public class AdminTagServiceImpl extends ServiceImpl<TagMapper, TagDO> implement
                     .collect(Collectors.toList());
         }
         return Response.success(vos);
+
     }
 }

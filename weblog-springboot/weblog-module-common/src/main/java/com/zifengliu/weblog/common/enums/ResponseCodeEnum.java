@@ -24,7 +24,7 @@ public enum ResponseCodeEnum implements BaseExceptionInterface {
     //---------------业务异常状态码------
     PRODUCT_NOT_FOUND("20000","该功能不存在"),
     //权限异常码
-    UNAUTHORIZED("20002","无访问权限,请先登录!"),
+    UNAUTHORIZED("20002","无访问权限,"),
     //登录异常码
     LOGIN_FAIL("20000", "登录失败"),
     USERNAME_OR_PWD_ERROR("20001", "用户名或密码错误"),
