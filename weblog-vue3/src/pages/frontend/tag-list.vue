@@ -78,7 +78,7 @@ import UserInfoCard from '@/layouts/frontend/components/UserInfoCard.vue'
 import CategoryListCard from '@/layouts/frontend/components/CategoryListCard.vue'
 import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
 import { getTagList } from '@/api/frontend/tag'
-import { ref } from 'vue'
+import { ref,onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -90,6 +90,44 @@ getTagList({}).then((res) => {
         tags.value = res.data
     }
 })
+onMounted(() => {
+    // 1. 获取本地存储的用户数据
+    const userStr = localStorage.getItem('user') 
+    
+    if (userStr) {
+        const userObj = JSON.parse(userStr)
+        // 2. 提取 userID (对应你之前成功的 {"userInfo":{"userID":14...}} 结构)
+        const userId = userObj.userInfo ? userObj.userInfo.userID : null
+        
+        console.log("当前识别到的用户ID:", userId)
+
+        if (userId) {
+            // 3. 携带 userId 请求后端，这样日志就不会是 null 了
+            getTagList({ userId: userId }).then((res) => {
+                if (res.success) {
+                    tags.value = res.data
+                    console.log("成功获取该用户的标签:", tags.value)
+                }
+            })
+        } else {
+            console.warn("未在用户信息中找到 userID")
+            // 备选方案：如果没 ID 尝试空请求获取全部
+            fetchDefaultTags()
+        }
+    } else {
+        console.warn("本地未登录，无法获取用户特有标签")
+        fetchDefaultTags()
+    }
+})
+
+// 获取默认标签列表的方法
+const fetchDefaultTags = () => {
+    getTagList({}).then((res) => {
+        if (res.success) {
+            tags.value = res.data
+        }
+    })
+}
 
 // 跳转标签文章列表页
 const goTagArticleListPage = (id, name) => {
