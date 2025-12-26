@@ -154,7 +154,7 @@ import UserInfoCard from '@/layouts/frontend/components/UserInfoCard.vue'
 import TagListCard from '@/layouts/frontend/components/TagListCard.vue'
 import CategoryListCard from '@/layouts/frontend/components/CategoryListCard.vue'
 import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
-import { ref, watch } from 'vue'
+import { ref, watch,onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getTagArticlePageList, getTagList } from '@/api/frontend/tag'
 
@@ -167,6 +167,19 @@ const articles = ref([])
 const tagName = ref(route.query.name)
 // 标签 ID
 const tagId = ref(route.query.id)
+//身份识别
+const userStr = localStorage.getItem('user')
+const userObj = userStr ? JSON.parse(userStr) : null
+//
+const userId = userObj && userObj.userInfo ? userObj.userInfo.userID : null
+const initTags = () => {
+    // 关键：必须把 userId 传给后端，否则会显示全部标签
+    getTagList({ userId: userId }).then((res) => {
+        if (res.success) {
+            tags.value = res.data
+        }
+    })
+}
 
 // 监听路由
 watch(route, (newRoute, oldRoute) => {
@@ -211,6 +224,10 @@ getTagList({}).then((res) => {
     if (res.success) {
         tags.value = res.data
     }
+})
+onMounted(() => {
+    initTags() // 1. 加载过滤后的标签列表
+    getTagArticles(current.value) // 2. 加载文章列表
 })
 
 // 跳转标签文章列表页
