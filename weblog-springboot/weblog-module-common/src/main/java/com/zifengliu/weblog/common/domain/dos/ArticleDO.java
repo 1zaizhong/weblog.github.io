@@ -44,4 +44,7 @@ public class ArticleDO {
     private Integer weight;
     //文章类型 1普通文章 2 知识库
     private Integer type;
+
+    private Long userId;
+    private Integer status;
 }

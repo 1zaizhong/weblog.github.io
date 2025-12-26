@@ -25,7 +25,7 @@ import java.util.Date;
 @TableName("t_user")
 public class UserDO {
     @TableId(type=IdType.AUTO)
-    private Long id;
+    private Long userId;
     private String username;
 
     private String password;

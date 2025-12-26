@@ -21,6 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,6 +56,8 @@ public class AdminArticleServiceImpl implements AdminArticleService {
     private TagMapper tagMapper;
     @Autowired
     private ApplicationEventPublisher eventPublisher;
+    @Autowired
+    private  UserMapper userMapper;
 
     /*
     * 发布文章
@@ -64,12 +68,19 @@ public class AdminArticleServiceImpl implements AdminArticleService {
     @Transactional(rollbackFor =  Exception.class)
     public Response publishArticle(PublishArticleReqVO publishArticleReqVO) {
        //VO 转 ArticleDO 并保存
+        // 1. 获取当前发帖人 ID
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery().eq(UserDO::getUsername, username));
+
+        // 2. 构建 ArticleDO 时，把 userId 塞进去
         ArticleDO articleDO = ArticleDO.builder()
                 .title(publishArticleReqVO.getTitle())
                 .cover(publishArticleReqVO.getCover())
                 .summary(publishArticleReqVO.getSummary())
                 .createTime(LocalDateTime.now())
                 .updateTime(LocalDateTime.now())
+                .userId(userDO.getUserId()) // <--- 关键：绑定当前用户ID
+                .type(1) // 默认普通文章，或者从 VO 中取
                 .build();
 
         articleMapper.insert(articleDO);
@@ -115,11 +126,7 @@ public class AdminArticleServiceImpl implements AdminArticleService {
     }
 
 
-    /*
-    * 保存标签集合
-    * @param articleId
-    * @param publishTags
-    * */
+
     /**
      * 保存标签
      * @param articleId
@@ -205,7 +212,8 @@ public class AdminArticleServiceImpl implements AdminArticleService {
         }
     }
 
-    /*删除文章
+    /**
+    删除文章
     * @param deleteArticleReqVO
     * @return
     * */
@@ -230,25 +238,40 @@ public class AdminArticleServiceImpl implements AdminArticleService {
         return Response.success();
 
     }
-    /*
-    * 查询文章分页数据
-    * @param findCategoryPageListReqVO
-    * @return
-    * */
+
+/**
+*查询文章分页
+*
+* */
     @Override
     public PageResponse findArticlePageList(FindArticlePageListReqVO findArticlePageListReqVO) {
-        //获取当前页,每页展示数量
-        String title = findArticlePageListReqVO.getTitle();
-        Long current = findArticlePageListReqVO.getCurrent();
-        Long size = findArticlePageListReqVO.getSize();
-        LocalDate startDate = findArticlePageListReqVO.getStartDate();
-        LocalDate endDate = findArticlePageListReqVO.getEndDate();
-        Integer type = findArticlePageListReqVO.getType();
 
-        //执行分页查询
-        Page<ArticleDO> articleDOPage = articleMapper.selectPageList(current, size, title, startDate, endDate,type);
+        // 1. 获取当前登录用户名 (从 Spring Security 上下文中获取)
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        // 2. 根据用户名查询用户信息（假设你已经在 UserMapper 实现了 findByUsername）
+        // 或者直接从你的缓存/Session中获取
+        UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery().eq(UserDO::getUsername, username));
+        Long loginUserId = userDO.getUserId();
+
+        // 3. 核心判断：如果是管理员(ID=1)，传 null 给 Mapper；否则传当前用户 ID
+        Long userIdParam = Objects.equals(loginUserId, 1L) ? null : loginUserId;
+
+        // 4. 调用上面修改后的 Mapper 方法
+        Page<ArticleDO> articleDOPage = articleMapper.selectPageList(
+                findArticlePageListReqVO.getCurrent(),
+                findArticlePageListReqVO.getSize(),
+                findArticlePageListReqVO.getTitle(),
+                findArticlePageListReqVO.getStartDate(),
+                findArticlePageListReqVO.getEndDate(),
+                findArticlePageListReqVO.getType(),
+                userIdParam // <--- 传入处理后的参数
+        );
+
         List<ArticleDO> articleDOS = articleDOPage.getRecords();
 
+        // 5. 转换 VO 对象 (这部分保持你原来的代码逻辑)
         // DO 转 VO
         List<FindArticlePageListRspVO> vos = null;
         if (!CollectionUtils.isEmpty(articleDOS)) {
@@ -258,12 +281,13 @@ public class AdminArticleServiceImpl implements AdminArticleService {
                             .title(articleDO.getTitle())
                             .cover(articleDO.getCover())
                             .createTime(articleDO.getCreateTime())
-                            .isTop(articleDO.getWeight() > 0) // 是否置顶
+                            .isTop(articleDO.getWeight() > 0)
+                            .userId(articleDO.getUserId().intValue())
                             .build())
                     .collect(Collectors.toList());
         }
 
-        return PageResponse.success(articleDOPage,vos);
+        return PageResponse.success(articleDOPage, vos);
     }
     /**
      * 查询文章详情

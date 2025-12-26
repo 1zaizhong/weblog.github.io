@@ -42,5 +42,7 @@ private  String cover;
      * 是否置顶
      */
     private Boolean isTop;
+    // --- 新增：关联的用户ID ---
+    private Integer userId;
 
 }

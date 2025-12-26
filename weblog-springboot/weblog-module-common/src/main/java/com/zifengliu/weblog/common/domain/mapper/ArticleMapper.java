@@ -25,23 +25,33 @@ import java.util.Objects;
 public interface ArticleMapper extends BaseMapper<ArticleDO> {
 
     /*
-     * 分页查询
-     * @param current,size,title,startDate,endDate
+     * 分页查询（已集成管理员与普通用户隔离逻辑）
+     * @param current, size, title, startDate, endDate, type
+     * @param userId 当前登录用户的 ID
      * @return
-     * */
-    default Page<ArticleDO> selectPageList (long current, long size, String title, LocalDate startDate, LocalDate endDate, Integer type){
+     */
+    default Page<ArticleDO> selectPageList(long current, long size, String title,
+                                           LocalDate startDate, LocalDate endDate,
+                                           Integer type, Long userId) {
 
-        // 分页对象(查询第几页、每页多少数据)
+        // 1. 创建分页对象
         Page<ArticleDO> page = new Page<>(current, size);
 
-        // 构建查询条件
+        // 2. 构建查询条件
         LambdaQueryWrapper<ArticleDO> wrapper = Wrappers.<ArticleDO>lambdaQuery()
-                .like(StringUtils.isNotBlank(title), ArticleDO::getTitle, title) // like 模块查询
-                .ge(Objects.nonNull(startDate), ArticleDO::getCreateTime, startDate) // 大于等于 startDate
-                .le(Objects.nonNull(endDate), ArticleDO::getCreateTime, endDate)  // 小于等于 endDate
-                .eq(Objects.nonNull(type), ArticleDO::getType, type) // 文章类型
-                .orderByDesc(ArticleDO::getWeight) // 按权重倒序
-                .orderByDesc(ArticleDO::getCreateTime); // 按创建时间倒叙
+                // --- 原有过滤条件 ---
+                .like(StringUtils.isNotBlank(title), ArticleDO::getTitle, title)
+                .ge(Objects.nonNull(startDate), ArticleDO::getCreateTime, startDate)
+                .le(Objects.nonNull(endDate), ArticleDO::getCreateTime, endDate)
+                .eq(Objects.nonNull(type), ArticleDO::getType, type)
+
+                // --- 核心新增逻辑：权限隔离 ---
+                // 只有当 userId 不为 null 时，才生效 (管理员传入 null，普通用户传入其 ID)
+                .eq(Objects.nonNull(userId), ArticleDO::getUserId, userId)
+
+                // --- 排序逻辑 ---
+                .orderByDesc(ArticleDO::getWeight)
+                .orderByDesc(ArticleDO::getCreateTime);
 
         return selectPage(page, wrapper);
     }
