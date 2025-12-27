@@ -50,12 +50,13 @@
                         <el-text class="mx-1" type="info"  size="small">开启后，系统自动对发表的每条评论进行敏感词过滤</el-text>
                     </div>
                 </el-form-item>
-                <el-form-item label="开启审核">
-                    <el-switch v-model="form.isCommentExamineOpen" inline-prompt :active-icon="Check" :inactive-icon="Close"
-                    @change="examineSwitchChange"/>
+                <el-form-item label="评论审核" v-if="isAdmin">
+                    <el-switch v-model="form.isCommentExamineOpen" @change="examineSwitchChange" />
                     <div class="flex items-center ml-3">
-                        <el-icon class="mr-2" color="#909399"><InfoFilled /></el-icon>
-                        <el-text class="mx-1" type="info"  size="small">开启后，评论需要博主后台审核通过后，才会展示出来</el-text>
+                        <el-icon class="mr-1 text-gray-400">
+                            <InfoFilled />
+                        </el-icon>
+                        <small class="text-gray-400">开启后，评论需要博主审核通过后才会展示</small>
                     </div>
                 </el-form-item>
             
@@ -69,7 +70,7 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref,computed } from 'vue'
 import { Check, Close } from '@element-plus/icons-vue'
 import { getBlogSettingsDetail, updateBlogSettings } from '@/api/admin/blogsettings'
 import { uploadFile } from '@/api/admin/file'
@@ -195,7 +196,18 @@ const sensiWordSwitchChange = (checked) => form.isCommentSensiWordOpen = checked
 // 评论审核 switch 组件 change 事件
 const examineSwitchChange = (checked) => form.isCommentExamineOpen = checked
 
-
+//判断是不是管理员
+const isAdmin = computed(() => {
+    // 从 localStorage 获取登录时保存的用户信息
+    const userStr = localStorage.getItem('user')
+    if (userStr) {
+        const userObj = JSON.parse(userStr)
+        //拿到id
+        const userID = userObj.userInfo?.userID
+        return userID === 1
+    }
+    return false
+})
 </script>
 
 <style scoped>
