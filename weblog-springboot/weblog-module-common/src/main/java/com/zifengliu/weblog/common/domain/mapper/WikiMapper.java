@@ -29,7 +29,7 @@ public interface WikiMapper extends BaseMapper<WikiDO> {
      * @param endDate
      * @return
      */
-    default Page<WikiDO> selectPageList(Long current, Long size, String title, LocalDate startDate, LocalDate endDate, Boolean isPublish) {
+    default Page<WikiDO> selectPageList(Long current, Long size, String title, LocalDate startDate, LocalDate endDate, Boolean isPublish,Long userId) {
         // 分页对象(查询第几页、每页多少数据)
         Page<WikiDO> page = new Page<>(current, size);
 
@@ -39,6 +39,7 @@ public interface WikiMapper extends BaseMapper<WikiDO> {
                 .ge(Objects.nonNull(startDate), WikiDO::getCreateTime, startDate) // 大于等于 startDate
                 .le(Objects.nonNull(endDate), WikiDO::getCreateTime, endDate)  // 小于等于 endDate
                 .eq(Objects.nonNull(isPublish), WikiDO::getIsPublish, isPublish) // 发布状态
+                .eq(Objects.nonNull(userId), WikiDO::getUserId, userId)
                 .orderByDesc(WikiDO::getWeight) // 按权重倒序
                 .orderByDesc(WikiDO::getCreateTime); // 按创建时间倒叙
 

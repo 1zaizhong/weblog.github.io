@@ -40,5 +40,8 @@ public class FindWikiPageListReqVO extends BasePageQuery {
      * 文章类型
      */
     private Integer type;
+    /*
+    * */
+    private  Long userId;
 
 }

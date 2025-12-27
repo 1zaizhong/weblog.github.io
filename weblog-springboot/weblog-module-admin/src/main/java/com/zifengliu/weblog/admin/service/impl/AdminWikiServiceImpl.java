@@ -1,14 +1,17 @@
 package com.zifengliu.weblog.admin.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.zifengliu.weblog.admin.convert.WikiConvert;
 import com.zifengliu.weblog.admin.model.vo.wiki.*;
 import com.zifengliu.weblog.admin.service.AdminWikiService;
 import com.zifengliu.weblog.common.domain.dos.ArticleDO;
+import com.zifengliu.weblog.common.domain.dos.UserDO;
 import com.zifengliu.weblog.common.domain.dos.WikiCatalogDO;
 import com.zifengliu.weblog.common.domain.dos.WikiDO;
 import com.zifengliu.weblog.common.domain.mapper.ArticleMapper;
+import com.zifengliu.weblog.common.domain.mapper.UserMapper;
 import com.zifengliu.weblog.common.domain.mapper.WikiCatalogMapper;
 import com.zifengliu.weblog.common.domain.mapper.WikiMapper;
 import com.zifengliu.weblog.common.enums.ArticleTypeEnum;
@@ -19,6 +22,8 @@ import com.zifengliu.weblog.common.utils.PageResponse;
 import com.zifengliu.weblog.common.utils.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -47,6 +52,8 @@ public class AdminWikiServiceImpl implements AdminWikiService {
     private WikiCatalogMapper wikiCatalogMapper;
     @Autowired
     private ArticleMapper articleMapper;
+    @Autowired
+    private UserMapper userMapper; // 注入 UserMapper
 
     /**
      * 新增知识库
@@ -57,6 +64,17 @@ public class AdminWikiServiceImpl implements AdminWikiService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Response addWiki(AddWikiReqVO addWikiReqVO) {
+        //获取yonghuid
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
+                .eq(UserDO::getUsername, username));
+
+        //
+        if (userDO == null) {
+            throw new BizException(ResponseCodeEnum.USERNAME_NOT_FOUND);
+        }
+        Long UserId = userDO.getUserId();
         // VO 转 DO
         WikiDO wikiDO = WikiDO.builder()
                 .cover(addWikiReqVO.getCover())
@@ -65,6 +83,8 @@ public class AdminWikiServiceImpl implements AdminWikiService {
                 .createTime(LocalDateTime.now())
                 .updateTime(LocalDateTime.now())
                 .build();
+        // 设置用户 ID
+        wikiDO.setUserId(UserId);
 
         // 新增知识库
         wikiMapper.insert(wikiDO);
@@ -89,16 +109,28 @@ public class AdminWikiServiceImpl implements AdminWikiService {
     @Transactional(rollbackFor = Exception.class)
     public Response deleteWiki(DeleteWikiReqVO deleteWikiReqVO) {
         Long wikiId = deleteWikiReqVO.getId();
+        //拿用户id
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
+                .eq(UserDO::getUsername, authentication.getName()));
+        Long userId = userDO.getUserId();
 
-        // 删除知识库
-        int count = wikiMapper.deleteById(wikiId);
+        //查数据库
+        WikiDO wikiDO = wikiMapper.selectById(wikiId);
 
         // 若知识库不存在
-        if (count == 0) {
+        if (wikiDO == null) {
             log.warn("该知识库不存在, wikiId: {}", wikiId);
             throw new BizException(ResponseCodeEnum.WIKI_NOT_FOUND);
         }
+        //权限
+        if (!Objects.equals(userId, 1L) && !Objects.equals(wikiDO.getUserId(), userId)) {
+            log.warn("无权, UserId: {}", userId);
+            throw new BizException(ResponseCodeEnum.UNAUTHORIZED);
+        }
 
+        // 删除知识库
+        int count = wikiMapper.deleteById(wikiId);
         // 查询此知识库下所有目录
         List<WikiCatalogDO> wikiCatalogDOS = wikiCatalogMapper.selectByWikiId(wikiId);
         // 过滤目录中所有文章的 ID
@@ -135,9 +167,14 @@ public class AdminWikiServiceImpl implements AdminWikiService {
         String title = findWikiPageListReqVO.getTitle();
         LocalDate startDate = findWikiPageListReqVO.getStartDate();
         LocalDate endDate = findWikiPageListReqVO.getEndDate();
+        Long userId = findWikiPageListReqVO.getUserId();
+
+        if (userId != null && userId == 1L) {
+            userId = null; // 管理员查全量
+        }
 
         // 执行分页查询
-        Page<WikiDO> wikiDOPage = wikiMapper.selectPageList(current, size, title, startDate, endDate, null);
+        Page<WikiDO> wikiDOPage = wikiMapper.selectPageList(current, size, title, startDate, endDate, null,userId);
 
         // 获取查询记录
         List<WikiDO> wikiDOS = wikiDOPage.getRecords();

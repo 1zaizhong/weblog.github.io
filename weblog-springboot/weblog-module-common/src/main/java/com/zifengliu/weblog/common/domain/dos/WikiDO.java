@@ -41,4 +41,5 @@ public class WikiDO {
     private Integer weight;
 
     private Boolean isPublish;
+    private Long userId;
 }

@@ -114,7 +114,7 @@ import TagListCard from '@/layouts/frontend/components/TagListCard.vue'
 import CategoryListCard from '@/layouts/frontend/components/CategoryListCard.vue'
 import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
 import { getArchivePageList } from '@/api/frontend/archive'
-import { ref } from 'vue'
+import { ref ,onMounted} from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -129,12 +129,21 @@ const size = ref(10)
 const total = ref(0)
 // 总共多少页
 const pages = ref(2)
+// 获取用户 ID ---
+const userStr = localStorage.getItem('user')
+const userObj = userStr ? JSON.parse(userStr) : null
+const userId = userObj?.userInfo?.userID
 
 function getArchives(currentNo) {
-    // 上下页是否能点击判断，当要跳转上一页且页码小于 1 时，则不允许跳转；当要跳转下一页且页码大于总页数时，则不允许跳转
+    // 
     if (currentNo < 1 || (pages.value > 0 && currentNo > pages.value)) return
-    // 调用分页接口渲染数据
-    getArchivePageList({current: currentNo, size: size.value}).then((res) => {
+    
+    // 调用分页接口，传入 userId
+    getArchivePageList({ 
+        current: currentNo, 
+        size: size.value, 
+        userId: userId // 对应后端 ReqVO 中的 userId 字段
+    }).then((res) => {
         if (res.success) {
             archives.value = res.data
             current.value = res.current
@@ -144,7 +153,10 @@ function getArchives(currentNo) {
         }
     })
 }
-getArchives(current.value)
+//初始化
+onMounted(() => {
+    getArchives(current.value)
+})
 
 // 跳转文章详情页
 const goArticleDetailPage = (articleId) => {
