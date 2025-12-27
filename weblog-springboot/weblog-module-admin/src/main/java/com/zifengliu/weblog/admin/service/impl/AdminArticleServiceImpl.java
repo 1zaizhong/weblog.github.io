@@ -245,11 +245,11 @@ public class AdminArticleServiceImpl implements AdminArticleService {
 * */
 @Override
 public PageResponse findArticlePageList(FindArticlePageListReqVO findArticlePageListReqVO) {
-    // --- (1) 获取当前登录人的身份信息 ---
+    // 获取当前登录人的身份信息
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String username = authentication.getName(); // 拿到登录的用户名
 
-    // --- (2) 根据用户名从数据库获取完整的用户信息 ---
+    // 根据用户名从数据库获取完整的用户信息 ---
     UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
             .eq(UserDO::getUsername, username));
 
@@ -259,29 +259,33 @@ public PageResponse findArticlePageList(FindArticlePageListReqVO findArticlePage
 
     Long loginUserId = userDO.getUserId(); // 当前操作者的 ID
 
-    // --- (3) 核心权限决策--
+    // -p判断
     Long searchUserId = Objects.equals(loginUserId, 1L) ? null : loginUserId;
 
-    // --- (4) 获取前端传来的查询参数 ---
+    // 获取前端传来的查询参数
     String title = findArticlePageListReqVO.getTitle();
     LocalDate startDate = findArticlePageListReqVO.getStartDate();
     LocalDate endDate = findArticlePageListReqVO.getEndDate();
     Integer type = findArticlePageListReqVO.getType();
 
+    ///获取分页参数
+    Long current = findArticlePageListReqVO.getCurrent();
+    Long size = findArticlePageListReqVO.getSize();
 
-    // 我们在后台管理查询，status 传 null，表示不论是“私人(1)”还是“公开(2)”的文章都要显示出来
+    Page<ArticleDO> page = new Page<>(current, size);
+
+    //
     Page<ArticleDO> articleDOPage = articleMapper.selectPageList(
-            findArticlePageListReqVO.getCurrent(),
-            findArticlePageListReqVO.getSize(),
-            title,
-            startDate,
-            endDate,
-            type,
-            searchUserId, // 传入过滤 ID
-            null          // 传入 null，后台不按 status 过滤，私人/公开全查出来
+            page,               // 第 1 个参数：IPage 对象
+            title,              // 第 2 个参数：标题
+            startDate,          // 第 3 个参数：开始日期
+            endDate,            // 第 4 个参数：结束日期
+            type,               // 第 5 个参数：类型
+            searchUserId,       // 第 6 个参数：用户 ID
+            null                // 第 7 个参数：状态
     );
 
-    // --- (6) 数据转换 (DO -> VO) ---
+    // 数据转换 (DO -> VO) ---
     List<ArticleDO> articleDOS = articleDOPage.getRecords();
     List<FindArticlePageListRspVO> vos = null;
 

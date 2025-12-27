@@ -60,99 +60,86 @@ public class ArticleServiceImpl implements ArticleService {
      * @return
      */
     @Override
-    public Response findArticlePageList(FindIndexArticlePageListReqVO findIndexArticlePageListReqVO) {
+    public PageResponse findArticlePageList(FindIndexArticlePageListReqVO findIndexArticlePageListReqVO) {
+        // 1. 获取分页参数
         Long current = findIndexArticlePageListReqVO.getCurrent();
         Long size = findIndexArticlePageListReqVO.getSize();
 
+        // 显式创建 Page 对象，MyBatis Plus 需要这个对象来承载分页结果和 Total 总数
+        Page<ArticleDO> page = new Page<>(findIndexArticlePageListReqVO.getCurrent(), findIndexArticlePageListReqVO.getSize());
 
-        // 第一步：分页查询文章主体记录
+        // 2. 分页查询文章主体记录
+      //必须确保第一个参数是 Page 对象
         Page<ArticleDO> articleDOPage = articleMapper.selectPageList(
-                findIndexArticlePageListReqVO.getCurrent(),
-                findIndexArticlePageListReqVO.getSize(),
-                null, null, null, null,
-                null, // userId 传 null，查全站
-                2     // status 传 2，只查已公布文章
+                page,    // <--- 这里的参数要和 Mapper 定义匹配
+                null,    // title
+                null,    // startDate
+                null,    // endDate
+                null,    // type
+                null,    // userId (全站查)
+                2        // status (只查已发布)
         );
-        // 返回的分页数据
+        // 获取当前页的记录列表
         List<ArticleDO> articleDOS = articleDOPage.getRecords();
 
         List<FindIndexArticlePageListRspVO> vos = null;
         if (!CollectionUtils.isEmpty(articleDOS)) {
-            // 文章 DO 转 VO
+            // 第一步：文章 DO 转 VO
             vos = articleDOS.stream()
                     .map(articleDO -> {
                         FindIndexArticlePageListRspVO vo = ArticleConvert.INSTANCE.convertDO2VO(articleDO);
-                        vo.setIsTop(articleDO.getWeight() > 0); // 是否置顶
+                        // 处理置顶逻辑 (weight > 0 则为置顶)
+                        vo.setIsTop(articleDO.getWeight() != null && articleDO.getWeight() > 0);
                         return vo;
                     })
                     .collect(Collectors.toList());
 
-            // 拿到所有文章的 ID 集合
+            // 拿到所有文章的 ID 集合，用于后续批量查询分类和标签
             List<Long> articleIds = articleDOS.stream().map(ArticleDO::getId).collect(Collectors.toList());
 
-            // 第二步：设置文章所属分类
-            // 查询所有分类
+            // 第二步：批量设置文章所属分类
             List<CategoryDO> categoryDOS = categoryMapper.selectList(Wrappers.emptyWrapper());
-            // 转 Map, 方便后续根据分类 ID 拿到对应的分类名称
-            Map<Long, String> categoryIdNameMap = categoryDOS.stream().collect(Collectors.toMap(CategoryDO::getId, CategoryDO::getName));
+            Map<Long, String> categoryIdNameMap = categoryDOS.stream()
+                    .collect(Collectors.toMap(CategoryDO::getId, CategoryDO::getName));
 
-            // 根据文章 ID 批量查询所有关联记录
             List<ArticleCategoryRelDO> articleCategoryRelDOS = articleCategoryRelMapper.selectByArticleIds(articleIds);
 
             vos.forEach(vo -> {
                 Long currArticleId = vo.getId();
-                // 过滤出当前文章对应的关联数据
-                Optional<ArticleCategoryRelDO> optional = articleCategoryRelDOS.stream().filter(rel -> Objects.equals(rel.getArticleId(), currArticleId)).findAny();
-
-                // 若不为空
-                if (optional.isPresent()) {
-                    ArticleCategoryRelDO articleCategoryRelDO = optional.get();
-                    Long categoryId = articleCategoryRelDO.getCategoryId();
-                    // 通过分类 ID 从 map 中拿到对应的分类名称
-                    String categoryName = categoryIdNameMap.get(categoryId);
-
-                    FindCategoryListRspVO findCategoryListRspVO = FindCategoryListRspVO.builder()
-                            .id(categoryId)
-                            .name(categoryName)
-                            .build();
-                    // 设置到当前 vo 类中
-                    vo.setCategory(findCategoryListRspVO);
-                }
+                articleCategoryRelDOS.stream()
+                        .filter(rel -> Objects.equals(rel.getArticleId(), currArticleId))
+                        .findAny()
+                        .ifPresent(rel -> {
+                            Long categoryId = rel.getCategoryId();
+                            vo.setCategory(FindCategoryListRspVO.builder()
+                                    .id(categoryId)
+                                    .name(categoryIdNameMap.get(categoryId))
+                                    .build());
+                        });
             });
 
-            // 第三步：设置文章标签
-            // 查询所有标签
+            // 第三步：批量设置文章标签
             List<TagDO> tagDOS = tagMapper.selectList(Wrappers.emptyWrapper());
-            // 转 Map, 方便后续根据标签 ID 拿到对应的标签名称
-            Map<Long, String> mapIdNameMap = tagDOS.stream().collect(Collectors.toMap(TagDO::getId, TagDO::getName));
+            Map<Long, String> tagIdNameMap = tagDOS.stream()
+                    .collect(Collectors.toMap(TagDO::getId, TagDO::getName));
 
-            // 拿到所有文章的标签关联记录
             List<ArticleTagRelDO> articleTagRelDOS = articleTagRelMapper.selectByArticleIds(articleIds);
             vos.forEach(vo -> {
                 Long currArticleId = vo.getId();
-                // 过滤出当前文章的标签关联记录
-                List<ArticleTagRelDO> articleTagRelDOList = articleTagRelDOS.stream().filter(rel -> Objects.equals(rel.getArticleId(), currArticleId)).collect(Collectors.toList());
-
-                List<FindTagListRspVO> findTagListRspVOS = Lists.newArrayList();
-                // 将关联记录 DO 转 VO, 并设置对应的标签名称
-                articleTagRelDOList.forEach(articleTagRelDO -> {
-                    Long tagId = articleTagRelDO.getTagId();
-                    String tagName = mapIdNameMap.get(tagId);
-
-                    FindTagListRspVO findTagListRspVO = FindTagListRspVO.builder()
-                            .id(tagId)
-                            .name(tagName)
-                            .build();
-                    findTagListRspVOS.add(findTagListRspVO);
-                });
-                // 设置转换后的标签数据
+                List<FindTagListRspVO> findTagListRspVOS = articleTagRelDOS.stream()
+                        .filter(rel -> Objects.equals(rel.getArticleId(), currArticleId))
+                        .map(rel -> FindTagListRspVO.builder()
+                                .id(rel.getTagId())
+                                .name(tagIdNameMap.get(rel.getTagId()))
+                                .build())
+                        .collect(Collectors.toList());
                 vo.setTags(findTagListRspVOS);
             });
         }
 
+
         return PageResponse.success(articleDOPage, vos);
     }
-
 
     /**
      * 获取文章详情

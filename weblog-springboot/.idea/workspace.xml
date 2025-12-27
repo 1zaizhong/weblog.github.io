@@ -7,6 +7,7 @@
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminArticleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminArticleServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/config/MybatisPlusConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/config/MybatisPlusConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/ArticleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/ArticleMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArchiveServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArchiveServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArticleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArticleServiceImpl.java" afterDir="false" />
@@ -270,15 +271,7 @@
       <workItem from="1766819435178" duration="7915000" />
       <workItem from="1766827449178" duration="4041000" />
       <workItem from="1766832229079" duration="7609000" />
-      <workItem from="1766845417888" duration="11465000" />
-    </task>
-    <task id="LOCAL-00020" summary="阅读功能加一">
-      <option name="closed" value="true" />
-      <created>1765626762947</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1765626762947</updated>
+      <workItem from="1766845417888" duration="14865000" />
     </task>
     <task id="LOCAL-00021" summary="获取总浏览量">
       <option name="closed" value="true" />
@@ -664,7 +657,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766855925128</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="修复上下篇文章跳转其他用户文章的bug">
+      <option name="closed" value="true" />
+      <created>1766857868902</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1766857868902</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -718,7 +719,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="评论删除,获取列表" />
     <MESSAGE value="区分不同用户,查看不同文章功能" />
     <MESSAGE value="后台文章公布功能" />
     <MESSAGE value="文章公布完成" />
@@ -743,7 +743,8 @@
     <MESSAGE value="博客设置多用户区分" />
     <MESSAGE value="lunch搜索引擎添加status=2查询" />
     <MESSAGE value="博客设置的bug,已经完善" />
-    <option name="LAST_COMMIT_MESSAGE" value="博客设置的bug,已经完善" />
+    <MESSAGE value="修复上下篇文章跳转其他用户文章的bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复上下篇文章跳转其他用户文章的bug" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

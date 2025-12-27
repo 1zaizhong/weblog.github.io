@@ -2,6 +2,7 @@ package com.zifengliu.weblog.web.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.zifengliu.weblog.common.domain.dos.ArticleDO;
 import com.zifengliu.weblog.common.domain.mapper.ArticleMapper;
@@ -58,12 +59,13 @@ public class ArchiveServiceImpl implements ArchiveService {
             log.info("==> 前台获取归档列表：未传用户 ID）");
         }
 
+        //封装
+        Page<ArticleDO> page = new Page<>(current, size);
         // 分页查询
-        IPage<ArticleDO> page = articleMapper.selectPageList(
-                current, size, null,null, null, null,userId,null
-        );
+        IPage<ArticleDO> articleDOPage = articleMapper.selectPageList(
+                page, null, null, null,null, userId, 2);
 
-        List<ArticleDO> articleDOS = page.getRecords();
+        List<ArticleDO> articleDOS = articleDOPage.getRecords();
 
         List<FindArchiveArticlePageListRspVO> vos = Lists.newArrayList();
         if (!CollectionUtils.isEmpty(articleDOS)) {
@@ -82,7 +84,7 @@ public class ArchiveServiceImpl implements ArchiveService {
             sortedMap.forEach((k, v) -> vos.add(FindArchiveArticlePageListRspVO.builder().month(k).articles(v).build()));
         }
 
-        return PageResponse.success(page, vos);
+        return PageResponse.success(articleDOPage, vos);
     }
 }
 

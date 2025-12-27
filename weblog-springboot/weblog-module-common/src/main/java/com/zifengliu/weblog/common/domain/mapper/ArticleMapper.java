@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -34,26 +35,22 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
      * @param userId 当前登录用户的 ID
      * @return
      */
-    default Page<ArticleDO> selectPageList(long current, long size, String title,
+    default Page<ArticleDO> selectPageList(IPage<ArticleDO> page, String title,
                                            LocalDate startDate, LocalDate endDate,
                                            Integer type, Long userId, Integer status) {
-
-        // 1. 创建分页对象
-        Page<ArticleDO> page = new Page<>(current, size);
-        //构建查询
+        // 构建查询条件
         LambdaQueryWrapper<ArticleDO> wrapper = Wrappers.<ArticleDO>lambdaQuery()
                 .like(StringUtils.isNotBlank(title), ArticleDO::getTitle, title)
                 .ge(Objects.nonNull(startDate), ArticleDO::getCreateTime, startDate)
                 .le(Objects.nonNull(endDate), ArticleDO::getCreateTime, endDate)
                 .eq(Objects.nonNull(type), ArticleDO::getType, type)
-                // 权限过滤：用户 ID
                 .eq(Objects.nonNull(userId), ArticleDO::getUserId, userId)
-                // 公布状态过滤：如果是前台查询会传 2，后台查询传 null 则查全部
                 .eq(Objects.nonNull(status), ArticleDO::getStatus, status)
                 .orderByDesc(ArticleDO::getWeight)
                 .orderByDesc(ArticleDO::getCreateTime);
 
-        return selectPage(page, wrapper);
+        // 执行分页查询，MyBatis Plus 会将查询到的 total 自动填充进 page 对象中
+        return selectPage((Page<ArticleDO>) page, wrapper);
     }
 
     /**
