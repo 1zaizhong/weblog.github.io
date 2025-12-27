@@ -16,7 +16,9 @@ import org.apache.ibatis.annotations.Select;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author 粟英朝
@@ -181,19 +183,24 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
     /**
      * 查询文章发布热力图数据
      */
-    @Select("<script>" +
-            "SELECT DATE(create_time) AS date, COUNT(*) AS count " +
-            "FROM t_article " +
-            "WHERE is_deleted = 0 " +
-            "AND create_time >= #{startDate} " +
-            "AND create_time &lt; #{endDate} " + // 使用 &lt; 替换 <
-            "<if test='userId != null'>" +
-            "AND user_id = #{userId} " +
-            "</if>" +
-            "GROUP BY DATE(create_time)" +
-            "</script>")
-    List<ArticlePublishCountDO> selectDateArticlePublishCount(
-            @Param("startDate") LocalDate startDate,
-            @Param("endDate") LocalDate endDate,
-            @Param("userId") Long userId);
+    // ArticleMapper.java
+    default List<ArticlePublishCountDO> selectDateArticlePublishCount(LocalDate startDate, LocalDate endDate, Long userId) {
+        // 1. 构建查询条件
+        QueryWrapper<ArticleDO> wrapper = new QueryWrapper<>();
+        wrapper.select("DATE(create_time) AS date", "COUNT(*) AS count") // 聚合字段
+                .ge("create_time", startDate)
+                .lt("create_time", endDate)
+                .eq(userId != null, "user_id", userId) // 动态判断 userId
+                .groupBy("DATE(create_time)");
+
+        // 2. 执行查询并获取结果集 (List<Map<String, Object>>)
+        List<Map<String, Object>> maps = selectMaps(wrapper);
+
+        // 3. 将 Map 转换为对应的 DO 对象
+        return maps.stream().map(map -> ArticlePublishCountDO.builder()
+                .date(LocalDate.parse(map.get("date").toString()))
+                .count(Long.valueOf(map.get("count").toString()))
+                .build()
+        ).collect(Collectors.toList());
+    }
 }// }
