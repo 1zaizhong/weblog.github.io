@@ -159,7 +159,7 @@ import UserInfoCard from '@/layouts/frontend/components/UserInfoCard.vue'
 import TagListCard from '@/layouts/frontend/components/TagListCard.vue'
 import CategoryListCard from '@/layouts/frontend/components/CategoryListCard.vue'
 import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
-import { ref, watch } from 'vue'
+import { ref, watch,onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getCategoryArticlePageList, getCategoryList } from '@/api/frontend/category'
 
@@ -172,6 +172,20 @@ const articles = ref([])
 const categoryName = ref(route.query.name)
 // 分类 ID
 const categoryId = ref(route.query.id)
+
+//身份id
+const userStr = localStorage.getItem('user')
+const userObj = userStr ? JSON.parse(userStr) : null
+const userId = userObj?.userInfo?.userID
+//获取分类列表
+const initCategories = () => {
+    // 这里传参必须是 { userId: xxx }，对应后端的 FindCategoryListReqVO
+    getCategoryList({ userId: userId }).then((res) => {
+        if (res.success) {
+            categories.value = res.data
+        }
+    })
+}
 
 // 监听路由
 watch(route, (newRoute, oldRoute) => {
@@ -205,6 +219,11 @@ function getCategoryArticles(currentNo) {
     })
 }
 getCategoryArticles(current.value)
+
+onMounted(() => {
+    initCategories() // 初始化顶部分类导航
+    getCategoryArticles(current.value) // 加载文章列表
+})
 
 // 跳转文章详情页
 const goArticleDetailPage = (articleId) => {

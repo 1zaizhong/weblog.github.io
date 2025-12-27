@@ -45,7 +45,7 @@
 
 <script setup>
 import { getTagList } from '@/api/frontend/tag'
-import { ref } from 'vue'
+import { ref ,onMounted} from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -54,12 +54,18 @@ const router = useRouter()
 const tags = ref([])
 // 一次显示的标签数
 const size = ref(20)
-getTagList({ size: size.value }).then((res) => {
-    if (res.success) {
-        tags.value = res.data
-    }
-})
+onMounted(() => {
+    const userStr = localStorage.getItem('user')
+    const userObj = userStr ? JSON.parse(userStr) : null
+    const userId = userObj?.userInfo?.userID
 
+    getTagList({ userId: userId }).then((res) => {
+        if (res.success) {
+            
+            tags.value = res.data.slice(0, 10)
+        }
+    })
+})
 // 跳转标签文章列表页
 const goTagArticleListPage = (id, name) => {
     // 跳转时通过 query 携带参数（标签 ID、标签名称）

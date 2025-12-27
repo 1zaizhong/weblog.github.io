@@ -75,49 +75,49 @@
                         <span class="px-2 py-[1px] flex-none text-xs border text-gray-400 rounded dark:border-gray-600">Ctrl K</span>
                     </button>
 
-                    <!-- 登录 -->
-                    <div class="text-gray-900 ml-1 mr-1 hover:text-sky-600 dark:text-white" v-if="!isLogined"
-                        @click="$router.push('/login')">登录</div>
-                    <!-- 已经登录，展示用户头像 -->
-                    <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" v-else
-                        class="text-white ml-2 mr-2 md:mr-0 focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                        type="button">
-                        <!-- 用户登录头像 -->
-                        <img class="w-8 h-8 rounded-full" :src="blogSettingsStore.blogSettings.avatar" alt="user photo">
-                    </button>
+                    
 
-                    <!-- Dropdown menu -->
-                    <div id="dropdown"
-                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700">
-                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                            <li>
-                                <a @click="router.push('/admin/index')"
-                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                    <svg class="inline w-3 h-3 mb-[2px] mr-1 text-gray-700 dark:text-white"
-                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                        viewBox="0 0 20 20">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M10 14v4m-4 1h8M1 10h18M2 1h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1Z" />
-                                    </svg>
-                                    进入后台
-                                </a>
-                            </li>
-                            <li>
-                                <a data-modal-target="popup-modal" data-modal-toggle="popup-modal"
-                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                    <svg class="inline w-3 h-3 mb-[2px] mr-1 text-gray-700 dark:text-white"
-                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                        viewBox="0 0 16 16">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3" />
-                                    </svg>
-                                    退出登录
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <!-- 已经登录，展示用户头像 -->
+                    <div class="flex items-center md:order-2">
+    <button type="button" @click="clickSearchBtn"
+        class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 mr-1">
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+        </svg>
+    </button>
+
+    <div class="flex items-center">
+        <button v-if="!isLogined" @click="$router.push('/login')" type="button"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 ml-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+            登录
+        </button>
+
+        <div v-else class="ml-3 flex items-center">
+            <button @click="$router.push('/admin/index')" type="button"
+                class="flex items-center justify-center w-10 h-10 bg-blue-50 rounded-full border-2 border-blue-200 hover:scale-110 transition-transform focus:outline-none overflow-hidden"
+                title="进入后台">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-9 h-9">
+                    <path d="M50 60 L35 25 L75 45 Z" fill="#87CEEB" />
+                    <path d="M150 60 L165 25 L125 45 Z" fill="#87CEEB" />
+                    <circle cx="100" cy="100" r="70" fill="#E0F7FA" />
+                    <circle cx="75" cy="95" r="7" fill="#2C3E50" />
+                    <circle cx="125" cy="95" r="7" fill="#2C3E50" />
+                    <path d="M96 115 L104 115 L100 122 Z" fill="#5DADE2" />
+                    <path d="M88 132 Q100 142 112 132" stroke="#5DADE2" stroke-width="3" fill="none" stroke-linecap="round" />
+                    <line x1="45" y1="110" x2="25" y2="105" stroke="#B0E0E6" stroke-width="2" />
+                    <line x1="45" y1="120" x2="25" y2="125" stroke="#B0E0E6" stroke-width="2" />
+                    <line x1="155" y1="110" x2="175" y2="105" stroke="#B0E0E6" stroke-width="2" />
+                    <line x1="155" y1="120" x2="175" y2="125" stroke="#B0E0E6" stroke-width="2" />
+                </svg>
+            </button>
+            <button @click="logout" class="ml-2 text-xs text-gray-400 hover:text-blue-500 transition-colors">
+                [退出]
+            </button>
+        </div>
+    </div>
+
+    </div>
 
 
 

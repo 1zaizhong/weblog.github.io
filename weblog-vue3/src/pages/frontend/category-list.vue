@@ -80,10 +80,29 @@ import TagListCard from '@/layouts/frontend/components/TagListCard.vue'
 import CategoryListCard from '@/layouts/frontend/components/CategoryListCard.vue'
 import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
 import { getCategoryList } from '@/api/frontend/category'
-import { ref } from 'vue'
+import { ref ,onMounted} from 'vue'
 import { useRouter } from 'vue-router'
 
+
 const router = useRouter()
+const categories = ref([])
+
+onMounted(() => {
+    const userStr = localStorage.getItem('user')
+    const userObj = userStr ? JSON.parse(userStr) : null
+    const userId = userObj?.userInfo?.userID 
+
+    console.log("即将发送的请求 ID:", userId)
+
+    // 关键点：如果后端用了 @RequestBody，这里必须传对象
+    getCategoryList({ userId: userId }).then((res) => {
+        console.log("后端返回的原始数据:", res) 
+        if (res.success) {
+            categories.value = res.data
+            console.log("解析后的 categories 长度:", categories.value.length)
+        }
+    })
+})
 
 // 跳转分类文章列表页
 const goCategoryArticleListPage = (id, name) => {
@@ -91,11 +110,6 @@ const goCategoryArticleListPage = (id, name) => {
     router.push({ path: '/category/article/list', query: { id, name } })
 }
 
-// 所有分类
-const categories = ref([])
-getCategoryList({}).then((res) => {
-    if (res.success) {
-        categories.value = res.data
-    }
-})
+
+
 </script>
