@@ -2,6 +2,7 @@ package com.zifengliu.weblog.common.domain.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -39,18 +40,20 @@ public interface CommentMapper extends BaseMapper<CommentDO> {
      * @param endDate
      * @return
      */
+    // CommentMapper.java
+
     default Page<CommentDO> selectPageList(Long current, Long size, String routerUrl,
-                                           LocalDate startDate, LocalDate endDate, Integer status) {
-        // 分页对象(查询第几页、每页多少数据)
+                                            LocalDate startDate, LocalDate endDate,
+                                            Integer status, Long userId) { // 增加 userId 参数
         Page<CommentDO> page = new Page<>(current, size);
 
-        // 构建查询条件
         LambdaQueryWrapper<CommentDO> wrapper = Wrappers.<CommentDO>lambdaQuery()
-                .like(StringUtils.isNotBlank(routerUrl), CommentDO::getRouterUrl, routerUrl) // like 模糊查询
-                .eq(Objects.nonNull(status), CommentDO::getStatus, status) // 评论状态
-                .ge(Objects.nonNull(startDate), CommentDO::getCreateTime, startDate) // 大于等于 startDate
-                .le(Objects.nonNull(endDate), CommentDO::getCreateTime, endDate)  // 小于等于 endDate
-                .orderByDesc(CommentDO::getCreateTime); // 按创建时间倒叙
+                .like(StringUtils.isNotBlank(routerUrl), CommentDO::getRouterUrl, routerUrl)
+                .eq(Objects.nonNull(status), CommentDO::getStatus, status)
+                .ge(Objects.nonNull(startDate), CommentDO::getCreateTime, startDate)
+                .le(Objects.nonNull(endDate), CommentDO::getCreateTime, endDate)
+                .eq(Objects.nonNull(userId), CommentDO::getUserId, userId) // 关键过滤
+                .orderByDesc(CommentDO::getCreateTime);
 
         return selectPage(page, wrapper);
     }

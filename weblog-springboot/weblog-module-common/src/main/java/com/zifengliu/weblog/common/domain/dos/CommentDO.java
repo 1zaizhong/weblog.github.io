@@ -51,4 +51,5 @@ public class CommentDO {
     private Integer status;
 
     private String reason;
+    private Long userId;
 }

@@ -1,5 +1,6 @@
 package com.zifengliu.weblog.admin.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zifengliu.weblog.admin.convert.CommentConvert;
 import com.zifengliu.weblog.admin.model.vo.comment.DeleteCommentReqVO;
@@ -8,7 +9,9 @@ import com.zifengliu.weblog.admin.model.vo.comment.FindCommentPageListReqVO;
 import com.zifengliu.weblog.admin.model.vo.comment.FindCommentPageListRspVO;
 import com.zifengliu.weblog.admin.service.AdminCommentService;
 import com.zifengliu.weblog.common.domain.dos.CommentDO;
+import com.zifengliu.weblog.common.domain.dos.UserDO;
 import com.zifengliu.weblog.common.domain.mapper.CommentMapper;
+import com.zifengliu.weblog.common.domain.mapper.UserMapper;
 import com.zifengliu.weblog.common.enums.CommentStatusEnum;
 import com.zifengliu.weblog.common.enums.ResponseCodeEnum;
 import com.zifengliu.weblog.common.exception.BizException;
@@ -16,6 +19,8 @@ import com.zifengliu.weblog.common.utils.PageResponse;
 import com.zifengliu.weblog.common.utils.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -38,6 +43,19 @@ public class AdminCommentServiceImpl implements AdminCommentService {
 
     @Autowired
     private CommentMapper commentMapper;
+    @Autowired
+    private UserMapper userMapper;
+
+    //拿到登录信息id,用来后面用
+    private Long getLoginUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
+                .eq(UserDO::getUsername, authentication.getName()));
+        if (userDO == null) {
+            throw new BizException(ResponseCodeEnum.USERNAME_NOT_FOUND);
+        }
+        return userDO.getUserId();
+    }
 
     /**
      * 查询评论分页数据
@@ -54,9 +72,13 @@ public class AdminCommentServiceImpl implements AdminCommentService {
         LocalDate endDate = findCommentPageListReqVO.getEndDate();
         String routerUrl = findCommentPageListReqVO.getRouterUrl();
         Integer status = findCommentPageListReqVO.getStatus();
+        // 1. 获取当前登录用户
+        Long loginUserId = getLoginUserId();
+        // 管理员看全部，普通用户看自己
+        Long userId = Objects.equals(loginUserId, 1L) ? null : loginUserId;
 
         // 执行分页查询
-        Page<CommentDO> commentDOPage = commentMapper.selectPageList(current, size, routerUrl, startDate, endDate, status);
+        Page<CommentDO> commentDOPage = commentMapper.selectPageList(current, size, routerUrl, startDate, endDate, status,userId);
 
         List<CommentDO> commentDOS = commentDOPage.getRecords();
 
@@ -90,6 +112,7 @@ public class AdminCommentServiceImpl implements AdminCommentService {
     public Response deleteComment(DeleteCommentReqVO deleteCommentReqVO) {
         Long commentId = deleteCommentReqVO.getId();
 
+
         // 查询该评论是一级评论，还是二级评论
         CommentDO commentDO = commentMapper.selectById(commentId);
 
@@ -98,7 +121,10 @@ public class AdminCommentServiceImpl implements AdminCommentService {
             log.warn("该评论不存在, commentId: {}", commentId);
             throw new BizException(ResponseCodeEnum.COMMENT_NOT_FOUND);
         }
-
+        Long loginUserId = getLoginUserId();
+        if (!Objects.equals(loginUserId, 1L) && !Objects.equals(commentDO.getUserId(), loginUserId)) {
+            throw new BizException(ResponseCodeEnum.UNAUTHORIZED); // 抛出无权限异常
+        }
         // 删除评论
         commentMapper.deleteById(commentId);
 
