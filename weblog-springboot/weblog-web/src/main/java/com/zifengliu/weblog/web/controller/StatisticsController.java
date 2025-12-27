@@ -2,11 +2,14 @@ package com.zifengliu.weblog.web.controller;
 
 import com.zifengliu.weblog.common.aspect.ApiOperationLog;
 import com.zifengliu.weblog.common.utils.Response;
+import com.zifengliu.weblog.web.model.vo.statistics.FindStatisticsInfoReqVO;
 import com.zifengliu.weblog.web.service.StatisticsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,9 +31,7 @@ public class StatisticsController {
     @PostMapping("/info")
     @ApiOperation(value = "前台获取统计信息")
     @ApiOperationLog(description = "前台获取统计信息")
-    public Response findInfo() {
-
-        return statisticsService.findInfo();
+    public Response findInfo(@RequestBody @Validated FindStatisticsInfoReqVO reqVO) {
+        return statisticsService.findInfo(reqVO.getUserId());
     }
-
 }

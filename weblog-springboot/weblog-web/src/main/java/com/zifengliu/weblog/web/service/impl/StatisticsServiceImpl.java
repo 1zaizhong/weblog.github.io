@@ -2,6 +2,8 @@ package com.zifengliu.weblog.web.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zifengliu.weblog.common.domain.dos.ArticleDO;
+import com.zifengliu.weblog.common.domain.dos.CategoryDO;
+import com.zifengliu.weblog.common.domain.dos.TagDO;
 import com.zifengliu.weblog.common.domain.mapper.ArticleMapper;
 import com.zifengliu.weblog.common.domain.mapper.CategoryMapper;
 import com.zifengliu.weblog.common.domain.mapper.TagMapper;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author 粟英朝
@@ -39,32 +42,36 @@ public class StatisticsServiceImpl implements StatisticsService {
      * @return
      */
     @Override
-    public Response findInfo() {
+    public Response findInfo(Long userId) {
+        // 是否为管理员 (ID 为 1)
+        boolean isAdmin = Objects.equals(userId, 1L);
+
         // 查询文章总数
-        Long articleTotalCount = articleMapper.selectCount(Wrappers.emptyWrapper());
+        // 如果是管理员，userId 传 null，MyBatis Plus 的 .eq(Objects.nonNull(userId),
+        Long articleCount = articleMapper.selectCount(Wrappers.<ArticleDO>lambdaQuery()
+                .eq(!isAdmin, ArticleDO::getUserId, userId));
 
         // 查询分类总数
-        Long categoryTotalCount = categoryMapper.selectCount(Wrappers.emptyWrapper());
+        Long categoryCount = categoryMapper.selectCount(Wrappers.<CategoryDO>lambdaQuery()
+                .eq(!isAdmin, CategoryDO::getUserId, userId));
 
         // 查询标签总数
-        Long tagTotalCount = tagMapper.selectCount(Wrappers.emptyWrapper());
+        Long tagCount = tagMapper.selectCount(Wrappers.<TagDO>lambdaQuery()
+                .eq(!isAdmin, TagDO::getUserId, userId));
 
         // 总浏览量
-        List<ArticleDO> articleDOS = articleMapper.selectAllReadNum();
-        Long pvTotalCount = 0L;
+        Long pvTotalCount = articleMapper.selectSumPvByUserId(isAdmin ? null : userId);
 
-        if (!CollectionUtils.isEmpty(articleDOS)) {
-            // 所有 read_num 相加
-            pvTotalCount = articleDOS.stream().mapToLong(ArticleDO::getReadNum).sum();
-        }
+
+
 
         // 组装 VO 类
         FindStatisticsInfoRspVO vo = FindStatisticsInfoRspVO.builder()
-                .articleTotalCount(articleTotalCount)
-                .categoryTotalCount(categoryTotalCount)
-                .tagTotalCount(tagTotalCount)
+                .articleTotalCount(articleCount)
+                .categoryTotalCount(categoryCount)
+                .tagTotalCount(tagCount)
                 .pvTotalCount(pvTotalCount)
-                .build();
+                .build();;
 
         return Response.success(vo);
     }
