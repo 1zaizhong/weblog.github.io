@@ -46,10 +46,23 @@ public class ArchiveServiceImpl implements ArchiveService {
     public Response findArchivePageList(FindArchiveArticlePageListReqVO findArchiveArticlePageListReqVO) {
         Long current = findArchiveArticlePageListReqVO.getCurrent();
         Long size = findArchiveArticlePageListReqVO.getSize();
+        Long userId = findArchiveArticlePageListReqVO.getUserId();
+
+        // 逻辑判断：如果是管理员（ID为1），则不按用户 ID 过滤（传 null）
+        if (userId != null && userId == 1L) {
+            log.info("==> 前台获取归档列表：管理员身份，查看全量数据");
+            userId = null;
+        } else if (userId != null) {
+            log.info("==> 前台获取归档列表：目标用户 ID = {}", userId);
+        } else {
+            log.info("==> 前台获取归档列表：未传用户 ID）");
+        }
 
         // 分页查询
-        IPage<ArticleDO> page = articleMapper.selectPageList(current, size, null,null, null, null,null,null
+        IPage<ArticleDO> page = articleMapper.selectPageList(
+                current, size, null,null, null, null,userId,null
         );
+
         List<ArticleDO> articleDOS = page.getRecords();
 
         List<FindArchiveArticlePageListRspVO> vos = Lists.newArrayList();
