@@ -11,6 +11,7 @@ import com.zifengliu.weblog.common.domain.dos.ArticleContentDO;
 import com.zifengliu.weblog.common.domain.dos.ArticleDO;
 import com.zifengliu.weblog.common.domain.dos.ArticleDO;
 import com.zifengliu.weblog.common.domain.dos.ArticlePublishCountDO;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.time.LocalDate;
@@ -55,6 +56,7 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
 
     /**
      * 根据文章 ID 批量分页查询
+     *
      * @param current
      * @param size
      * @param articleIds
@@ -74,6 +76,7 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
 
     /**
      * 查询上一篇文章
+     *
      * @param articleId
      * @return
      */
@@ -86,6 +89,7 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
 
     /**
      * 查询下一篇文章
+     *
      * @param articleId
      * @return
      */
@@ -98,6 +102,7 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
 
     /**
      * 阅读量+1
+     *
      * @param articleId
      * @return
      */
@@ -107,8 +112,10 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
                 .setSql("read_num = read_num + 1")
                 .eq(ArticleDO::getId, articleId));
     }
+
     /**
      * 查询所有记录的阅读量
+     *
      * @return
      */
     default List<ArticleDO> selectAllReadNum() {
@@ -119,6 +126,7 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
 
     /**
      * 按日分组，并统计每日发布的文章数量
+     *
      * @param startDate
      * @param endDate
      * @return
@@ -132,6 +140,7 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
 
     /**
      * 查询最大权重值记录
+     *
      * @return
      */
     default ArticleDO selectMaxWeight() {
@@ -139,8 +148,10 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
                 .orderByDesc(ArticleDO::getWeight) // 按权重值降序排列
                 .last("LIMIT 1")); // 仅查询出一条
     }
+
     /**
      * 批量更新文章
+     *
      * @param articleDO
      * @param ids
      * @return
@@ -149,8 +160,10 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
         return update(articleDO, Wrappers.<ArticleDO>lambdaUpdate()
                 .in(ArticleDO::getId, ids));
     }
+
     /**
      * 批量更新文章
+     *
      * @param userId
      * @param
      * @return
@@ -164,4 +177,23 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
         Object obj = selectObjs(wrapper).get(0);
         return obj == null ? 0L : Long.parseLong(obj.toString());
     }
-}
+
+    /**
+     * 查询文章发布热力图数据
+     */
+    @Select("<script>" +
+            "SELECT DATE(create_time) AS date, COUNT(*) AS count " +
+            "FROM t_article " +
+            "WHERE is_deleted = 0 " +
+            "AND create_time >= #{startDate} " +
+            "AND create_time &lt; #{endDate} " + // 使用 &lt; 替换 <
+            "<if test='userId != null'>" +
+            "AND user_id = #{userId} " +
+            "</if>" +
+            "GROUP BY DATE(create_time)" +
+            "</script>")
+    List<ArticlePublishCountDO> selectDateArticlePublishCount(
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate,
+            @Param("userId") Long userId);
+}// }

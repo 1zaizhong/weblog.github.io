@@ -3,6 +3,8 @@ package com.zifengliu.weblog.common.domain.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zifengliu.weblog.common.domain.dos.StatisticsArticlePVDO;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 
 import java.time.LocalDate;
@@ -37,4 +39,19 @@ public interface StatisticsArticlePVMapper extends BaseMapper<StatisticsArticleP
                 .orderByDesc(StatisticsArticlePVDO::getPvDate)
                 .last("limit 7")); // 仅查询七条
     }
+    /**
+     * 查询最近一周的文章 PV 访问量记录 (支持按用户过滤)
+     */
+    @Select("<script>" +
+            "SELECT DATE(create_time) AS pv_date, SUM(read_num) AS pv_count " +
+            "FROM t_article " +
+            "WHERE is_deleted = 0 " +
+            "AND create_time >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) " +
+            "<if test='userId != null'>" +
+            "AND user_id = #{userId} " +
+            "</if>" +
+            "GROUP BY DATE(create_time) " +
+            "ORDER BY pv_date ASC" +
+            "</script>")
+    List<StatisticsArticlePVDO> selectLatestWeekRecords(@Param("userId") Long userId);
 }

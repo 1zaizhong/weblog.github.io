@@ -44,6 +44,28 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
     private StatisticsArticlePVMapper articlePVMapper;
     @Autowired
     private UserMapper userMapper;
+    /**
+     * 获取当前登录用户的 ID
+     * @return
+     */
+    private Long getLoginUserId() {
+        // 1. 从 Spring Security 上下文中获取当前认证信息
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // 2. 如果未登录或匿名访问，返回 null
+        if (authentication == null || !authentication.isAuthenticated()
+                || "anonymousUser".equals(authentication.getPrincipal())) {
+            return null;
+        }
+
+        // 3. 根据用户名查询用户信息
+        String username = authentication.getName();
+        UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
+                .eq(UserDO::getUsername, username));
+
+        // 4. 返回用户 ID
+        return userDO != null ? userDO.getUserId() : null;
+    }
 
     /**
      * 获取仪表盘基础统计信息
@@ -75,23 +97,18 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
                 .eq(Objects.nonNull(userId), TagDO::getUserId, userId));
 
         // 总浏览量
-        List<ArticleDO> articleDOS = articleMapper.selectAllReadNum();
+
         Long pvTotalCount = articleMapper.selectSumPvByUserId(userId);
 
-        if (!CollectionUtils.isEmpty(articleDOS)) {
-            // 所有 read_num 相加
-            pvTotalCount = articleDOS.stream().mapToLong(ArticleDO::getReadNum).sum();
-        }
+
 
         // 组装 VO 类
-        FindDashboardStatisticsInfoRspVO vo = FindDashboardStatisticsInfoRspVO.builder()
+        return Response.success(FindDashboardStatisticsInfoRspVO.builder()
                 .articleTotalCount(articleTotalCount)
                 .categoryTotalCount(categoryTotalCount)
                 .tagTotalCount(tagTotalCount)
-                .pvTotalCount(pvTotalCount)
-                .build();
-
-        return Response.success(vo);
+                .pvTotalCount(pvTotalCount) // 返回绑定用户后的总浏览量
+                .build());
     }
     /**
      * 获取文章发布热点统计信息
@@ -100,15 +117,17 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
      */
     @Override
     public Response findDashboardPublishArticleStatistics() {
+        Long loginUserId = getLoginUserId();
+        Long userId = Objects.equals(loginUserId, 1L) ? null : loginUserId;
         // 当前日期
         LocalDate currDate = LocalDate.now();
 
         // 当前日期倒退一年的日期
-        LocalDate startDate = currDate.minusYears(1);
+        LocalDate endDate = LocalDate.now().plusDays(1);
+        LocalDate startDate = endDate.minusYears(1);
 
         // 查找这一年内，每日发布的文章数量
-        List<ArticlePublishCountDO> articlePublishCountDOS = articleMapper.selectDateArticlePublishCount(startDate, currDate.plusDays(1));
-
+        List<ArticlePublishCountDO> articlePublishCountDOS = articleMapper.selectDateArticlePublishCount(startDate, endDate, userId);
         Map<LocalDate, Long> map = null;
         if (!CollectionUtils.isEmpty(articlePublishCountDOS)) {
             // DO 转 Map
@@ -136,9 +155,10 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
      */
     @Override
     public Response findDashboardPVStatistics() {
+        Long loginUserId = getLoginUserId();
+        Long userId = Objects.equals(loginUserId, 1L) ? null : loginUserId;
         // 查询最近一周的 PV 访问量记录
-        List<StatisticsArticlePVDO> articlePVDOS = articlePVMapper.selectLatestWeekRecords();
-
+        List<StatisticsArticlePVDO> articlePVDOS = articlePVMapper.selectLatestWeekRecords(userId);
         Map<LocalDate, Long> pvDateCountMap = Maps.newHashMap();
         if (!CollectionUtils.isEmpty(articlePVDOS)) {
             // 转 Map, 方便后续通过日期获取 PV 访问量
