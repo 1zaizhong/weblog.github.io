@@ -250,7 +250,6 @@ public PageResponse findArticlePageList(FindArticlePageListReqVO findArticlePage
     String username = authentication.getName(); // 拿到登录的用户名
 
     // --- (2) 根据用户名从数据库获取完整的用户信息 ---
-    // 这里调用 UserMapper。由于你之前把字段改成了 userId(驼峰)，注意查询条件
     UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
             .eq(UserDO::getUsername, username));
 
@@ -260,9 +259,7 @@ public PageResponse findArticlePageList(FindArticlePageListReqVO findArticlePage
 
     Long loginUserId = userDO.getUserId(); // 当前操作者的 ID
 
-    // --- (3) 核心权限决策 (重点！) ---
-    // 逻辑：如果是管理员(ID=1)，我们要看全部，所以 searchUserId 设为 null，让 Mapper 忽略 SQL 里的 user_id 过滤
-    // 如果是普通用户(ID!=1)，我们只能看自己的，所以 searchUserId 设为自己的 ID
+    // --- (3) 核心权限决策--
     Long searchUserId = Objects.equals(loginUserId, 1L) ? null : loginUserId;
 
     // --- (4) 获取前端传来的查询参数 ---

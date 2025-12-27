@@ -6,8 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminBlogSettingsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminBlogSettingsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/blog-settings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/blog-settings.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminArticleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminArticleServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/ArticleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/ArticleMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArchiveServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArchiveServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArticleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArticleServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -268,15 +270,7 @@
       <workItem from="1766819435178" duration="7915000" />
       <workItem from="1766827449178" duration="4041000" />
       <workItem from="1766832229079" duration="7609000" />
-      <workItem from="1766845417888" duration="9377000" />
-    </task>
-    <task id="LOCAL-00019" summary="目录功能">
-      <option name="closed" value="true" />
-      <created>1765625377808</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1765625377808</updated>
+      <workItem from="1766845417888" duration="11465000" />
     </task>
     <task id="LOCAL-00020" summary="阅读功能加一">
       <option name="closed" value="true" />
@@ -662,7 +656,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766854375070</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="博客设置的bug,已经完善">
+      <option name="closed" value="true" />
+      <created>1766855925128</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1766855925128</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -716,7 +718,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="qq获取" />
     <MESSAGE value="评论删除,获取列表" />
     <MESSAGE value="区分不同用户,查看不同文章功能" />
     <MESSAGE value="后台文章公布功能" />
@@ -741,7 +742,8 @@
     <MESSAGE value="前台统计" />
     <MESSAGE value="博客设置多用户区分" />
     <MESSAGE value="lunch搜索引擎添加status=2查询" />
-    <option name="LAST_COMMIT_MESSAGE" value="lunch搜索引擎添加status=2查询" />
+    <MESSAGE value="博客设置的bug,已经完善" />
+    <option name="LAST_COMMIT_MESSAGE" value="博客设置的bug,已经完善" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

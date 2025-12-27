@@ -77,29 +77,35 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
     }
 
     /**
-     * 查询上一篇文章
+     * 查询上一篇文章（同一作者、已发布、ID 较大者）
      *
-     * @param articleId
+     * @param articleId 当前文章ID
+     * @param userId 当前文章作者ID
      * @return
      */
-    default ArticleDO selectPreArticle(Long articleId) {
+    default ArticleDO selectPreArticle(Long articleId, Long userId) {
         return selectOne(Wrappers.<ArticleDO>lambdaQuery()
-                .orderByAsc(ArticleDO::getId) // 按文章 ID 升序排列
-                .gt(ArticleDO::getId, articleId) // 查询比当前文章 ID 大的
-                .last("limit 1")); // 第一条记录即为上一篇文章
+                .eq(ArticleDO::getUserId, userId)      // 限制为当前作者
+                .eq(ArticleDO::getStatus, 2)            // 限制为已公开发布
+                .orderByAsc(ArticleDO::getId)          // 按 ID 升序
+                .gt(ArticleDO::getId, articleId)       // 查询比当前 ID 大的（逻辑上的上一篇，通常指时间更近的）
+                .last("limit 1"));
     }
 
     /**
-     * 查询下一篇文章
+     * 查询下一篇文章（同一作者、已发布、ID 较小者）
      *
-     * @param articleId
+     * @param articleId 当前文章ID
+     * @param userId 当前文章作者ID
      * @return
      */
-    default ArticleDO selectNextArticle(Long articleId) {
+    default ArticleDO selectNextArticle(Long articleId, Long userId) {
         return selectOne(Wrappers.<ArticleDO>lambdaQuery()
-                .orderByDesc(ArticleDO::getId) // 按文章 ID 倒序排列
-                .lt(ArticleDO::getId, articleId) // 查询比当前文章 ID 小的
-                .last("limit 1")); // 第一条记录即为下一篇文章
+                .eq(ArticleDO::getUserId, userId)      // 限制为当前作者
+                .eq(ArticleDO::getStatus, 2)            // 限制为已公开发布
+                .orderByDesc(ArticleDO::getId)         // 按 ID 倒序
+                .lt(ArticleDO::getId, articleId)       // 查询比当前 ID 小的（逻辑上的下一篇，通常指时间更早的）
+                .last("limit 1"));
     }
 
     /**

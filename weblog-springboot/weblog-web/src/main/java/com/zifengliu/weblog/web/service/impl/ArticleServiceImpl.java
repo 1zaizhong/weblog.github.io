@@ -162,6 +162,7 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     public Response findArticleDetail(FindArticleDetailReqVO findArticleDetailReqVO) {
+
         Long articleId = findArticleDetailReqVO.getArticleId();
 
         ArticleDO articleDO = articleMapper.selectById(articleId);
@@ -207,8 +208,9 @@ public class ArticleServiceImpl implements ArticleService {
                 .collect(Collectors.toList());
         vo.setTags(tagVOS);
 
+        Long userId = articleDO.getUserId();
         // 上一篇
-        ArticleDO preArticleDO = articleMapper.selectPreArticle(articleId);
+        ArticleDO preArticleDO = articleMapper.selectPreArticle(articleId, userId); // 传入 userId
         if (Objects.nonNull(preArticleDO)) {
             FindPreNextArticleRspVO preArticleVO = FindPreNextArticleRspVO.builder()
                     .articleId(preArticleDO.getId())
@@ -218,7 +220,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
         // 下一篇
-        ArticleDO nextArticleDO = articleMapper.selectNextArticle(articleId);
+        ArticleDO nextArticleDO = articleMapper.selectNextArticle(articleId, userId); // 传入 userId
         if (Objects.nonNull(nextArticleDO)) {
             FindPreNextArticleRspVO nextArticleVO = FindPreNextArticleRspVO.builder()
                     .articleId(nextArticleDO.getId())
