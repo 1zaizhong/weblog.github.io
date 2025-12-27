@@ -78,8 +78,7 @@ onMounted(() => {
     const userStr = localStorage.getItem('user')
     if (userStr) {
         const userObj = JSON.parse(userStr)
-        // 【关键点】请确认你的 localStorage 里是 userID 还是 userId
-        // 根据你之前的代码，通常是 userObj.userInfo.userID
+        // 
         const currentLoginUserId = userObj.userInfo?.userID 
 
         if (currentLoginUserId) {

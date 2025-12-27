@@ -1,5 +1,6 @@
 package com.zifengliu.weblog.admin.service;
 
+import com.zifengliu.weblog.admin.model.vo.user.AddUserReqVO;
 import com.zifengliu.weblog.admin.model.vo.user.UpdateAdminUserPasswordReqVO;
 import com.zifengliu.weblog.common.utils.Response;
 
@@ -24,4 +25,10 @@ public interface AdminUserService {
     * @return
     */
     Response findUserInfo();
+
+    /*
+    * 用户新增
+    * @return
+    * */
+    Response addUser(AddUserReqVO addUserReqVO);
 }

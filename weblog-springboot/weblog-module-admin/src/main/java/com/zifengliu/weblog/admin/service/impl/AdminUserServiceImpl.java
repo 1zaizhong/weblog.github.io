@@ -1,9 +1,11 @@
 package com.zifengliu.weblog.admin.service.impl;
 
 
+import com.zifengliu.weblog.admin.model.vo.user.AddUserReqVO;
 import com.zifengliu.weblog.admin.model.vo.user.FindUserInfoRspVO;
 import com.zifengliu.weblog.admin.model.vo.user.UpdateAdminUserPasswordReqVO;
 import com.zifengliu.weblog.admin.service.AdminUserService;
+import com.zifengliu.weblog.common.domain.dos.UserDO;
 import com.zifengliu.weblog.common.domain.mapper.UserMapper;
 
 import com.zifengliu.weblog.common.enums.ResponseCodeEnum;
@@ -15,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Security;
+import java.util.Date;
+import java.util.Objects;
 
 
 /**
@@ -63,6 +67,36 @@ public class AdminUserServiceImpl implements AdminUserService {
         String username = authentication.getName();
 
         return Response.success(FindUserInfoRspVO.builder().username(username).build());
+    }
+
+
+    @Override
+    public Response addUser(AddUserReqVO addUserReqVO) {
+        String username = addUserReqVO.getUsername();
+        String password = addUserReqVO.getPassword();
+
+        // 1. 校验用户名是否已存在
+        UserDO userDO = userMapper.findByUsername(username);
+        if (Objects.nonNull(userDO)) {
+            // 用户已存在
+            return Response.fail(ResponseCodeEnum.USERNAME_HAS_EXISTED);
+        }
+
+        // 2. 加密密码
+        String encodePassword = passwordEncoder.encode(password);
+
+        // 3. 构建实体类并保存
+        UserDO newUser = UserDO.builder()
+                .username(username)
+                .password(encodePassword)
+                .createTime(new Date())
+                .updateTime(new Date())
+                .isDeleted(false)
+                .build();
+
+        int count = userMapper.insert(newUser);
+
+        return count == 1 ? Response.success() : Response.fail(ResponseCodeEnum.SYSTEM_ERROR);
     }
 
 

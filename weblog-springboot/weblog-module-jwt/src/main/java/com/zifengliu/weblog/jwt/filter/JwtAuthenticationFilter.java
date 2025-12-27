@@ -27,13 +27,17 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
     /*
     * 指定用户登陆的访问地址
     * */
-    public JwtAuthenticationFilter(){
+    public JwtAuthenticationFilter() {
+        // 显式指定只拦截 POST 方法的 /login 接口
         super(new AntPathRequestMatcher("/login", "POST"));
     }
-
     //实现用户身份验证的具体逻辑
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
+        //如果不是登录路径，直接跳过，交给后续过滤器（如注册 Controller）处理
+        if (!requiresAuthentication(request, response)) {
+            return null;
+        }
         ObjectMapper mapper = new ObjectMapper();
 
         //解析提交的json 数据对象

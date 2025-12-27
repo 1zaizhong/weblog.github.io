@@ -65,45 +65,31 @@
                         </div>
                     </div>
                 </div>
+                
                 <!-- 分页 -->
-                <nav aria-label="Page navigation example" class="mt-10 flex justify-center">
-                    <ul class="flex items-center -space-x-px h-10 text-base">
-                        <!-- 上一页 -->
+                <nav class="flex justify-center items-center mt-10" aria-label="Page navigation example">
+                    <ul class="inline-flex -space-x-px text-base h-10">
                         <li>
-                            <a @click="getArticles(current - 1)"
-                                class="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                                :class="[current > 1 ? '' : 'cursor-not-allowed']"
-                                >
-
-                                <span class="sr-only">上一页</span>
-                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 6 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="M5 1 1 5l4 4" />
-                                </svg>
+                            <a @click="getArticles(current - 1)" 
+                            class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                            :class="[current == 1 ? 'cursor-not-allowed opacity-50' : 'cursor-pointer']">
+                                上一页
                             </a>
                         </li>
-                        <!-- 页码 -->
-                        <li v-for="(pageNo, index) in pages" :key="index">
-                            <a @click="getArticles(pageNo)"
-                                class="flex items-center justify-center px-4 h-10 leading-tight border  dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                                :class="[pageNo == current ? 'text-sky-600  bg-sky-50 border-sky-500 hover:bg-sky-100 hover:text-sky-700' : 'text-gray-500 border-gray-300 bg-white hover:bg-gray-100 hover:text-gray-700']"
-                                >
-                                {{ index + 1 }}
+                        
+                        <li v-for="(pageNo, index) in pagesList" :key="index">
+                            <a @click="getArticles(pageNo)" 
+                            class="flex items-center justify-center px-4 h-10 leading-tight border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                            :class="[current == pageNo ? 'text-blue-600 bg-blue-50 border-blue-300 hover:bg-blue-100 hover:text-blue-700' : 'text-gray-500 bg-white']">
+                            {{ pageNo }}
                             </a>
                         </li>
-                        <!-- 下一页 -->
+                        
                         <li>
-                            <a @click="getArticles(current + 1)"
-                                class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                                :class="[current < pages ? '' : 'cursor-not-allowed']"
-                                >
-                                <span class="sr-only">下一页</span>
-                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 6 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="m1 9 4-4-4-4" />
-                                </svg>
+                            <a @click="getArticles(current + 1)" 
+                            class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                            :class="[current == pagesList.length ? 'cursor-not-allowed opacity-50' : 'cursor-pointer']">
+                                下一页
                             </a>
                         </li>
                     </ul>
@@ -165,29 +151,33 @@ const articles = ref([])
 // 当前页码
 const current = ref(1)
 // 每页显示的文章数
-const size = ref(10)
+const size = ref(6)
 // 总文章数
 const total = ref(0)
 // 总共多少页
 const pages = ref(0)
 
+const pagesList = ref([])
 
 function getArticles(currentNo) {
-    if (currentNo < 1 || (pages.value > 0 && currentNo > pages.value)) return
+    // 上下限校验：如果点击的页码超出范围，则不跳转
+    let totalPages = Math.ceil(total.value / size.value)
+    if (currentNo < 1 || (totalPages > 0 && currentNo > totalPages)) return
     
-    // 调用分页接口，新增 status: 2 参数
-    // 这样后端 Mapper 就会执行 AND status = 2，只查出公布的文章
     getArticlePageList({
         current: currentNo, 
         size: size.value,
-        
     }).then((res) => {
         if (res.success) {
             articles.value = res.data
             current.value = res.current
-            size.value = res.size
             total.value = res.total
-            pages.value = res.pages
+            size.value = res.size
+            
+            // 计算总页数
+            let tPages = Math.ceil(res.total / res.size)
+            // 生成页码数组，例如 [1, 2, 3]
+            pagesList.value = Array.from({ length: tPages }, (v, k) => k + 1)
         }
     })
 }

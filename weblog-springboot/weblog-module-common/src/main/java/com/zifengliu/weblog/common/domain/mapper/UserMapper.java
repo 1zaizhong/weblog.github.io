@@ -34,5 +34,6 @@ import java.time.LocalDateTime;
             wrapper.eq(UserDO::getUsername, username);
             return  update(null, wrapper);
         }
+
     }
 

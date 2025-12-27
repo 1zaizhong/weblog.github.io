@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -30,7 +31,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private RestAuthenticationEntryPoint authEntryPoint;
 
-
+    // 忽略指定路径，不走任何过滤器
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/admin/user/add");
+    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable(). // 禁用 csrf
@@ -38,6 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .apply(jwtAuthenticationSecurityConfig) // 设置用户登录认证相关配置
                 .and()
                 .authorizeHttpRequests()
+                .antMatchers("/admin/user/add").permitAll()
                 .mvcMatchers("/admin/**").authenticated() // 认证所有以 /admin 为前缀的 URL 资源
                 .anyRequest().permitAll() // 其他都需要放行，无需认证
                 .and()

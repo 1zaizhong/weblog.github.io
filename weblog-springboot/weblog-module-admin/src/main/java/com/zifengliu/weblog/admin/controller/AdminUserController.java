@@ -1,5 +1,6 @@
 package com.zifengliu.weblog.admin.controller;
 
+import com.zifengliu.weblog.admin.model.vo.user.AddUserReqVO;
 import com.zifengliu.weblog.admin.model.vo.user.UpdateAdminUserPasswordReqVO;
 import com.zifengliu.weblog.admin.service.AdminUserService;
 import com.zifengliu.weblog.common.aspect.ApiOperationLog;
@@ -39,6 +40,13 @@ public class AdminUserController {
     @ApiOperationLog(description = "获取用户信息")
     public Response findUserInfo() {
         return userService.findUserInfo();
+    }
+    //新增用户
+    @PostMapping("/user/add")
+    @ApiOperation(value = "新增用户")
+    @ApiOperationLog(description = "新增用户")
+    public Response addUser(@RequestBody @Validated AddUserReqVO addUserReqVO) {
+        return userService.addUser(addUserReqVO);
     }
 
 }
