@@ -36,9 +36,6 @@ public class BlogSettingsDO {
     private String avatar;
 
 
-
-
-
     private Boolean isCommentSensiWordOpen;
 
     private Boolean isCommentExamineOpen;

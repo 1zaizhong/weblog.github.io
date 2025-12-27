@@ -2,11 +2,14 @@ package com.zifengliu.weblog.web.controller;
 
 import com.zifengliu.weblog.common.aspect.ApiOperationLog;
 import com.zifengliu.weblog.common.utils.Response;
+import com.zifengliu.weblog.web.model.vo.blogsettings.FindBlogSettingsDetailReqVO;
 import com.zifengliu.weblog.web.service.BlogSettingsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,8 +28,8 @@ public class BlogSettingsController {
 
     @PostMapping("/detail")
     @ApiOperation(value = "前台获取博客设置详情")
-    @ApiOperationLog(description = "前台获取博客设置详情" )
-    public Response findDetail(){
-        return blogSettingsService.findDetail();
+    @ApiOperationLog(description = "前台获取博客设置详情")
+    public Response findBlogSettingsDetail(@RequestBody @Validated FindBlogSettingsDetailReqVO reqVO) {
+        return blogSettingsService.findDetail(reqVO.getUserId());
     }
 }

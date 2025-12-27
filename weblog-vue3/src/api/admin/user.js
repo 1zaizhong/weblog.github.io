@@ -14,3 +14,6 @@ export function getUserInfo() {
 export function updateAdminPassword(data) {
     return axios.post("/admin/password/update", data)
 }
+export function addUser(data) {
+    return axios.post("/admin/user/add", data)
+}

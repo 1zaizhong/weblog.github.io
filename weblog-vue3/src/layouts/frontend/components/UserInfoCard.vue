@@ -52,17 +52,15 @@
         </div>
     </div>
 </template>
-
 <script setup>
 import { useBlogSettingsStore } from '@/stores/blogsettings'
 import { initTooltips } from 'flowbite'
 import { onMounted, ref } from 'vue'
 import { getStatisticsInfo } from '@/api/frontend/statistics'
 import CountTo from '@/components/CountTo.vue'
-// 引入博客设置信息 store
+
 const blogSettingsStore = useBlogSettingsStore()
 
-// 统计信息响应式变量
 const statisticsInfo = ref({
     articleTotalCount: 0,
     categoryTotalCount: 0,
@@ -71,27 +69,25 @@ const statisticsInfo = ref({
 })
 
 onMounted(() => {
-    // 1. 初始化 Flowbite (提示框等)
     initTooltips();
 
-    // 2. 获取当前登录用户信息
+    // 1. 获取本地存储的用户信息
     const userStr = localStorage.getItem('user')
     if (userStr) {
         const userObj = JSON.parse(userStr)
-        // 
         const currentLoginUserId = userObj.userInfo?.userID 
 
         if (currentLoginUserId) {
-            console.log('正在获取登录用户的统计信息，ID:', currentLoginUserId)
-            // 3. 发起带 ID 的请求
+            // 2. 【关键修改】调用 Store 方法时传入当前登录的 userID
+            blogSettingsStore.getBlogSettings(currentLoginUserId)
+
+            // 3. 获取统计信息
             getStatisticsInfo({ userId: currentLoginUserId }).then((res) => {
                 if (res.success) {
                     statisticsInfo.value = res.data
                 }
             })
         }
-    } else {
-        console.warn('未检测到登录用户，无法加载个性化统计卡片')
     }
 })
 </script>

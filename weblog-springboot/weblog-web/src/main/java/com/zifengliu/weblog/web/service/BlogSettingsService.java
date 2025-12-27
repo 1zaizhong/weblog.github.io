@@ -1,5 +1,6 @@
 package com.zifengliu.weblog.web.service;
 
+import com.zifengliu.weblog.admin.model.vo.article.FindArticleDetailReqVO;
 import com.zifengliu.weblog.common.utils.Response;
 
 /**
@@ -10,9 +11,10 @@ import com.zifengliu.weblog.common.utils.Response;
  **/
 public interface BlogSettingsService {
     /**
-     * 获取博客设置
+     * 获取博客设置详情
+     * @param userId
      * @return
      */
-   Response findDetail();
+    Response findDetail(Long userId);
 
 }

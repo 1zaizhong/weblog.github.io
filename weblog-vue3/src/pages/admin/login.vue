@@ -52,12 +52,34 @@
             </div>
         </div>
     </div>
+//z注册弹窗
+    <el-dialog v-model="registerDialogVisible" title="新用户注册" width="400px" center :show-close="false">
+    <div class="flex flex-col items-center">
+        
+        <p class="text-sm text-gray-400 mb-6">欢迎加入！请设置您的密码</p>
+        
+        <el-form :model="registerForm" ref="registerFormRef" :rules="rules" class="w-full">
+            <el-form-item prop="username">
+                <el-input v-model="registerForm.username" placeholder="账号" disabled :prefix-icon="User" />
+            </el-form-item>
+            <el-form-item prop="password">
+                <el-input v-model="registerForm.password" type="password" placeholder="设置密码" show-password :prefix-icon="Lock" />
+            </el-form-item>
+        </el-form>
+    </div>
+    <template #footer>
+        <div class="flex flex-col gap-2">
+            <el-button type="primary" class="w-full" :loading="registerLoading" @click="handleRegister">立即注册并登录</el-button>
+            <el-button @click="registerDialogVisible = false" class="w-full">返回登录</el-button>
+        </div>
+    </template>
+</el-dialog>
 </template>
 
 <script setup>
 // 引入 Element Plus 中的用户、锁图标
 import { User, Lock } from '@element-plus/icons-vue'
-import { login } from '@/api/admin/user'
+import { login, addUser } from '@/api/admin/user'
 import { ref, reactive, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import { showMessage} from '@/composables/util'
@@ -96,17 +118,17 @@ const rules = {
         },
     ]
 }
+const registerDialogVisible = ref(false)
+const registerLoading = ref(false)
+const registerForm = reactive({ username: '', password: '' })
 
 // login.vue 中的 onSubmit 函数
 const onSubmit = () => {
   console.log('登录')
   formRef.value.validate((valid) => {
-    if (!valid) {
-      console.log('表单验证不通过')
-      return false
-    }
-
+    if (!valid) return 
     loading.value = true
+
     login(form.username, form.password).then((res) => {
       console.log('登录成功响应数据:', res)
       if (res.success == true) {
@@ -116,26 +138,50 @@ const onSubmit = () => {
         let token = res.data.token
         setToken(token)
 
-        // 2. --- 关键修改：确保存入包含 userID 的用户信息 ---
-        // 注意：这里的 res.data.userID 必须和后端 LoginRspVO 里的字段名一致
+        // 2. 存储 userInfo
         localStorage.setItem('user', JSON.stringify({
             token: token,
             userInfo: {
                 username: form.username,
-                userID: res.data.userID  // 后端新加的字段
+                userID: res.data.userID  
             }
         }))
 
         // 3. 跳转到后台首页
         router.push('/admin/index')
       } else {
-        let message = res.message
-        showMessage(message, 'error')
+        console.log('后端返回的错误信息：', res)
+        if (res.message.includes('不存在') || res.message.includes('未找到') || res.errorCode === '20001') {
+             registerForm.username = form.username
+             registerDialogVisible.value = true
+             showMessage('用户不存在，已为您开启注册弹窗', 'warning')
+
+      }else {
+            // 真正的密码错误会走这里
+            showMessage(res.message || '用户名或密码错误', 'error')
+        }
       }
     }).finally(() => {
       loading.value = false
     })
   })
+}
+// 注册弹窗中的 handleRegister 函数
+const handleRegister = () => {
+    registerLoading.value = true
+    addUser({
+        username: registerForm.username,
+        password: registerForm.password
+    }).then(res => {
+        if (res.success) {
+            showMessage('注册成功！')
+            registerDialogVisible.value = false
+            // 注册成功后，用刚才的账号密码执行登录
+            onSubmit() 
+        } else {
+            showMessage(res.message, 'error')
+        }
+    }).finally(() => registerLoading.value = false)
 }
 // 按回车键后，执行登录事件
 function onKeyUp(e) {

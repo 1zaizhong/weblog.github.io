@@ -91,6 +91,8 @@ const routes = [
             title: 'Weblog 登录页'
         }
     },
+    
+    
     {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
@@ -111,6 +113,7 @@ const routes = [
                     title: '仪表盘'
                 }
             },
+            
             {
                 path: "/admin/article/list",
                 component: AdminArticleList,

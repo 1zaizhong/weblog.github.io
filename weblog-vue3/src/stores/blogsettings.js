@@ -3,20 +3,24 @@ import { ref } from 'vue'
 import { getBlogSettingsDetail } from '@/api/frontend/blogsettings'
 
 export const useBlogSettingsStore = defineStore('blogsettings', () => {
-  // 博客设置信息
-  const blogSettings = ref({})
+  // 1. 初始化博客设置对象
+  const blogSettings = ref({
+    avatar: '',
+    author: '',
+    introduction: ''
+  })
 
-  // 获取博客设置信息
-  function getBlogSettings() {
-    // 调用后台获取博客设置信息接口
-    console.log('获取博客设置信息')
-    getBlogSettingsDetail().then(res => {
+  // 2. ，增加 userId 参数
+  function getBlogSettings(userId) {
+    console.log('正在获取 ID 为', userId, '的博客设置')
+    // 将 userId 传给 API
+    return getBlogSettingsDetail(userId).then(res => {
       if (res.success) {
         blogSettings.value = res.data
       }
+      return res
     })
   }
-
 
   return { blogSettings, getBlogSettings }
 })
