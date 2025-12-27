@@ -11,10 +11,7 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.index.*;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,6 +138,7 @@ public class LuceneHelper {
             // 解析查询关键字
             Query query = parser.parse(word);
 
+
             // 执行搜索，获取匹配查询的前 limit 条结果。
             int limit = current * size;
             TopDocs topDocs = searcher.search(query, limit); // 搜索前 limit 条结果
@@ -258,6 +256,59 @@ public class LuceneHelper {
         } catch (Exception e) {
             log.error("更新 Lucene 文档错误: ", e);
             return 0;
+        }
+    }
+    /**
+     * 支持自定义 Query 查询总数据量
+     */
+    public long searchTotal(String index, Query query) {
+        try {
+            String indexDir = properties.getIndexDir() + File.separator + index;
+            Directory directory = FSDirectory.open(Paths.get(indexDir));
+            IndexReader reader = DirectoryReader.open(directory);
+            IndexSearcher searcher = new IndexSearcher(reader);
+
+            TopDocs totalDocs = searcher.search(query, Integer.MAX_VALUE);
+            long total = totalDocs.totalHits.value;
+
+            reader.close();
+            directory.close();
+            return total;
+        } catch (Exception e) {
+            log.error("查询 Lucene 总数错误 (Query): ", e);
+            return 0;
+        }
+    }
+
+    /**
+     * 支持自定义 Query 分页搜索
+     */
+    public List<Document> search(String index, Query query, int current, int size) {
+        try {
+            String indexDir = properties.getIndexDir() + File.separator + index;
+            Directory directory = FSDirectory.open(Paths.get(indexDir));
+            IndexReader reader = DirectoryReader.open(directory);
+            IndexSearcher searcher = new IndexSearcher(reader);
+
+            int limit = current * size;
+            TopDocs topDocs = searcher.search(query, limit);
+            ScoreDoc[] scoreDocs = topDocs.scoreDocs;
+
+            int start = (current - 1) * size;
+            int end = Math.min(start + size, scoreDocs.length);
+
+            List<Document> documents = Lists.newArrayList();
+            for (int i = start; i < end; i++) {
+                Document doc = searcher.doc(scoreDocs[i].doc);
+                documents.add(doc);
+            }
+
+            reader.close();
+            directory.close();
+            return documents;
+        } catch (Exception e) {
+            log.error("查询 Lucene 错误 (Query): ", e);
+            return null;
         }
     }
 

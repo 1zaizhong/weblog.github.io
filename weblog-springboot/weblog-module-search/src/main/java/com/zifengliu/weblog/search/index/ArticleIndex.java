@@ -24,4 +24,6 @@ public interface ArticleIndex {
     String COLUMN_CONTENT = "content";
 
     String COLUMN_CREATE_TIME = "createTime";
+
+    public static final String COLUMN_STATUS = "status";
 }

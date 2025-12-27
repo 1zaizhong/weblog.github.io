@@ -37,44 +37,10 @@
                 <!-- 分割线 -->
                 <el-divider />
 
-                <el-form-item>
-                    <h2 class="font-bold text-base mb-1">第三方平台设置</h2>
-                </el-form-item>
-                <!-- 开启 Github 访问 -->
-                <el-form-item label="开启 GihHub 访问">
-                    <el-switch v-model="isGithubChecked" inline-prompt :active-icon="Check" :inactive-icon="Close"
-                        @change="githubSwitchChange" />
-                </el-form-item>
-                <el-form-item label="GitHub 主页访问地址" v-if="isGithubChecked">
-                    <el-input v-model="form.githubHomepage" clearable placeholder="请输入 GitHub 主页访问的 URL" />
-                </el-form-item>
+        
+                
 
-                <!-- 开启 Gitee 访问 -->
-                <el-form-item label="开启 Gitee 访问">
-                    <el-switch v-model="isGiteeChecked" inline-prompt :active-icon="Check" :inactive-icon="Close"
-                        @change="giteeSwitchChange" />
-                </el-form-item>
-                <el-form-item label="Gitee 主页访问地址" v-if="isGiteeChecked">
-                    <el-input v-model="form.giteeHomepage" clearable placeholder="请输入 Gitee 主页访问的 URL" />
-                </el-form-item>
-
-                <!-- 开启知乎访问 -->
-                <el-form-item label="开启知乎访问">
-                    <el-switch v-model="isZhihuChecked" inline-prompt :active-icon="Check" :inactive-icon="Close"
-                        @change="zhihuSwitchChange" />
-                </el-form-item>
-                <el-form-item label="知乎主页访问地址" v-if="isZhihuChecked">
-                    <el-input v-model="form.zhihuHomepage" clearable placeholder="请输入知乎主页访问的 URL" />
-                </el-form-item>
-
-                <!-- 开启 CSDN 访问 -->
-                <el-form-item label="开启 CSDN 访问">
-                    <el-switch v-model="isCSDNChecked" inline-prompt :active-icon="Check" :inactive-icon="Close"
-                        @change="csdnSwitchChange" />
-                </el-form-item>
-                <el-form-item label="CSDN 主页访问地址" v-if="isCSDNChecked">
-                    <el-input v-model="form.csdnHomepage" clearable placeholder="请输入 CSDN 主页访问的 URL" />
-                </el-form-item>
+              
 
                 <!-- 分割线 -->
                 <el-divider />
@@ -115,14 +81,7 @@ import { getBlogSettingsDetail, updateBlogSettings } from '@/api/admin/blogsetti
 import { uploadFile } from '@/api/admin/file'
 import { showMessage } from '@/composables/util'
 
-// 是否开启 GitHub
-const isGithubChecked = ref(false)
-// 是否开启 Gitee
-const isGiteeChecked = ref(false)
-// 是否开启知乎
-const isZhihuChecked = ref(false)
-// 是否开启 CSDN
-const isCSDNChecked = ref(false)
+
 // 是否显示保存按钮的 loading 状态，默认为 false
 const btnLoading = ref(false)
 
@@ -135,13 +94,8 @@ const form = reactive({
     logo: '',
     avatar: '',
     introduction: '',
-    githubHomepage: '',
-    giteeHomepage: '',
-    zhihuHomepage: '',
-    csdnHomepage: '',
     isCommentSensiWordOpen: true, // 是否开启评论敏感词过滤
     isCommentExamineOpen: false, // 是否开启评论审核
-    mail: '' // 博主邮箱
 })
 
 // 规则校验
@@ -153,33 +107,7 @@ const rules = {
     introduction: [{ required: true, message: '请输入介绍语', trigger: 'blur' }],
 }
 
-// 监听 Github Switch 改变事件
-const githubSwitchChange = (checked) => {
-    if (checked == false) {
-        form.githubHomepage = ''
-    }
-}
 
-// 监听 Gitee Switch 改变事件
-const giteeSwitchChange = (checked) => {
-    if (checked == false) {
-        form.giteeHomepage = ''
-    }
-}
-
-// 监听知乎 Switch 改变事件
-const zhihuSwitchChange = (checked) => {
-    if (checked == false) {
-        form.zhihuHomepage = ''
-    }
-}
-
-// 监听 CSDN Switch 改变事件
-const csdnSwitchChange = (checked) => {
-    if (checked == false) {
-        form.csdnHomepage = ''
-    }
-}
 
 // 初始化博客设置数据，并渲染到页面上
 function initBlogSettings() {
@@ -192,30 +120,10 @@ function initBlogSettings() {
             form.avatar = e.data.avatar
             form.introduction = e.data.introduction
 
-            // 第三方平台信息设置
-            if (e.data.githubHomepage) {
-                isGithubChecked.value = true
-                form.githubHomepage = e.data.githubHomepage
-            }
-
-            if (e.data.giteeHomepage) {
-                isGiteeChecked.value = true
-                form.giteeHomepage = e.data.giteeHomepage
-            }
-
-            if (e.data.zhihuHomepage) {
-                isZhihuChecked.value = true
-                form.zhihuHomepage = e.data.zhihuHomepage
-            }
-
-            if (e.data.csdnHomepage) {
-                isCSDNChecked.value = true
-                form.csdnHomepage = e.data.csdnHomepage
-            }
-
+           
             form.isCommentSensiWordOpen = e.data.isCommentSensiWordOpen
             form.isCommentExamineOpen = e.data.isCommentExamineOpen
-            form.mail = e.data.mail
+         
         }
     })
 }

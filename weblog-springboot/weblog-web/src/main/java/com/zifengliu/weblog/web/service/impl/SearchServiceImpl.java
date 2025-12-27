@@ -15,8 +15,12 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.document.IntPoint;
+import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.highlight.Highlighter;
 import org.apache.lucene.search.highlight.QueryScorer;
@@ -37,6 +41,9 @@ import java.util.List;
  * @description
  **/
 
+/**
+ * 文章搜索业务实现类
+ */
 @Service
 @Slf4j
 public class SearchServiceImpl implements SearchService {
@@ -53,36 +60,57 @@ public class SearchServiceImpl implements SearchService {
         // 查询关键词
         String word = searchArticlePageListReqVO.getWord();
 
-        // 想要搜索的文档字段（这里指定对文章标题、摘要进行检索，任何一个字段包含该关键词，都会被搜索到）
-        String[] columns = {ArticleIndex.COLUMN_TITLE, ArticleIndex.COLUMN_SUMMARY};
-        // 查询总记录数
-        long total = luceneHelper.searchTotal(ArticleIndex.NAME, word, columns);
+        // 1. ======================== 构建组合查询条件 ========================
+        Analyzer analyzer = new SmartChineseAnalyzer();
+        BooleanQuery.Builder booleanQueryBuilder = new BooleanQuery.Builder();
 
-        // 执行搜索（分页查询）
-        List<Document> documents = luceneHelper.search(ArticleIndex.NAME, word, columns, current, size);
+        try {
+            // 条件 A: 关键词匹配 (在标题和摘要中搜索)
+            String[] columns = {ArticleIndex.COLUMN_TITLE, ArticleIndex.COLUMN_SUMMARY};
+            MultiFieldQueryParser multiParser = new MultiFieldQueryParser(columns, analyzer);
+            Query wordQuery = multiParser.parse(word);
+            // MUST 表示必须包含关键词
+            booleanQueryBuilder.add(wordQuery, BooleanClause.Occur.MUST);
 
-        // 若未查询到相关文档，只接 return
+            // 条件 B: 状态过滤 (必须是已发布状态 2)
+            // 这里的 IntPoint.newExactQuery 必须对应之前 InitLuceneIndexRunner 存入的 IntPoint 字段
+            Query statusQuery = IntPoint.newExactQuery(ArticleIndex.COLUMN_STATUS, 2);
+            // MUST 表示必须满足状态为 2
+            booleanQueryBuilder.add(statusQuery, BooleanClause.Occur.MUST);
+
+        } catch (ParseException e) {
+            log.error("构建 Lucene 查询条件异常: ", e);
+        }
+
+        // 生成最终的布尔查询对象
+        BooleanQuery finalQuery = booleanQueryBuilder.build();
+
+        // 2. ======================== 执行搜索 ========================
+        // 调用 LuceneHelper 中我们新增加的、接收 Query 对象的方法
+        long total = luceneHelper.searchTotal(ArticleIndex.NAME, finalQuery);
+        List<Document> documents = luceneHelper.search(ArticleIndex.NAME, finalQuery, current, size);
+
+        // 若未查询到相关文档，直接返回
         if (CollectionUtils.isEmpty(documents)) {
             return PageResponse.success(total, current, size, null);
         }
 
-        // ======================== 开始关键词高亮处理 ========================
-        // 中文分析器
-        Analyzer analyzer = new SmartChineseAnalyzer();
-        QueryParser parser = new QueryParser(ArticleIndex.COLUMN_TITLE, analyzer);
-        Query query = null;
+        // 3. ======================== 关键词高亮处理 ========================
+        // 高亮只需要针对关键词 word 部分进行解析
+        Query highlightQuery = null;
         try {
-            query = parser.parse(word);
+            highlightQuery = new QueryParser(ArticleIndex.COLUMN_TITLE, analyzer).parse(word);
         } catch (ParseException e) {
-            log.error("解析关键词错误:", e);
+            log.error("解析高亮关键词错误:", e);
         }
 
         // 创建高亮器
         SimpleHTMLFormatter formatter = new SimpleHTMLFormatter("<span style=\"color: #f73131\">", "</span>");
-        Highlighter highlighter = new Highlighter(formatter, new QueryScorer(query));
+        Highlighter highlighter = new Highlighter(formatter, new QueryScorer(highlightQuery));
 
         // 返参 VO
         List<SearchArticlePageListRspVO> vos = Lists.newArrayList();
+
         // 遍历查询到的文档，进行关键词高亮处理
         documents.forEach(document -> {
             try {
