@@ -121,6 +121,7 @@ public class AdminCommentServiceImpl implements AdminCommentService {
             log.warn("该评论不存在, commentId: {}", commentId);
             throw new BizException(ResponseCodeEnum.COMMENT_NOT_FOUND);
         }
+
         Long loginUserId = getLoginUserId();
         if (!Objects.equals(loginUserId, 1L) && !Objects.equals(commentDO.getUserId(), loginUserId)) {
             throw new BizException(ResponseCodeEnum.UNAUTHORIZED); // 抛出无权限异常
@@ -181,9 +182,17 @@ public class AdminCommentServiceImpl implements AdminCommentService {
         Long commentId = examineCommentReqVO.getId();
         Integer status = examineCommentReqVO.getStatus();
         String reason = examineCommentReqVO.getReason();
+        Long loginUserId = getLoginUserId();
+
+        //权限
+        if (!Objects.equals(loginUserId, 1L)) {
+            log.warn("非管理员用户尝试执行审核操作, userId: {}", loginUserId);
+            throw new BizException(ResponseCodeEnum.UNAUTHORIZED); // 确保你的枚举里有这个错误码
+        }
 
         // 根据提交的评论 ID 查询该条评论
         CommentDO commentDO = commentMapper.selectById(commentId);
+
 
         // 判空
         if (Objects.isNull(commentDO)) {
