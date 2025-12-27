@@ -57,11 +57,14 @@
                             </el-button>
                         </el-tooltip>
 
-                        <el-tooltip v-if="scope.row.status == 1" class="box-item" effect="dark" content="审核"
-                            placement="bottom">
-                            <el-button size="small" :icon="Edit" circle @click="showEditDetailDialog(scope.row)">
-                            </el-button>
-                        </el-tooltip>
+                        <el-button 
+            v-if="currentUserId == 1" 
+            type="success" 
+            size="small" 
+            :icon="Check" 
+            @click="showEditDetailDialog(scope.row)">
+            审核
+        </el-button>
 
                         <el-tooltip class="box-item" effect="dark" content="删除" placement="bottom">
                             <el-button type="danger" size="small" :icon="Delete" @click="deleteCommentSubmit(scope.row)"
@@ -152,7 +155,10 @@ import FormDialog from '@/components/FormDialog.vue'
 const searchRouterUrl = ref('')
 // 日期
 const pickDate = ref('')
-
+//获取id
+const userStore = localStorage.getItem('user')
+const userObj = userStore ? JSON.parse(userStore) : null
+const currentUserId = userObj?.userInfo?.userID
 // 查询条件：开始结束时间
 const startDate = reactive({})
 const endDate = reactive({})

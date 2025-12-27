@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminCommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminCommentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/enums/ResponseCodeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/enums/ResponseCodeEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CommentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/comment-list.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/comment-list.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -262,15 +264,7 @@
       <workItem from="1766687541960" duration="52000" />
       <workItem from="1766736508290" duration="20366000" />
       <workItem from="1766819435178" duration="7915000" />
-      <workItem from="1766827449178" duration="2651000" />
-    </task>
-    <task id="LOCAL-00014" summary="获取文章详情后端接口">
-      <option name="closed" value="true" />
-      <created>1765616214453</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1765616214453</updated>
+      <workItem from="1766827449178" duration="3589000" />
     </task>
     <task id="LOCAL-00015" summary="前台文章详情页设计">
       <option name="closed" value="true" />
@@ -656,7 +650,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766828952716</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="评论,后台完善">
+      <option name="closed" value="true" />
+      <created>1766830140577</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1766830140577</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -710,7 +712,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="后台管理知识库功能" />
     <MESSAGE value="知识库功能" />
     <MESSAGE value="发布评论" />
     <MESSAGE value="评论过滤敏感词" />
@@ -735,38 +736,10 @@
     <MESSAGE value="后台首页阅读量统计" />
     <MESSAGE value="修改了mapper的一个小错误" />
     <MESSAGE value="评论,后台查询" />
-    <option name="LAST_COMMIT_MESSAGE" value="评论,后台查询" />
+    <MESSAGE value="评论,后台完善" />
+    <option name="LAST_COMMIT_MESSAGE" value="评论,后台完善" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CommentServiceImpl.java</url>
-          <line>67</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CommentServiceImpl.java</url>
-          <line>82</line>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CommentServiceImpl.java</url>
-          <line>57</line>
-          <properties class="com.zifengliu.weblog.web.service.impl.CommentServiceImpl" method="findQQUserInfo">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-field">
-          <url>file://$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CommentServiceImpl.java</url>
-          <line>54</line>
-          <properties field="apiKey" class="com.zifengliu.weblog.web.service.impl.CommentServiceImpl" />
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="com.zifengliu.weblog.admin.service.impl.AdminCategoryServiceImpl" memberName="articleCategoryRelMapper" />

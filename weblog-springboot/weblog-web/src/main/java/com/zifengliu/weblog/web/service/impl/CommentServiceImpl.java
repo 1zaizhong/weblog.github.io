@@ -2,8 +2,10 @@ package com.zifengliu.weblog.web.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zifengliu.weblog.common.domain.dos.ArticleDO;
 import com.zifengliu.weblog.common.domain.dos.BlogSettingsDO;
 import com.zifengliu.weblog.common.domain.dos.CommentDO;
+import com.zifengliu.weblog.common.domain.mapper.ArticleMapper;
 import com.zifengliu.weblog.common.domain.mapper.BlogSettingsMapper;
 import com.zifengliu.weblog.common.domain.mapper.CommentMapper;
 import com.zifengliu.weblog.common.enums.CommentStatusEnum;
@@ -50,6 +52,8 @@ public class CommentServiceImpl implements CommentService {
     private IllegalWordsSearch wordsSearch;
     @Autowired
     private ApplicationEventPublisher eventPublisher;
+    @Autowired
+    private ArticleMapper articleMapper;
 
     @Value("${api-key}")
     private String apiKey;
@@ -109,7 +113,26 @@ public class CommentServiceImpl implements CommentService {
         String content = publishCommentReqVO.getContent();
         // 昵称
         String nickname = publishCommentReqVO.getNickname();
+        // 网站地址
+        String routerUrl = publishCommentReqVO.getRouterUrl();
+        Long authorId = null;
+        // 用户 ID
+        if (routerUrl.contains("/article/")) {
+            try {
+                // 截取路径中的 ID 部分
+                String articleIdStr = routerUrl.substring(routerUrl.lastIndexOf("/") + 1);
+                Long articleId = Long.valueOf(articleIdStr);
 
+                // 根据文章 ID 查找作者
+                ArticleDO articleDO = articleMapper.selectById(articleId);
+                if (articleDO != null) {
+                    authorId = articleDO.getUserId(); // 拿到文章所属用户的 ID
+                }
+            } catch (Exception e) {
+                log.error("解析路由地址获取文章作者失败, routerUrl: {}", routerUrl, e);
+                throw new BizException(ResponseCodeEnum.URL_ID_NO_FOUND);
+            }
+        }
         // 查询博客设置相关信息（约定的 ID 为 1）
         BlogSettingsDO blogSettingsDO = blogSettingsMapper.selectById(1L);
         // 是否开启了敏感词过滤
@@ -159,7 +182,8 @@ public class CommentServiceImpl implements CommentService {
                 .status(status)
                 .reason(reason)
                 .build();
-
+        //设置作者id
+        commentDO.setUserId(authorId != null ? authorId : 1L);
         commentMapper.insert(commentDO);
 
         Long commentId = commentDO.getId();
