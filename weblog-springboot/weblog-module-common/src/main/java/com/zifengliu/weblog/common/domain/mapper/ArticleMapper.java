@@ -2,6 +2,7 @@ package com.zifengliu.weblog.common.domain.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -148,5 +149,19 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
         return update(articleDO, Wrappers.<ArticleDO>lambdaUpdate()
                 .in(ArticleDO::getId, ids));
     }
+    /**
+     * 批量更新文章
+     * @param userId
+     * @param
+     * @return
+     */
+    default Long selectSumPvByUserId(Long userId) {
+        // 逻辑：SELECT SUM(read_num) FROM t_article WHERE user_id = #{userId}
+        QueryWrapper<ArticleDO> wrapper = new QueryWrapper<>();
+        wrapper.select("SUM(read_num) as totalPv");
+        wrapper.eq(userId != null, "user_id", userId);
 
+        Object obj = selectObjs(wrapper).get(0);
+        return obj == null ? 0L : Long.parseLong(obj.toString());
+    }
 }

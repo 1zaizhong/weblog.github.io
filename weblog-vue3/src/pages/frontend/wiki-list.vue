@@ -71,19 +71,30 @@ import TagListCard from '@/layouts/frontend/components/TagListCard.vue'
 import CategoryListCard from '@/layouts/frontend/components/CategoryListCard.vue'
 import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
 import { getWikiList } from '@/api/frontend/wiki'
-import { ref } from 'vue'
+import { ref ,onMounted} from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
 // 知识库
 const wikis = ref([])
-getWikiList().then(res => {
-    if (res.success) {
-        wikis.value = res.data
-    }
-})
 
+const fetchWikiList = () => {
+    // 获取用户 ID
+    const userStr = localStorage.getItem('user')
+    const userObj = userStr ? JSON.parse(userStr) : null
+    const userId = userObj?.userInfo?.userID
+
+    //调用接口
+    getWikiList({ userId: userId }).then(res => {
+        if (res.success) {
+            wikis.value = res.data
+        }
+    })
+}
+onMounted(() => {
+    fetchWikiList()
+})
 // 跳转文章详情页
 const goWikiArticleDetailPage = (wikiId, articleId) => {
     console.log('跳转' + wikiId + ',' + articleId)

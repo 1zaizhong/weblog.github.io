@@ -7,16 +7,13 @@ import com.zifengliu.weblog.admin.model.vo.dashboard.FindDashboardPVStatisticsIn
 import com.zifengliu.weblog.admin.model.vo.dashboard.FindDashboardStatisticsInfoRspVO;
 import com.zifengliu.weblog.admin.service.AdminDashboardService;
 import com.zifengliu.weblog.common.constant.Constants;
-import com.zifengliu.weblog.common.domain.dos.ArticleDO;
-import com.zifengliu.weblog.common.domain.dos.ArticlePublishCountDO;
-import com.zifengliu.weblog.common.domain.dos.StatisticsArticlePVDO;
-import com.zifengliu.weblog.common.domain.mapper.ArticleMapper;
-import com.zifengliu.weblog.common.domain.mapper.CategoryMapper;
-import com.zifengliu.weblog.common.domain.mapper.StatisticsArticlePVMapper;
-import com.zifengliu.weblog.common.domain.mapper.TagMapper;
+import com.zifengliu.weblog.common.domain.dos.*;
+import com.zifengliu.weblog.common.domain.mapper.*;
 import com.zifengliu.weblog.common.utils.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -45,6 +42,8 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
     private TagMapper tagMapper;
     @Autowired
     private StatisticsArticlePVMapper articlePVMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     /**
      * 获取仪表盘基础统计信息
@@ -53,18 +52,31 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
      */
     @Override
     public Response findDashboardStatistics() {
+        // 获取当前登录用户名
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        // 查询用户信息
+        UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
+                .eq(UserDO::getUsername, username));
+        Long loginUserId = userDO.getUserId();
+        //判断用户
+        Long userId = Objects.equals(loginUserId, 1L) ? null : loginUserId;
+
         // 查询文章总数
-        Long articleTotalCount = articleMapper.selectCount(Wrappers.emptyWrapper());
+        Long articleTotalCount = articleMapper.selectCount(Wrappers.<ArticleDO>lambdaQuery()
+                .eq(Objects.nonNull(userId), ArticleDO::getUserId, userId));
 
         // 查询分类总数
-        Long categoryTotalCount = categoryMapper.selectCount(Wrappers.emptyWrapper());
+        Long categoryTotalCount = categoryMapper.selectCount(Wrappers.<CategoryDO>lambdaQuery()
+                .eq(Objects.nonNull(userId), CategoryDO::getUserId, userId));
 
         // 查询标签总数
-        Long tagTotalCount = tagMapper.selectCount(Wrappers.emptyWrapper());
+        Long tagTotalCount = tagMapper.selectCount(Wrappers.<TagDO>lambdaQuery()
+                .eq(Objects.nonNull(userId), TagDO::getUserId, userId));
 
         // 总浏览量
         List<ArticleDO> articleDOS = articleMapper.selectAllReadNum();
-        Long pvTotalCount = 0L;
+        Long pvTotalCount = articleMapper.selectSumPvByUserId(userId);
 
         if (!CollectionUtils.isEmpty(articleDOS)) {
             // 所有 read_num 相加
