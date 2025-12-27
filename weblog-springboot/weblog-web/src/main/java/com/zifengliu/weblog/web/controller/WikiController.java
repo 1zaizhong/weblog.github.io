@@ -4,6 +4,7 @@ import com.zifengliu.weblog.common.aspect.ApiOperationLog;
 import com.zifengliu.weblog.common.utils.Response;
 import com.zifengliu.weblog.web.model.vo.wiki.FindWikiArticlePreNextReqVO;
 import com.zifengliu.weblog.web.model.vo.wiki.FindWikiCatalogListReqVO;
+import com.zifengliu.weblog.web.model.vo.wiki.FindWikiListReqVO;
 import com.zifengliu.weblog.web.service.WikiService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,8 +32,8 @@ public class WikiController {
     @PostMapping("/list")
     @ApiOperation(value = "获取知识库数据")
     @ApiOperationLog(description = "获取知识库数据")
-    public Response findWikiList() {
-        return wikiService.findWikiList();
+    public Response findWikiList(@RequestBody FindWikiListReqVO findWikiListReqVO) {
+        return wikiService.findWikiList(findWikiListReqVO);
     }
 
     @PostMapping("/catalog/list")

@@ -1,5 +1,6 @@
 package com.zifengliu.weblog.web.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Lists;
 import com.zifengliu.weblog.common.domain.dos.WikiCatalogDO;
 import com.zifengliu.weblog.common.domain.dos.WikiDO;
@@ -39,10 +40,24 @@ public class WikiServiceImpl implements WikiService {
      * @return
      */
     @Override
-    public Response findWikiList() {
-        // 查询已发布的知识库
-        List<WikiDO> wikiDOS = wikiMapper.selectPublished();
+    public Response findWikiList(FindWikiListReqVO findWikiListReqVO) {
+        //用户id
+        Long userId = findWikiListReqVO.getUserId();
 
+        // 管理员逻辑：ID 为 1 则查全量
+        if (userId != null && userId == 1L) {
+            userId = null;
+        }
+        // 查询已发布的知识库
+        List<WikiDO> wikiDOS = wikiMapper.selectList(Wrappers.<WikiDO>lambdaQuery()
+                .eq(WikiDO::getIsPublish, true)
+                .eq(Objects.nonNull(userId), WikiDO::getUserId, userId)
+                .orderByDesc(WikiDO::getWeight)
+                .orderByDesc(WikiDO::getCreateTime));
+
+        if (CollectionUtils.isEmpty(wikiDOS)) {
+            return Response.success(Lists.newArrayList());
+        }
         // DO 转 VO
         List<FindWikiListRspVO> vos = null;
         if (!CollectionUtils.isEmpty(wikiDOS)) {
@@ -144,6 +159,8 @@ public class WikiServiceImpl implements WikiService {
     public Response findArticlePreNext(FindWikiArticlePreNextReqVO findWikiArticlePreNextReqVO) {
         // 知识库 ID
         Long wikiId = findWikiArticlePreNextReqVO.getId();
+        //用户id
+        Long userId = findWikiArticlePreNextReqVO.getUserId();
         // 文章 ID
         Long articleId = findWikiArticlePreNextReqVO.getArticleId();
 

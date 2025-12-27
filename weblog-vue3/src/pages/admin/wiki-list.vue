@@ -208,10 +208,12 @@ const shortcuts = [
 
 // 重置
 const reset = () => {
-    pickDate.value = ''
+    searchWikiTitle.value = ''
     startDate.value = null
     endDate.value = null
-    searchWikiTitle.value = ''
+    pickDate.value = null
+    current.value = 1 // 重置到第一页
+    getTableData() 
 }
 
 // 表格加载 Loading
@@ -230,17 +232,30 @@ const size = ref(10)
 function getTableData() {
     // 显示表格 loading
     tableLoading.value = true
-    // 调用后台分页接口，并传入所需参数
-    getWikiPageList({ current: current.value, size: size.value, startDate: startDate.value, endDate: endDate.value, title: searchWikiTitle.value })
-        .then((res) => {
-            if (res.success == true) {
-                tableData.value = res.data
-                current.value = res.current
-                size.value = res.size
-                total.value = res.total
-            }
-        })
-        .finally(() => tableLoading.value = false) // 隐藏表格 loading
+    //拿到本地的id
+    const userStr = localStorage.getItem('user')
+    const userObj = userStr ? JSON.parse(userStr) : null
+    const userId = userObj?.userInfo?.userID
+
+    // 调用后台查询接口
+    getWikiPageList({
+        current: current.value,
+        size: size.value,
+        startDate: startDate.value,
+        endDate: endDate.value,
+        title: searchWikiTitle.value,
+        userId: userId // 传入用户ID，实现隔离查询
+    }).then((res) => {
+        if (res.success) {
+            tableData.value = res.data
+            current.value = res.current
+            size.value = res.size
+            total.value = res.total
+        }
+    }).finally(() => {
+        // 关闭表格 loading
+        tableLoading.value = false
+    })// 隐藏表格 loading
 }
 getTableData()
 

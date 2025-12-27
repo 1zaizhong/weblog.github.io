@@ -26,4 +26,6 @@ public class FindWikiArticlePreNextReqVO {
     @NotNull(message = "文章 ID 不能为空")
     private Long articleId;
 
+    private  Long userId;
+
 }

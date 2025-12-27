@@ -3,6 +3,7 @@ package com.zifengliu.weblog.web.service;
 import com.zifengliu.weblog.common.utils.Response;
 import com.zifengliu.weblog.web.model.vo.wiki.FindWikiArticlePreNextReqVO;
 import com.zifengliu.weblog.web.model.vo.wiki.FindWikiCatalogListReqVO;
+import com.zifengliu.weblog.web.model.vo.wiki.FindWikiListReqVO;
 
 /**
  * @author 粟英朝
@@ -17,7 +18,7 @@ public interface WikiService {
      * 获取知识库
      * @return
      */
-    Response findWikiList();
+    Response findWikiList(FindWikiListReqVO findWikiListReqVO);
 
     /**
      * 获取知识库目录
