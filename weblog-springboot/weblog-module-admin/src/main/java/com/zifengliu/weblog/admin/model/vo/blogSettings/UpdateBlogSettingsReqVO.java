@@ -33,22 +33,14 @@ public class UpdateBlogSettingsReqVO {
     @NotBlank(message = "博客作者不能为空")
     private String author;
 
-    @NotBlank(message = "博客介绍语不能为空")
+
     private String introduction;
 
     @NotBlank(message = "博客头像不能为空")
     private String avatar;
 
-    private String githubHomepage;
 
-    private String csdnHomepage;
 
-    private String giteeHomepage;
-
-    private String zhihuHomepage;
-
-    @Email(message = "邮箱格式不正确")
-    private String mail;
 
     @NotNull(message = "请设置评论敏感词过滤是否开启")
     private Boolean isCommentSensiWordOpen;

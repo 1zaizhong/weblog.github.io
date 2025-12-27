@@ -17,7 +17,7 @@ public class PageResponse <T>  extends  Response<List<T>>{
 
     /*总记录数
     * */
-    private long total = 0L;
+    private long total = 1L;
 
     /*每一页显示的记录数,默认为10
     * */

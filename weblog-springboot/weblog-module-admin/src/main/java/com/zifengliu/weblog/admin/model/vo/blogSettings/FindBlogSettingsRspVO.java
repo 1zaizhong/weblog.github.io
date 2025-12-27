@@ -28,15 +28,9 @@ public class FindBlogSettingsRspVO {
 
     private String avatar;
 
-    private String githubHomepage;
 
-    private String csdnHomepage;
 
-    private String giteeHomepage;
 
-    private String zhihuHomepage;
-
-    private String mail;
 
     private Boolean isCommentSensiWordOpen;
 

@@ -52,6 +52,6 @@ public class BlogSettingsDO {
     private Boolean isCommentSensiWordOpen;
 
     private Boolean isCommentExamineOpen;
-
+    private Long userId;
 
 }

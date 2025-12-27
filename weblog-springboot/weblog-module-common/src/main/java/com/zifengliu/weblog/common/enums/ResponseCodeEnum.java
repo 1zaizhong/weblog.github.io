@@ -46,6 +46,8 @@ public enum ResponseCodeEnum implements BaseExceptionInterface {
     COMMENT_NOT_FOUND("20017", "该评论不存在"),
     COMMENT_STATUS_NOT_WAIT_EXAMINE("20018", "该评论未处于待审核状态"),
     URL_ID_NO_FOUND("20020", "评论对应的文章作者ID没找到"),
+    AUTHOR_NO_FOUND("20021", "新博主，之前未登录"),
+
     WIKI_NOT_FOUND("20013", "该知识库不存在");
 
 

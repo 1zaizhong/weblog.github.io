@@ -5,11 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/statistics/FindStatisticsInfoReqVO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/StatisticsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/StatisticsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/StatisticsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/StatisticsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/StatisticsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/StatisticsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/blogSettings/FindBlogSettingsRspVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/blogSettings/FindBlogSettingsRspVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/blogSettings/UpdateBlogSettingsReqVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/blogSettings/UpdateBlogSettingsReqVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminBlogSettingsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminBlogSettingsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/BlogSettingsDO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/BlogSettingsDO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/enums/ResponseCodeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/enums/ResponseCodeEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/utils/PageResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/utils/PageResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/utils/SecurityUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/utils/SecurityUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/api/frontend/statistics.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/frontend/statistics.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/UserInfoCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/UserInfoCard.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,6 +119,9 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\workSpaceIDEA\weblog\weblog-springboot\weblog-web\src\main\resources\word" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.zifengliu.weblog.admin.utils" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -266,15 +274,8 @@
       <workItem from="1766736508290" duration="20366000" />
       <workItem from="1766819435178" duration="7915000" />
       <workItem from="1766827449178" duration="4041000" />
-      <workItem from="1766832229079" duration="4089000" />
-    </task>
-    <task id="LOCAL-00016" summary="文章正文设计">
-      <option name="closed" value="true" />
-      <created>1765621256625</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1765621256625</updated>
+      <workItem from="1766832229079" duration="7609000" />
+      <workItem from="1766845417888" duration="435000" />
     </task>
     <task id="LOCAL-00017" summary="代码块高亮，点击图片变大">
       <option name="closed" value="true" />
@@ -660,7 +661,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766831194685</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="前台统计">
+      <option name="closed" value="true" />
+      <created>1766840908948</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1766840908948</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -714,7 +723,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="发布评论" />
     <MESSAGE value="评论过滤敏感词" />
     <MESSAGE value="首页评论功能(qq获取未完善)" />
     <MESSAGE value="qq获取" />
@@ -739,7 +747,8 @@
     <MESSAGE value="评论,后台查询" />
     <MESSAGE value="评论,后台完善" />
     <MESSAGE value="评论,前台发布修改" />
-    <option name="LAST_COMMIT_MESSAGE" value="评论,前台发布修改" />
+    <MESSAGE value="前台统计" />
+    <option name="LAST_COMMIT_MESSAGE" value="前台统计" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
