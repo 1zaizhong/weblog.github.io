@@ -6,12 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/event/subscriber/PublishArticleSubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/event/subscriber/PublishArticleSubscriber.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/event/subscriber/UpdateArticleSubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/event/subscriber/UpdateArticleSubscriber.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/LuceneHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/LuceneHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/index/ArticleIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/index/ArticleIndex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/run/InitLuceneIndexRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/run/InitLuceneIndexRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/SearchServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/SearchServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminBlogSettingsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminBlogSettingsServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/blog-settings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/blog-settings.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -273,15 +268,7 @@
       <workItem from="1766819435178" duration="7915000" />
       <workItem from="1766827449178" duration="4041000" />
       <workItem from="1766832229079" duration="7609000" />
-      <workItem from="1766845417888" duration="8094000" />
-    </task>
-    <task id="LOCAL-00018" summary="404找不到界面">
-      <option name="closed" value="true" />
-      <created>1765623126263</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1765623126263</updated>
+      <workItem from="1766845417888" duration="9377000" />
     </task>
     <task id="LOCAL-00019" summary="目录功能">
       <option name="closed" value="true" />
@@ -667,7 +654,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766846011433</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="lunch搜索引擎添加status=2查询">
+      <option name="closed" value="true" />
+      <created>1766854375070</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1766854375070</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -721,7 +716,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="首页评论功能(qq获取未完善)" />
     <MESSAGE value="qq获取" />
     <MESSAGE value="评论删除,获取列表" />
     <MESSAGE value="区分不同用户,查看不同文章功能" />
@@ -746,7 +740,8 @@
     <MESSAGE value="评论,前台发布修改" />
     <MESSAGE value="前台统计" />
     <MESSAGE value="博客设置多用户区分" />
-    <option name="LAST_COMMIT_MESSAGE" value="博客设置多用户区分" />
+    <MESSAGE value="lunch搜索引擎添加status=2查询" />
+    <option name="LAST_COMMIT_MESSAGE" value="lunch搜索引擎添加status=2查询" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

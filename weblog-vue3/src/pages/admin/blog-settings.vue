@@ -37,13 +37,7 @@
                 <!-- 分割线 -->
                 <el-divider />
 
-        
                 
-
-              
-
-                <!-- 分割线 -->
-                <el-divider />
 
                 <el-form-item>
                     <h2 class="font-bold text-base mb-1">评论设置</h2>

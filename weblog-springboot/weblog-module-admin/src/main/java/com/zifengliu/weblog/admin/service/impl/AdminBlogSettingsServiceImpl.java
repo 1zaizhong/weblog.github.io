@@ -44,6 +44,13 @@ public class AdminBlogSettingsServiceImpl extends ServiceImpl<BlogSettingsMapper
         }
         return userDO.getUserId();
     }
+
+    /**
+     * 更新博客设置
+     *
+     * @param updateBlogSettingsReqVO
+     * @return
+     *//**/
     @Override
     public Response updateBlogSettings(UpdateBlogSettingsReqVO updateBlogSettingsReqVO) {
         //拿到id
@@ -77,7 +84,7 @@ public class AdminBlogSettingsServiceImpl extends ServiceImpl<BlogSettingsMapper
     public Response findDetail() {
         // 拿到登录用户id
         Long userId = getLoginUserId();
-        // 查询 ID 为 1 的记录
+        //
         BlogSettingsDO blogSettingsDO = blogSettingsMapper.selectOne(Wrappers.<BlogSettingsDO>lambdaQuery()
                 .eq(BlogSettingsDO::getUserId, userId));
         if (Objects.isNull(blogSettingsDO)) {

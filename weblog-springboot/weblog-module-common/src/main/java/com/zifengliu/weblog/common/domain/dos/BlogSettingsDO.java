@@ -35,19 +35,9 @@ public class BlogSettingsDO {
     //作者头像
     private String avatar;
 
-    //Github 地址
-    private String githubHomepage;
 
-    //CSDN 地址
-    private String csdnHomepage;
 
-    //Gitee 地址
-    private String giteeHomepage;
 
-    //知乎地址
-    private String zhihuHomepage;
-
-    private String mail;
 
     private Boolean isCommentSensiWordOpen;
 
