@@ -2,7 +2,10 @@ package com.zifengliu.weblog.admin.model.vo.collection;
 
 import com.zifengliu.weblog.common.model.BasePageQuery;
 import io.swagger.annotations.ApiModel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author 粟英朝

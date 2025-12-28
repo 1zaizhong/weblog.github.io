@@ -5,23 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/controller/AdminCollectionController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/collection/AddCollectionDirectoryReqVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/collection/CollectArticleReqVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/collection/DeleteCollectionDirectoryReqVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/collection/FindCollectionArticlePageListReqVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/collection/FindCollectionArticlePageListRspVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/collection/FindCollectionDirectoryPageListReqVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/collection/RemoveArticleFromCollectionReqVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/AdminCollectionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminCollectionServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/CollectionArticleRelDO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/CollectionDirectoryDO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/CollectionArticleRelMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/CollectionDirectoryMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/WebCollectionController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/collection/CollectArticleReqVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/collection/FindCollectionDirectoryReqVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/WebCollectionService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/WebCollectionServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/layouts/admin/components/AdminMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/admin/components/AdminMenu.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/article-list.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/article-list.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/collection/CollectArticleReqVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/collection/CollectArticleReqVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/collection/FindCollectionArticlePageListReqVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/collection/FindCollectionArticlePageListReqVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/collection/FindCollectionDirectoryPageListReqVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/collection/FindCollectionDirectoryPageListReqVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/collection/RemoveArticleFromCollectionReqVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/collection/RemoveArticleFromCollectionReqVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminCollectionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminCollectionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/enums/ResponseCodeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/enums/ResponseCodeEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/article-detail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/article-detail.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/router/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -76,6 +72,9 @@
         <option name="userSettingsFile" value="E:\java_tools\maven\apache-maven-3.9.9\conf\settings.xml" />
       </MavenGeneralSettings>
     </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -284,15 +283,7 @@
       <workItem from="1766827449178" duration="4041000" />
       <workItem from="1766832229079" duration="7609000" />
       <workItem from="1766845417888" duration="23911000" />
-      <workItem from="1766899132338" duration="18584000" />
-    </task>
-    <task id="LOCAL-00029" summary="项目启动任务：初始化 Lucene 文章索引">
-      <option name="closed" value="true" />
-      <created>1765872481570</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1765872481570</updated>
+      <workItem from="1766899132338" duration="25652000" />
     </task>
     <task id="LOCAL-00030" summary="中文分词检索接口">
       <option name="closed" value="true" />
@@ -678,7 +669,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766918622582</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="后台收藏夹功能">
+      <option name="closed" value="true" />
+      <created>1766925675897</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1766925675897</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -732,7 +731,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="前台标签功能完善" />
     <MESSAGE value="后台分类功能完善" />
     <MESSAGE value="前台分类功能后端成功" />
     <MESSAGE value="前台分类功能完善结束" />
@@ -757,7 +755,8 @@
     <MESSAGE value="前台文章详情" />
     <MESSAGE value="前台点赞功能" />
     <MESSAGE value="后台点赞功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="后台点赞功能" />
+    <MESSAGE value="后台收藏夹功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="后台收藏夹功能" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

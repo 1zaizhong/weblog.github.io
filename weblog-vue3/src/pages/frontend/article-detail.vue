@@ -149,14 +149,29 @@
         </span>
     </div>
 
-    <div class="flex flex-col items-center gap-2">
-        <button class="w-16 h-16 rounded-full border border-gray-100 bg-gray-50 text-gray-300 cursor-not-allowed flex items-center justify-center">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
-            </svg>
-        </button>
-        <span class="text-sm text-gray-300">收藏</span>
+    <div class="flex items-center cursor-pointer hover:text-blue-600" @click="showCollectDialog">
+    <el-icon size="18"><Star /></el-icon>
+    <span class="ml-1">收藏</span>
     </div>
+    <el-dialog v-model="collectDialogVisible" title="选择收藏夹" width="400px" center>
+    <el-form label-width="80px">
+        <el-form-item label="收藏夹">
+            <el-select v-model="selectedDirectoryId" placeholder="请选择收藏夹" class="w-full">
+                <el-option 
+                    v-for="item in directories" 
+                    :key="item.id" 
+                    :label="item.name" 
+                    :value="item.id" 
+                />
+            </el-select>
+        </el-form-item>
+    </el-form>
+    <template #footer>
+        <el-button @click="collectDialogVisible = false">取消</el-button>
+        <el-button type="primary" :loading="collectLoading" @click="handleCollect">确认收藏</el-button>
+    </template>
+</el-dialog>
+
 </div>
 
     
@@ -252,6 +267,7 @@ import { initTooltips } from 'flowbite'
 import Comment from '@/components/Comment.vue'
 import { showMessage } from '@/composables/util'
 import { useDark } from '@vueuse/core'
+import { getWebCollectionDirectoryList, collectArticle } from '@/api/frontend/collection'
 
 // 是否是暗黑模式
 const isDark = useDark()
@@ -265,6 +281,7 @@ const route = useRoute()
 const router = useRouter()
 // 路由传递过来的文章 ID
 console.log(route.params.articleId)
+const articleId = route.params.articleId
 
 // 文章数据
 const article = ref({})
@@ -278,7 +295,68 @@ const getLoginUserId = () => {
     }
     return null
 }
+// 1. 弹窗相关响应式数据
+const collectDialogVisible = ref(false)
+const collectLoading = ref(false)
+const directories = ref([])
+const selectedDirectoryId = ref(null)
 
+// 2. 修改：点击“收藏”按钮逻辑
+const showCollectDialog = () => {
+    // 使用你封装好的函数获取具体的 ID
+    const loginUserId = getLoginUserId()
+    
+    if (!loginUserId) {
+        showMessage('请先登录后再收藏', 'warning')
+        return
+    }
+    
+    // 获取用户的收藏夹列表，传入具体的 ID 数字
+    getWebCollectionDirectoryList(loginUserId).then(res => {
+        if (res.success) {
+            directories.value = res.data
+            if (directories.value && directories.value.length > 0) {
+                collectDialogVisible.value = true
+            } else {
+                showMessage('你还没有收藏夹，请先在后台创建', 'warning')
+            }
+        } else {
+            showMessage(res.message || '获取收藏夹失败', 'error')
+        }
+    }).catch(err => {
+        console.error('获取收藏夹请求失败:', err)
+    })
+}
+
+// 3. 修改：提交收藏逻辑
+const handleCollect = () => {
+    const loginUserId = getLoginUserId()
+
+    if (!selectedDirectoryId.value) {
+        showMessage('请选择收藏夹', 'warning')
+        return
+    }
+
+    collectLoading.value = true
+    const data = {
+        articleId: Number(articleId), // 确保是数字
+        directoryId: selectedDirectoryId.value,
+        userId: loginUserId // 传入具体的 ID 数字
+    }
+
+    collectArticle(data).then(res => {
+        if (res.success) {
+            showMessage('收藏成功')
+            collectDialogVisible.value = false
+            // 收藏成功后清空选择，防止下次打开还在
+            selectedDirectoryId.value = null 
+        } else {
+            showMessage(res.message, 'error')
+        }
+    }).finally(() => {
+        collectLoading.value = false
+    })
+}
 // 获取文章详情
 function refreshArticleDetail(articleId) {
    //那用户ID

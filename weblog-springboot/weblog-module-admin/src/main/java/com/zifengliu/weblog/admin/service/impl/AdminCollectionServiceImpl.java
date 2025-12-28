@@ -22,8 +22,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -113,17 +115,32 @@ public class AdminCollectionServiceImpl implements AdminCollectionService {
 
     @Override
     public PageResponse findCollectionArticlePageList(FindCollectionArticlePageListReqVO reqVO) {
+        // 1. 参数校验
+        if (reqVO.getDirectoryId() == null) {
+           throw  new BizException(ResponseCodeEnum.Directory_NOT_FOUND);
+        }
+        Long current = reqVO.getCurrent();
+        Long size = reqVO.getSize();
         Long userId = getLoginUserId();
+        Long directoryId = reqVO.getDirectoryId();
+
+        log.info("查询收藏夹文章，目录ID: {}, 用户ID: {}", directoryId, userId);
+        System.out.println();
 
         // 1. 分页查询关联表
-        Page<CollectionArticleRelDO> page = new Page<>(reqVO.getCurrent(), reqVO.getSize());
+        Page<CollectionArticleRelDO> page = new Page<>(current, size);
         relMapper.selectPage(page, Wrappers.<CollectionArticleRelDO>lambdaQuery()
-                .eq(CollectionArticleRelDO::getDirectoryId, reqVO.getDirectoryId())
+                .eq(CollectionArticleRelDO::getDirectoryId, directoryId)
                 .eq(CollectionArticleRelDO::getUserId, userId)
                 .orderByDesc(CollectionArticleRelDO::getCreateTime));
+        // 拿到记录条数
+        List<CollectionArticleRelDO> records = page.getRecords();
+        if (CollectionUtils.isEmpty(records)) {
+            return PageResponse.success(page, Collections.emptyList());
+        }
 
         // 2. 转换为含有文章详情的 VO
-        List<FindCollectionArticlePageListRspVO> vos = page.getRecords().stream().map(rel -> {
+        List<FindCollectionArticlePageListRspVO> vos = records.stream().map(rel -> {
             ArticleDO article = articleMapper.selectById(rel.getArticleId());
             return FindCollectionArticlePageListRspVO.builder()
                     .articleId(rel.getArticleId())

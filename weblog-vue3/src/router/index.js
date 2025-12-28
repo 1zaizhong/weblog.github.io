@@ -162,7 +162,7 @@ const routes = [
             {
                 path: "/admin/collection/article",
                 component: () => import("@/pages/admin/collection-article.vue"),
-                meta: { title: '收藏内容' }
+                meta: { title: '文章收藏' }
             },
             {
                 path: "/admin/comment/list",

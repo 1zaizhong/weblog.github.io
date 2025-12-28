@@ -48,6 +48,7 @@ public enum ResponseCodeEnum implements BaseExceptionInterface {
     URL_ID_NO_FOUND("20020", "评论对应的文章作者ID没找到"),
     AUTHOR_NO_FOUND("20021", "新博主，之前未登录"),
     USERNAME_HAS_EXISTED("20022", "用户名已存在"),
+    Directory_NOT_FOUND("20023", "该收藏夹不存在"),
     WIKI_NOT_FOUND("20013", "该知识库不存在");
 
 
