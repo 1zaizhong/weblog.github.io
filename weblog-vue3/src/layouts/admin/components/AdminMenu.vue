@@ -26,6 +26,9 @@
 import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useMenuStore } from '@/stores/menu'
+import { useUserStore } from '@/stores/user'
+
+const userStore = useUserStore()
 
 const menuStore = useMenuStore()
 
@@ -43,7 +46,8 @@ const handleSelect = (path) => {
     router.push(path)
 }
 
-const menus = [
+
+const allMenus = [
     {
         'name': '仪表盘',
         'icon': 'Monitor',
@@ -94,6 +98,20 @@ const menus = [
         'path': '/admin/blog/settings',
     },
 ]
+
+const menus = computed(() => {
+    const userInfo = userStore.userInfo
+    console.log("当前登录用户信息:", userInfo)
+    
+    return allMenus.filter(item => {
+        if (item.name === '用户管理') {
+        
+            return userInfo.userId == 1 || userInfo.username === 'admin'
+        }
+        // 其他菜单非管理员也能看
+        return true
+    })
+})
 </script>
 
 <style>

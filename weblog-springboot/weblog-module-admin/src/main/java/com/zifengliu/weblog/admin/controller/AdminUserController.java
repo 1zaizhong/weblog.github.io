@@ -60,7 +60,7 @@ public class AdminUserController {
     }
     // ：渲染全部用户
     @PostMapping("/user/list/all")
-    @ApiOperation(value = "获取除管理员外的全部用户列表")
+    @ApiOperation(value = "获取用户列表")
     @ApiOperationLog(description = "用于后台用户管理初始化渲染")
     public Response findAllUsers() {
         return userService.findAllUsersExceptAdmin();
@@ -68,8 +68,8 @@ public class AdminUserController {
 
     // 按名搜索
     @PostMapping("/user/search")
-    @ApiOperation(value = "根据用户名模糊搜索用户")
-    @ApiOperationLog(description = "根据用户名模糊搜索用户")
+    @ApiOperation(value = "模糊搜索用户")
+    @ApiOperationLog(description = "模糊搜索用户")
     public Response searchUser(@RequestBody FindUserPageListReqVO reqVO) {
         return userService.findUsersByUsername(reqVO.getUsername());
     }

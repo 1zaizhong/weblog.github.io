@@ -204,8 +204,9 @@ const isAdmin = computed(() => {
         const userObj = JSON.parse(userStr)
         //拿到id
         const userID = userObj.userInfo?.userID
-        return userID === 1
-    }
+        const username = userObj.userInfo?.username
+        return userID === 1 || username === 'admin'
+        }
     return false
 })
 </script>

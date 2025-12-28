@@ -56,7 +56,16 @@ public class AdminArticleServiceImpl implements AdminArticleService {
     private ApplicationEventPublisher eventPublisher;
     @Autowired
     private  UserMapper userMapper;
-
+    //登录人的id
+    private Long getLoginUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
+                .eq(UserDO::getUsername, authentication.getName()));
+        if (userDO == null) {
+            throw new BizException(ResponseCodeEnum.USER_NOT_FOUND);
+        }
+        return userDO.getUserId();
+    }
     /*
     * 发布文章
     * @param publishArticleReqVO
@@ -65,9 +74,10 @@ public class AdminArticleServiceImpl implements AdminArticleService {
     @Override
     @Transactional(rollbackFor =  Exception.class)
     public Response publishArticle(PublishArticleReqVO publishArticleReqVO) {
-       //VO 转 ArticleDO 并保存
         // 1. 获取当前发帖人 ID
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
         UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery().eq(UserDO::getUsername, username));
 
         // 2. 构建 ArticleDO 时，把 userId 塞进去
@@ -99,10 +109,10 @@ public class AdminArticleServiceImpl implements AdminArticleService {
 
         //校验提交时的分类是否存在
         CategoryDO categoryDO = categoryMapper.selectById(categoryId);
-        if(Objects.isNull(categoryDO)){
-            log.warn("分类不存在,categoryId:{}",categoryId);
-            throw new BizException(ResponseCodeEnum.CATEGORY_NOT_EXISTED);
+        if (categoryDO == null ) {
+            throw  new BizException(ResponseCodeEnum.CATEGORY_NOT_EXISTED);
         }
+
 
         //VO 转 ArticleCategoryRelDO 并保存
         ArticleCategoryRelDO articleCategoryRelDO = ArticleCategoryRelDO.builder()

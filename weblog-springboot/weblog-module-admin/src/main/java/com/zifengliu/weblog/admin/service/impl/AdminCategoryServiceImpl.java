@@ -181,8 +181,17 @@ public class AdminCategoryServiceImpl  implements AdminCategoryService {
     * */
     @Override
     public Response findeCategorySelectList() {
-        //查询所有标签
-        List<CategoryDO> categoryDOS = categoryMapper.selectList(null);
+        // 1. 获取当前登录用户 ID
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        UserDO userDO = userMapper.findByUsername(username);
+        Long userId = userDO.getUserId();
+
+        // 2. 仅查询属于该用户的分类 (且未删除)
+        List<CategoryDO> categoryDOS = categoryMapper.selectList(Wrappers.<CategoryDO>lambdaQuery()
+                .eq(CategoryDO::getUserId, userId) // 关键过滤
+                .eq(CategoryDO::getIsDeleted, false)
+                .orderByDesc(CategoryDO::getCreateTime));
 
         //DO 转 VO
         List<SelectRspVO> selectRspVOS = null;

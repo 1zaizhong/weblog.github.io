@@ -94,6 +94,7 @@ public class AdminTagServiceImpl extends ServiceImpl<TagMapper, TagDO> implement
      * */
     @Override
     public PageResponse findTagPageList(FindTagPageListReqVO findTagePageListReqVO) {
+
         Long loginUserId = getLoginUserId();
 
         // 特权逻辑：如果是 ID 为 1 的 Admin，则 userId 传 null 以查询全表
@@ -189,10 +190,12 @@ public class AdminTagServiceImpl extends ServiceImpl<TagMapper, TagDO> implement
     * */
     @Override
     public Response findTagSelectList() {
-        Long loginUserId = getLoginUserId();
-        // 只有发布文章时需要此列表，用户发布文章只能选自己的标签（或者是全站公共标签，这里暂定私有）
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long userId = userMapper.findByUsername(authentication.getName()).getUserId();
+
         List<TagDO> tagDOS = tagMapper.selectList(Wrappers.<TagDO>lambdaQuery()
-                .eq(TagDO::getUserId, loginUserId));
+                .eq(TagDO::getUserId, userId)
+                .orderByDesc(TagDO::getCreateTime));
 
         List<SelectRspVO> vos = null;
         if (!CollectionUtils.isEmpty(tagDOS)) {
