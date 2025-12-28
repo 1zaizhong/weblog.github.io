@@ -171,6 +171,13 @@ const routes = [
                     title: '评论管理'
                 }
             },
+            {
+                path: "/admin/user/list",
+                component: () => import("@/pages/admin/user-list.vue"), 
+                meta: {
+                    title: '用户管理'
+                }
+            },
         ]
         
     }

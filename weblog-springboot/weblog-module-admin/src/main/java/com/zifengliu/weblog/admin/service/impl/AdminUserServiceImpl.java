@@ -1,19 +1,20 @@
 package com.zifengliu.weblog.admin.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.zifengliu.weblog.admin.model.vo.user.AddUserReqVO;
-import com.zifengliu.weblog.admin.model.vo.user.DeleteUserReqVO;
-import com.zifengliu.weblog.admin.model.vo.user.FindUserInfoRspVO;
-import com.zifengliu.weblog.admin.model.vo.user.UpdateAdminUserPasswordReqVO;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zifengliu.weblog.admin.model.vo.user.*;
 import com.zifengliu.weblog.admin.service.AdminUserService;
 import com.zifengliu.weblog.common.domain.dos.*;
 import com.zifengliu.weblog.common.domain.mapper.*;
 
 import com.zifengliu.weblog.common.enums.ResponseCodeEnum;
 import com.zifengliu.weblog.common.exception.BizException;
+import com.zifengliu.weblog.common.utils.PageResponse;
 import com.zifengliu.weblog.common.utils.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -68,6 +69,59 @@ public class AdminUserServiceImpl implements AdminUserService {
         }
         return userDO.getUserId();
     }
+
+
+    /**
+     * 获取除管理员（ID=1）以外的所有用户
+     * 用于后台用户管理列表的初始渲染
+     */
+    @Override
+    public Response findAllUsersExceptAdmin() {
+        // 查询条件：userId 不等于 1，且未被逻辑删除
+        List<UserDO> userDOS = userMapper.selectList(Wrappers.<UserDO>lambdaQuery()
+                .ne(UserDO::getUserId, 1L)
+                .eq(UserDO::getIsDeleted, false)
+                .orderByDesc(UserDO::getCreateTime)); // 按注册时间倒序
+
+        // 转换为 VO，屏蔽敏感信息（如密码）
+        List<FindUserPageListRspVO> vos = userDOS.stream().map(userDO ->
+                FindUserPageListRspVO.builder()
+                        .userId(userDO.getUserId())
+                        .username(userDO.getUsername())
+                        .createTime(userDO.getCreateTime())
+                        .build()
+        ).collect(Collectors.toList());
+
+        return Response.success(vos);
+    }
+
+    /**
+     * 根据用户名模糊查询
+     * @param username 前端传来的搜索关键字
+     */
+    @Override
+    public Response findUsersByUsername(String username) {
+        if (StringUtils.isBlank(username)) {
+            return findAllUsersExceptAdmin(); // 如果搜索框为空，直接返回全量列表
+        }
+
+        List<UserDO> userDOS = userMapper.selectList(Wrappers.<UserDO>lambdaQuery()
+                .ne(UserDO::getUserId, 1L) // 搜索结果依然排除管理员
+                .eq(UserDO::getIsDeleted, false)
+                .like(UserDO::getUsername, username) // 模糊匹配
+                .orderByDesc(UserDO::getCreateTime));
+
+        List<FindUserPageListRspVO> vos = userDOS.stream().map(userDO ->
+                FindUserPageListRspVO.builder()
+                        .userId(userDO.getUserId())
+                        .username(userDO.getUsername())
+                        .createTime(userDO.getCreateTime())
+                        .build()
+        ).collect(Collectors.toList());
+
+        return Response.success(vos);
+    }
+
     /**
      * 修改密码
      * @param updateAdminUserPasswordReqVO

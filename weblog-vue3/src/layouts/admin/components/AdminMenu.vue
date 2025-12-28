@@ -84,6 +84,11 @@ const menus = [
         'path': '/admin/comment/list',
     },
     {
+    'name': '用户管理',
+    'icon': 'User',
+    'path': '/admin/user/list',
+},
+    {
         'name': '博客设置',
         'icon': 'Setting',
         'path': '/admin/blog/settings',

@@ -2,6 +2,7 @@ package com.zifengliu.weblog.admin.service;
 
 import com.zifengliu.weblog.admin.model.vo.user.AddUserReqVO;
 import com.zifengliu.weblog.admin.model.vo.user.DeleteUserReqVO;
+
 import com.zifengliu.weblog.admin.model.vo.user.UpdateAdminUserPasswordReqVO;
 import com.zifengliu.weblog.common.utils.Response;
 
@@ -36,4 +37,10 @@ public interface AdminUserService {
     * 删除用户
     * */
     Response deleteUser(DeleteUserReqVO deleteUserReqVO);
+
+    // 1. 获取除管理员外的所有用户列表（用于表格初始化）
+    Response findAllUsersExceptAdmin();
+
+    // 2. 根据用户名模糊查询用户
+    Response findUsersByUsername(String username);
 }

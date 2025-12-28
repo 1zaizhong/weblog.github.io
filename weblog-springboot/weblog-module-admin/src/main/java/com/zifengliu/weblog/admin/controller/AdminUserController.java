@@ -2,9 +2,11 @@ package com.zifengliu.weblog.admin.controller;
 
 import com.zifengliu.weblog.admin.model.vo.user.AddUserReqVO;
 import com.zifengliu.weblog.admin.model.vo.user.DeleteUserReqVO;
+import com.zifengliu.weblog.admin.model.vo.user.FindUserPageListReqVO;
 import com.zifengliu.weblog.admin.model.vo.user.UpdateAdminUserPasswordReqVO;
 import com.zifengliu.weblog.admin.service.AdminUserService;
 import com.zifengliu.weblog.common.aspect.ApiOperationLog;
+import com.zifengliu.weblog.common.utils.PageResponse;
 import com.zifengliu.weblog.common.utils.Response;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -55,6 +57,21 @@ public class AdminUserController {
     @ApiOperationLog(description = "删除用户及其关联数据")
     public Response deleteUser(@RequestBody @Validated DeleteUserReqVO deleteUserReqVO) {
         return userService.deleteUser(deleteUserReqVO);
+    }
+    // ：渲染全部用户
+    @PostMapping("/user/list/all")
+    @ApiOperation(value = "获取除管理员外的全部用户列表")
+    @ApiOperationLog(description = "用于后台用户管理初始化渲染")
+    public Response findAllUsers() {
+        return userService.findAllUsersExceptAdmin();
+    }
+
+    // 按名搜索
+    @PostMapping("/user/search")
+    @ApiOperation(value = "根据用户名模糊搜索用户")
+    @ApiOperationLog(description = "根据用户名模糊搜索用户")
+    public Response searchUser(@RequestBody FindUserPageListReqVO reqVO) { // 使用 VO 接收
+        return userService.findUsersByUsername(reqVO.getUsername());
     }
 
 }
