@@ -101,16 +101,26 @@ public class AdminUserServiceImpl implements AdminUserService {
      */
     @Override
     public Response findUsersByUsername(String username) {
-        if (StringUtils.isBlank(username)) {
-            return findAllUsersExceptAdmin(); // 如果搜索框为空，直接返回全量列表
+        // 1. 构造查询条件
+        LambdaQueryWrapper<UserDO> wrapper = new LambdaQueryWrapper<>();
+
+        // 排除管理员 (ID=1)
+        wrapper.ne(UserDO::getUserId, 1L);
+        // 逻辑未删除
+        wrapper.eq(UserDO::getIsDeleted, false);
+
+        //则进行模糊匹配 (username LIKE '%关键字%')
+        if (StringUtils.isNotBlank(username)) {
+            wrapper.like(UserDO::getUsername, username);
         }
 
-        List<UserDO> userDOS = userMapper.selectList(Wrappers.<UserDO>lambdaQuery()
-                .ne(UserDO::getUserId, 1L) // 搜索结果依然排除管理员
-                .eq(UserDO::getIsDeleted, false)
-                .like(UserDO::getUsername, username) // 模糊匹配
-                .orderByDesc(UserDO::getCreateTime));
+        // 按创建时间倒序排
+        wrapper.orderByDesc(UserDO::getCreateTime);
 
+        // 2. 执行查询
+        List<UserDO> userDOS = userMapper.selectList(wrapper);
+
+        // 3. 转换为 VO 列表返回（复用你之前的 FindUserPageListRspVO）
         List<FindUserPageListRspVO> vos = userDOS.stream().map(userDO ->
                 FindUserPageListRspVO.builder()
                         .userId(userDO.getUserId())
