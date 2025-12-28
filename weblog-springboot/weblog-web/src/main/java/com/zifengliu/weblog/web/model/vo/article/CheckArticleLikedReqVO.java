@@ -10,17 +10,16 @@ import javax.validation.constraints.NotNull;
 /**
  * @author 粟英朝
  * @version 0.0.3
- * @date 2025/12/28 下午3:16
- * @description 前台点赞VO
+ * @date 2025/12/28 下午3:30
+ * @description 检查是否点赞了
  **/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LikeArticleReqVO {
+public class CheckArticleLikedReqVO {
     @NotNull(message = "文章ID不能为空")
     private Long articleId;
 
-    @NotNull(message = "用户ID不能为空")
-    private Long userId; // 前台显式传入当前登录人ID
+    private Long userId; // 可为空，未登录即为未点赞
 }

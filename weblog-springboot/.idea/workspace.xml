@@ -5,10 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/article/FindLikeArticlePageListRspVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/ArticleLikeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminArticleLikeServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/ArticleLikeMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/ArticleLikeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/article/CheckArticleLikedReqVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/ArticleLikeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArticleLikeServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/article/FindArticleDetailReqVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/article/FindArticleDetailReqVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/article/FindIndexArticlePageListReqVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/article/FindIndexArticlePageListReqVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArticleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArticleServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/article/LikeArticleReqVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/article/LikeArticleReqVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/api/frontend/article.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/frontend/article.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/article-detail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/article-detail.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -270,15 +278,7 @@
       <workItem from="1766827449178" duration="4041000" />
       <workItem from="1766832229079" duration="7609000" />
       <workItem from="1766845417888" duration="23911000" />
-      <workItem from="1766899132338" duration="4190000" />
-    </task>
-    <task id="LOCAL-00025" summary="后台首页设计（静态资源）">
-      <option name="closed" value="true" />
-      <created>1765636622674</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1765636622674</updated>
+      <workItem from="1766899132338" duration="6735000" />
     </task>
     <task id="LOCAL-00026" summary="首页渲染数据">
       <option name="closed" value="true" />
@@ -664,7 +664,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766871153998</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="前台文章详情">
+      <option name="closed" value="true" />
+      <created>1766906244953</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1766906244954</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -718,7 +726,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="后台服务端标签功能" />
     <MESSAGE value="后台标签功能" />
     <MESSAGE value="前台标签功能" />
     <MESSAGE value="前台标签功能完善" />
@@ -743,7 +750,8 @@
     <MESSAGE value="分页功能" />
     <MESSAGE value="用户新增功能" />
     <MESSAGE value="博客设置卡片" />
-    <option name="LAST_COMMIT_MESSAGE" value="博客设置卡片" />
+    <MESSAGE value="前台文章详情" />
+    <option name="LAST_COMMIT_MESSAGE" value="前台文章详情" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
