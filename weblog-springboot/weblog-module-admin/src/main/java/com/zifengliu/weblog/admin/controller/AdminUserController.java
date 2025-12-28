@@ -70,7 +70,7 @@ public class AdminUserController {
     @PostMapping("/user/search")
     @ApiOperation(value = "根据用户名模糊搜索用户")
     @ApiOperationLog(description = "根据用户名模糊搜索用户")
-    public Response searchUser(@RequestBody FindUserPageListReqVO reqVO) { // 使用 VO 接收
+    public Response searchUser(@RequestBody FindUserPageListReqVO reqVO) {
         return userService.findUsersByUsername(reqVO.getUsername());
     }
 
