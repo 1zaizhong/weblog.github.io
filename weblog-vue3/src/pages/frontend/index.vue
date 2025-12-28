@@ -158,6 +158,13 @@ const total = ref(0)
 const pages = ref(0)
 
 const pagesList = ref([])
+// n拿id
+const userStr = localStorage.getItem('user')
+let loginUserId = null
+if (userStr) {
+    const userObj = JSON.parse(userStr)
+    loginUserId = userObj.userInfo?.userID // 拿到当前登录人的 ID
+}
 
 function getArticles(currentNo) {
     // 上下限校验：如果点击的页码超出范围，则不跳转
@@ -167,6 +174,7 @@ function getArticles(currentNo) {
     getArticlePageList({
         current: currentNo, 
         size: size.value,
+        userId: loginUserId
     }).then((res) => {
         if (res.success) {
             articles.value = res.data
@@ -185,7 +193,7 @@ function getArticles(currentNo) {
 getArticles(current.value)
 
 // 跳转文章详情页
-const goArticleDetailPage = (articleId) => {
+const goArticleDetailPage = (articleId, loginUserId) => {
     router.push('/article/' + articleId)
 }
 

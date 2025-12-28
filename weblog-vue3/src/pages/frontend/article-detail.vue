@@ -242,7 +242,18 @@ const article = ref({})
 
 // 获取文章详情
 function refreshArticleDetail(articleId) {
-    getArticleDetail(route.params.articleId).then((res) => {
+   //那用户ID
+    const userStr = localStorage.getItem('user')
+    let loginUserId = null
+    if (userStr) {
+        try {
+            const userObj = JSON.parse(userStr)
+            loginUserId = userObj.userInfo?.userID
+        } catch (e) {
+            console.error('解析用户信息失败', e)
+        }
+    }
+    getArticleDetail(route.params.articleId, loginUserId).then((res) => {
         // 该文章不存在(错误码为 20010)
         if (!res.success && res.errorCode == '20010') {
             // 手动跳转 404 页面

@@ -1,5 +1,6 @@
 package com.zifengliu.weblog.web.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
@@ -64,21 +65,29 @@ public class ArticleServiceImpl implements ArticleService {
         // 1. 获取分页参数
         Long current = findIndexArticlePageListReqVO.getCurrent();
         Long size = findIndexArticlePageListReqVO.getSize();
-
+        //y用户id
+        Long UserId = findIndexArticlePageListReqVO.getUserId();
         // 显式创建 Page 对象，MyBatis Plus 需要这个对象来承载分页结果和 Total 总数
         Page<ArticleDO> page = new Page<>(findIndexArticlePageListReqVO.getCurrent(), findIndexArticlePageListReqVO.getSize());
+        LambdaQueryWrapper<ArticleDO> wrapper = new LambdaQueryWrapper<>();
+      //查询条件：根据用户或者公布
+        if (Objects.nonNull(UserId)) {
+            // 使用 .and(w -> ...) 确保 OR 逻辑被括号包裹，不干扰其他查询条件
+            wrapper.and(w -> w.eq(ArticleDO::getStatus, 2) // 2 为已发布
+                    .or()
+                    .eq(ArticleDO::getUserId, UserId));
+        } else {
+            // 如果前端没传 userId（用户未登录），则只能看到已发布的文章
+            wrapper.eq(ArticleDO::getStatus, 2);
+        }
+        //倒叙
+        wrapper.orderByDesc(ArticleDO::getWeight)
+                .orderByDesc(ArticleDO::getCreateTime);
 
         // 2. 分页查询文章主体记录
       //必须确保第一个参数是 Page 对象
-        Page<ArticleDO> articleDOPage = articleMapper.selectPageList(
-                page,    // <--- 这里的参数要和 Mapper 定义匹配
-                null,    // title
-                null,    // startDate
-                null,    // endDate
-                null,    // type
-                null,    // userId (全站查)
-                2        // status (只查已发布)
-        );
+        Page<ArticleDO> articleDOPage =   articleMapper.selectPage(page, wrapper);
+
         // 获取当前页的记录列表
         List<ArticleDO> articleDOS = articleDOPage.getRecords();
 
@@ -153,12 +162,22 @@ public class ArticleServiceImpl implements ArticleService {
         Long articleId = findArticleDetailReqVO.getArticleId();
 
         ArticleDO articleDO = articleMapper.selectById(articleId);
+        Long currentUserId = findArticleDetailReqVO.getUserId();
 
         // 判断文章是否存在
-        if (articleDO == null || Objects.equals(articleDO.getStatus(), 1)) {
+        if (articleDO == null) {
             throw new BizException(ResponseCodeEnum.ARTICLE_NOT_EXISTED);
         }
-
+          // 权限校验逻辑
+        // 如果文章是“私人/未发布”状态 (status == 1)
+        if (Objects.equals(articleDO.getStatus(), 1)) {
+            // 如果 (当前未登录) 或者 (当前登录人不是这篇文章的作者) -> 拦截
+            if (currentUserId == null || !Objects.equals(currentUserId, articleDO.getUserId())) {
+                log.warn("用户 {} 试图访问未发布文章 {}, 作者是 {}", currentUserId, articleId, articleDO.getUserId());
+                throw new BizException(ResponseCodeEnum.ARTICLE_NOT_EXISTED);
+            }
+            // 如果是作者本人，代码继续往下执行，不做拦截
+        }
 
         // 查询正文
         ArticleContentDO articleContentDO = articleContentMapper.selectByArticleId(articleId);

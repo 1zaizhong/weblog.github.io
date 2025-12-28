@@ -2,8 +2,10 @@ package com.zifengliu.weblog.web.model.vo.article;
 
 import com.zifengliu.weblog.common.model.BasePageQuery;
 import io.swagger.annotations.ApiModel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author: 粟英朝
@@ -11,7 +13,13 @@ import lombok.Data;
  * @description: 首页-文章分页
  **/
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
-@ApiModel(value = "首页查询文章分页 VO")
 public class FindIndexArticlePageListReqVO extends BasePageQuery {
+    private Long current;
+    private Long size;
+    private Long userId;
+
+
 }

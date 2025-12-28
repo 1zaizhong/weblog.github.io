@@ -1,27 +1,25 @@
 package com.zifengliu.weblog.web.model.vo.article;
 
-import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 
 /**
  * @author 粟英朝
  * @version 0.0.3
- * @date 2025/12/13 下午4:41
- * @description 查询文章详情 VO
+ * @date 2025/12/28 下午3:16
+ * @description
  **/
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ApiModel(value = "查询文章详情 VO")
-public class FindArticleDetailReqVO {
-    /**
-     * 文章 ID
-     */
+public class LikeArticleReqVO {
+    @NotNull(message = "文章ID不能为空")
     private Long articleId;
-    private Long userId;
+    private Long userId; // 前台传入当前登录人ID
 }
