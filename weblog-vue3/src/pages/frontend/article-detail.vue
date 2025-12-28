@@ -135,26 +135,32 @@
                         <div class="flex justify-center items-center gap-6 mt-14 mb-10">
                      
                  <!-- 点赞 -->       
-                <div class="flex flex-col items-center gap-2">
-                    <button @click="handleLike" 
-                            :class="[isLiked ? 'bg-red-50 text-red-500 border-red-200 shadow-sm' : 'bg-gray-50 text-gray-500 border-gray-100']"
-                            class="group w-14 h-14 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95">
-                        <svg class="w-7 h-7" :class="{ 'fill-current': isLiked }" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                        </svg>
-                    </button>
-                    <span class="text-xs" :class="isLiked ? 'text-red-500 font-medium' : 'text-gray-400'">{{ isLiked ? '已点赞' : '点赞' }}</span>
-                </div>
+               
+    <div class="flex flex-col items-center gap-2">
+        <button @click="handleLike" 
+                :class="[isLiked ? 'bg-red-50 text-red-500 border-red-200 shadow-inner' : 'bg-gray-50 text-gray-500 border-gray-100']"
+                class="w-16 h-16 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 group">
+            <svg class="w-8 h-8" :class="{ 'fill-current': isLiked }" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+        </button>
+        <span class="text-sm font-medium" :class="isLiked ? 'text-red-500' : 'text-gray-400'">
+            {{ article.likeNum || 0 }} 人点赞
+        </span>
+    </div>
 
     <div class="flex flex-col items-center gap-2">
-        <button class="w-14 h-14 rounded-full border border-gray-100 bg-gray-50 text-gray-400 cursor-not-allowed opacity-50 flex items-center justify-center">
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <button class="w-16 h-16 rounded-full border border-gray-100 bg-gray-50 text-gray-300 cursor-not-allowed flex items-center justify-center">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
             </svg>
         </button>
-        <span class="text-xs text-gray-400">收藏(待开发)</span>
+        <span class="text-sm text-gray-300">收藏</span>
     </div>
 </div>
+
+    
+
 
                         <!-- 上下篇 -->
                         <nav class="flex flex-row mt-7">
@@ -237,14 +243,14 @@ import TagListCard from '@/layouts/frontend/components/TagListCard.vue'
 import CategoryListCard from '@/layouts/frontend/components/CategoryListCard.vue'
 import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
 import Toc from '@/layouts/frontend/components/Toc.vue'
-import { getArticleDetail , likeArticle, checkArticleIsLiked} from '@/api/frontend/article'
+import { getArticleDetail, likeArticle, checkArticleIsLiked} from '@/api/frontend/article'
 import { useRoute, useRouter } from 'vue-router'
 import { ref, watch, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/tokyo-night-dark.css'
 import { initTooltips } from 'flowbite'
 import Comment from '@/components/Comment.vue'
-
+import { showMessage } from '@/composables/util'
 import { useDark } from '@vueuse/core'
 
 // 是否是暗黑模式
@@ -335,20 +341,48 @@ function refreshArticleDetail(articleId) {
 refreshArticleDetail(route.params.articleId)
 // 处理点赞点击事件
 const handleLike = () => {
-    const loginUserId = getLoginUserId()
-    
-    // 权限检查：未登录不能点赞
-    if (!loginUserId) {
-        showMessage('请先登录后再操作', 'warning')
+    const userStr = localStorage.getItem('user')
+    if (!userStr) {
+        showMessage('请先登录后再点赞', 'warning')
         return
     }
 
-    // 调用点赞/取消点赞接口
-    likeArticle(article.value.id || route.params.articleId, loginUserId).then(res => {
+    // 1.拿到 ID
+    const articleId = Number(route.params.articleId)
+    console.log('获取到的文章ID:', articleId)
+    if (!articleId) {
+        showMessage('文章数据加载中，请稍后再试', 'warning')
+        return
+    }
+
+    // 2. 拿到用户 ID
+    const loginUserId = JSON.parse(userStr).userInfo?.userID
+
+    // 3. 调用接口：注意这里必须传对象 { articleId, userId }
+    likeArticle({ articleId: articleId, userId: loginUserId }).then(res => {
         if (res.success) {
-            isLiked.value = !isLiked.value // 取反状态
-            showMessage(res.data) // 弹出后端返回的“点赞成功”或“取消点赞成功”
+            // 切换本地点赞状态
+            isLiked.value = !isLiked.value
+            
+            // 确保数字存在，防止出现 NaN
+            if (typeof article.value.likeNum !== 'number') {
+                article.value.likeNum = 0
+            }
+
+            // 实时更新页面的数字
+            if (isLiked.value) {
+                article.value.likeNum++
+            } else {
+                article.value.likeNum = Math.max(0, article.value.likeNum - 1)
+            }
+            
+            // res.data 是后端返回的“点赞成功”或“取消点赞成功”字符串
+            showMessage(res.data) 
+        } else {
+            showMessage(res.message, 'error')
         }
+    }).catch(err => {
+        console.error('点赞接口请求失败:', err)
     })
 }
 // 跳转分类文章列表页

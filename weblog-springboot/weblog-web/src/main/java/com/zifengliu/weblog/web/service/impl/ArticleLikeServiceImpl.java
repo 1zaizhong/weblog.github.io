@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zifengliu.weblog.common.domain.dos.ArticleLikeDO;
 import com.zifengliu.weblog.common.domain.mapper.ArticleLikeMapper;
+import com.zifengliu.weblog.common.domain.mapper.ArticleMapper;
 import com.zifengliu.weblog.common.utils.Response;
 import com.zifengliu.weblog.web.model.vo.article.CheckArticleLikedReqVO;
 import com.zifengliu.weblog.web.model.vo.article.LikeArticleReqVO;
@@ -30,32 +31,38 @@ public class ArticleLikeServiceImpl implements ArticleLikeService {
     @Autowired
     private ArticleLikeMapper articleLikeMapper;
 
+    @Autowired
+    private ArticleMapper articleMapper;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Response likeOrUnlikeArticle(LikeArticleReqVO reqVO) {
         Long userId = reqVO.getUserId();
         Long articleId = reqVO.getArticleId();
 
-        // 1. 查询是否已有记录
+        // 检查 t_article_like 表中是否存在该用户对该文章的点赞记录
         LambdaQueryWrapper<ArticleLikeDO> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(ArticleLikeDO::getArticleId, articleId)
                 .eq(ArticleLikeDO::getUserId, userId);
-
+        //查询有没有记录
         ArticleLikeDO existLike = articleLikeMapper.selectOne(wrapper);
-
-        // 2. 如果没有记录，执行“点赞”
         if (Objects.isNull(existLike)) {
             ArticleLikeDO likeDO = ArticleLikeDO.builder()
                     .articleId(articleId)
                     .userId(userId)
-                    .createTime(LocalDateTime.now())
+                    .createTime(LocalDateTime.now()) // 确保设置了创建时间
                     .build();
             articleLikeMapper.insert(likeDO);
 
+            // 文章表点赞数 +1
+            articleMapper.updateLikeNum(articleId, 1);
             return Response.success("点赞成功");
         } else {
-            // 3. 如果已有记录，执行“取消点赞”
+            // 4已存在 -> 取消点赞
             articleLikeMapper.deleteById(existLike.getId());
+
+            // 文章表点赞数 -1
+            articleMapper.updateLikeNum(articleId, -1);
             return Response.success("取消点赞成功");
         }
     }

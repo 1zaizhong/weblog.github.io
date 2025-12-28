@@ -206,4 +206,15 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
                 .build()
         ).collect(Collectors.toList());
     }
-}// }
+    /**
+     * 点赞功能
+     * @param articleId 文章ID
+     * @param step 步长（点赞为 1，取消为 -1）
+     */
+    default void updateLikeNum(Long articleId, Integer step) {
+        // UPDATE t_article SET like_num = like_num + #{step} WHERE id = #{articleId}
+        this.update(null, Wrappers.lambdaUpdate(ArticleDO.class)
+                .eq(ArticleDO::getId, articleId)
+                .setSql("like_num = like_num + " + step));
+    }
+}

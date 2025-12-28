@@ -71,5 +71,6 @@ public class FindArticleDetailRspVO {
      * 最后更新时间
      */
     private LocalDateTime updateTime;
-
+    //多少人Dianz
+    private Integer likeNum;
 }

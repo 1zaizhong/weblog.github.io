@@ -47,4 +47,5 @@ public class ArticleDO {
 
     private Long userId;
     private Integer status;
+    private Integer likeNum;
 }

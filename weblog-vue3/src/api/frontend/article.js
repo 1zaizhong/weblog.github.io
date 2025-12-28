@@ -14,8 +14,8 @@ export function getArticleDetail(articleId, userId) {
 }
 
 // 点赞/取消点赞文章
-export function likeArticle(articleId, userId) {
-    return axios.post('/article/like', { articleId, userId })
+export function likeArticle(data) {
+    return axios.post('/article/like', data)
 }
 
 // 检查是否已点赞
