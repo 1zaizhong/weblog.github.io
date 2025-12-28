@@ -624,12 +624,12 @@ const handleStatusChange = (row) => {
     // 构造请求参数
     const data = {
         id: row.id,
-        status: row.status // 这里的 status 已经是开关切换后的新值 (1 或 2)
+        status: row.status 
     }
 
    
     updateArticleStatus(data).then((res) => {
-        // 1. 无论成功失败，最好刷新一次列表数据，保证前端状态与后端同步
+        //无论成功失败，刷新一次列表数据，保证前端状态与后端同步
         getTableData()
 
         if (res.success == false) {

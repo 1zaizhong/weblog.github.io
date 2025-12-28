@@ -68,6 +68,15 @@ const menus = [
         'name': '知识库管理',
         'icon': 'Collection',
         'path': '/admin/wiki/list',
+    },{
+        'name': '点赞管理',
+        'icon': 'Star', 
+        'path': '/admin/like/list',
+    },
+    {
+        'name': '收藏管理',
+        'icon': 'Collection', // 或者使用 'Folder'
+        'path': '/admin/collection/list',
     },
     {
         'name': '评论管理',

@@ -150,6 +150,21 @@ const routes = [
                 }
             },
             {
+                path: "/admin/like/list",
+                component: () => import("@/pages/admin/like.vue"),
+                meta: { title: '点赞管理' }
+            },
+            {
+                path: "/admin/collection/list",
+                component: () => import("@/pages/admin/collection-list.vue"),
+                meta: { title: '收藏管理' }
+            },
+            {
+                path: "/admin/collection/article",
+                component: () => import("@/pages/admin/collection-article.vue"),
+                meta: { title: '收藏内容' }
+            },
+            {
                 path: "/admin/comment/list",
                 component: AdminCommentList,
                 meta: {
