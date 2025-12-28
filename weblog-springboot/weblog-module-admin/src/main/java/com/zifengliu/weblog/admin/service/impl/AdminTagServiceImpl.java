@@ -1,16 +1,12 @@
 package com.zifengliu.weblog.admin.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zifengliu.weblog.admin.model.vo.category.FindCategoryPageListReqVO;
-import com.zifengliu.weblog.admin.model.vo.category.FindCategoryPageListRspVO;
 import com.zifengliu.weblog.admin.model.vo.tag.*;
 import com.zifengliu.weblog.admin.service.AdminTagService;
 import com.zifengliu.weblog.common.domain.dos.ArticleTagRelDO;
-import com.zifengliu.weblog.common.domain.dos.TagDO;
 import com.zifengliu.weblog.common.domain.dos.TagDO;
 import com.zifengliu.weblog.common.domain.dos.UserDO;
 import com.zifengliu.weblog.common.domain.mapper.ArticleTagRelMapper;
@@ -21,13 +17,11 @@ import com.zifengliu.weblog.common.exception.BizException;
 import com.zifengliu.weblog.common.model.vo.SelectRspVO;
 import com.zifengliu.weblog.common.utils.PageResponse;
 import com.zifengliu.weblog.common.utils.Response;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -56,7 +50,7 @@ public class AdminTagServiceImpl extends ServiceImpl<TagMapper, TagDO> implement
         UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
                 .eq(UserDO::getUsername, authentication.getName()));
         if (userDO == null) {
-            throw new BizException(ResponseCodeEnum.USERNAME_NOT_FOUND);
+            throw new BizException(ResponseCodeEnum.USER_NOT_FOUND);
         }
         return userDO.getUserId();
     }

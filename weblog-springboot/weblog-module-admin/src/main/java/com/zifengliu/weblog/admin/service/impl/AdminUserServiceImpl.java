@@ -1,24 +1,30 @@
 package com.zifengliu.weblog.admin.service.impl;
 
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zifengliu.weblog.admin.model.vo.user.AddUserReqVO;
+import com.zifengliu.weblog.admin.model.vo.user.DeleteUserReqVO;
 import com.zifengliu.weblog.admin.model.vo.user.FindUserInfoRspVO;
 import com.zifengliu.weblog.admin.model.vo.user.UpdateAdminUserPasswordReqVO;
 import com.zifengliu.weblog.admin.service.AdminUserService;
-import com.zifengliu.weblog.common.domain.dos.UserDO;
-import com.zifengliu.weblog.common.domain.mapper.UserMapper;
+import com.zifengliu.weblog.common.domain.dos.*;
+import com.zifengliu.weblog.common.domain.mapper.*;
 
 import com.zifengliu.weblog.common.enums.ResponseCodeEnum;
+import com.zifengliu.weblog.common.exception.BizException;
 import com.zifengliu.weblog.common.utils.Response;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Security;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 /**
@@ -27,6 +33,7 @@ import java.util.Objects;
  * @date 2025/3/27 下午7:13
  * @description
  **/
+@Slf4j
 @Service
 public class AdminUserServiceImpl implements AdminUserService {
 
@@ -34,7 +41,33 @@ public class AdminUserServiceImpl implements AdminUserService {
     private UserMapper userMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private ArticleMapper articleMapper;
+    @Autowired
+    private CategoryMapper categoryMapper;
+    @Autowired
+    private TagMapper tagMapper;
+    @Autowired
+    private WikiMapper wikiMapper;
+    @Autowired
+    private CollectionDirectoryMapper directoryMapper;
+    @Autowired
+    private CollectionArticleRelMapper relMapper;
+    @Autowired
+    private  ArticleLikeMapper articleLikeMapper;
+    @Autowired
+    private ArticleContentMapper articleContentMapper;
 
+    //nado当前登录的用户id
+    private Long getLoginUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
+                .eq(UserDO::getUsername, authentication.getName()));
+        if (userDO == null) {
+            throw new BizException(ResponseCodeEnum.USER_NOT_FOUND);
+        }
+        return userDO.getUserId();
+    }
     /**
      * 修改密码
      * @param updateAdminUserPasswordReqVO
@@ -52,7 +85,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         // 更新到数据库
         int count = userMapper.updatePasswordByUsername(username, encodePassword);
 
-        return count == 1 ? Response.success() : Response.fail(ResponseCodeEnum.USERNAME_NOT_FOUND);
+        return count == 1 ? Response.success() : Response.fail(ResponseCodeEnum.USER_NOT_FOUND);
     }
 
 
@@ -99,6 +132,54 @@ public class AdminUserServiceImpl implements AdminUserService {
         return count == 1 ? Response.success() : Response.fail(ResponseCodeEnum.SYSTEM_ERROR);
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Response deleteUser(DeleteUserReqVO deleteUserReqVO) {
+        Long loginUserId = getLoginUserId();
+        Long targetUserId = deleteUserReqVO.getUserId();
 
+        // 1. 权限校验
+        if (!Long.valueOf(1).equals(loginUserId)) {
+           throw  new BizException( ResponseCodeEnum.UNAUTHORIZED);
+        }
+        if (Long.valueOf(1).equals(targetUserId)) {
+            throw  new BizException(ResponseCodeEnum.SYSTEM_USER_CANNOT_BE_DELETED);
+        }
+
+        log.info("==> 开始级联删除用户 ID: {} 的全部数据（含点赞记录）...", targetUserId);
+
+        // 2. 级联清理
+
+        // A. 清理点赞表 (t_article_like) - 新增
+        articleLikeMapper.delete(Wrappers.<ArticleLikeDO>lambdaQuery()
+                .eq(ArticleLikeDO::getUserId, targetUserId));
+
+        // B. 处理文章及内容 (获取 ID 后删除内容，再删主表)
+        List<ArticleDO> articles = articleMapper.selectList(Wrappers.<ArticleDO>lambdaQuery()
+                .eq(ArticleDO::getUserId, targetUserId).select(ArticleDO::getId));
+        if (!articles.isEmpty()) {
+            List<Long> articleIds = articles.stream().map(ArticleDO::getId).collect(Collectors.toList());
+            articleContentMapper.delete(Wrappers.<ArticleContentDO>lambdaQuery()
+                    .in(ArticleContentDO::getArticleId, articleIds));
+            articleMapper.deleteBatchIds(articleIds);
+        }
+
+        // C. 清理分类、标签、知识库
+        categoryMapper.delete(Wrappers.<CategoryDO>lambdaQuery().eq(CategoryDO::getUserId, targetUserId));
+        tagMapper.delete(Wrappers.<TagDO>lambdaQuery().eq(TagDO::getUserId, targetUserId));
+        wikiMapper.delete(Wrappers.<WikiDO>lambdaQuery().eq(WikiDO::getUserId, targetUserId));
+
+        // D. 清理收藏夹目录及关联关系
+        relMapper.delete(Wrappers.<CollectionArticleRelDO>lambdaQuery().eq(CollectionArticleRelDO::getUserId, targetUserId));
+        directoryMapper.delete(Wrappers.<CollectionDirectoryDO>lambdaQuery().eq(CollectionDirectoryDO::getUserId, targetUserId));
+
+        // E. 最后删除用户核心表
+        int result = userMapper.deleteById(targetUserId);
+
+        log.info("==> 用户 ID: {} 数据级联删除完毕", targetUserId);
+        return result > 0 ? Response.success() : Response.fail("删除失败，用户不存在");
+    }
 }
+
+
 

@@ -14,11 +14,9 @@ import com.zifengliu.weblog.common.domain.dos.*;
 import com.zifengliu.weblog.common.domain.mapper.*;
 import com.zifengliu.weblog.common.enums.ResponseCodeEnum;
 import com.zifengliu.weblog.common.exception.BizException;
-import com.zifengliu.weblog.common.model.vo.SelectRspVO;
 import com.zifengliu.weblog.common.utils.PageResponse;
 import com.zifengliu.weblog.common.utils.Response;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.Authentication;
@@ -254,7 +252,7 @@ public PageResponse findArticlePageList(FindArticlePageListReqVO findArticlePage
             .eq(UserDO::getUsername, username));
 
     if (userDO == null) {
-        throw new BizException(ResponseCodeEnum.USERNAME_NOT_FOUND);
+        throw new BizException(ResponseCodeEnum.USER_NOT_FOUND);
     }
 
     Long loginUserId = userDO.getUserId(); // 当前操作者的 ID

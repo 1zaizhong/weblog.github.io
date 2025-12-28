@@ -53,7 +53,7 @@ public class AdminCollectionServiceImpl implements AdminCollectionService {
         UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
                 .eq(UserDO::getUsername, authentication.getName()));
         if (userDO == null) {
-            throw new BizException(ResponseCodeEnum.USERNAME_NOT_FOUND);
+            throw new BizException(ResponseCodeEnum.USER_NOT_FOUND);
         }
         return userDO.getUserId();
     }

@@ -8,8 +8,24 @@ export function useTabList() {
     const route = useRoute()
     const router = useRouter()
 
-    // 当前被选中的 tab
-    const activeTab = ref(route.path)
+    // 当前激活的应该是 fullPath，确保刷新时能带参数
+    const activeTab = ref(route.fullPath)
+    // 2. 修改路由更新钩子
+    onBeforeRouteUpdate((to, from) => {
+        // 使用 fullPath 代替 path
+        activeTab.value = to.fullPath 
+        addTab({
+            title: to.meta.title,
+            path: to.fullPath // 存储完整路径
+        })
+    })
+
+    // 3. 修改标签切换逻辑
+    const tabChange = (path) => {
+        activeTab.value = path
+        // 此时 path 已经是完整的 "/admin/collection/article?id=12"
+        router.push(path) 
+    }
     // 导航栏 tab 数组
     const tabList = ref([
         {
@@ -42,25 +58,9 @@ export function useTabList() {
     // 初始化标签导航栏
     initTabList()
 
-    // 在路由切换前被调用
-    onBeforeRouteUpdate((to, from) => {
-        // 设置被激活的 Tab 标签
-        activeTab.value = to.path
-        // 添加 Tab 标签页
-        addTab({
-            title: to.meta.title,
-            path: to.path
-        })
-    })
+   
 
-    // 标签页切换事件
-    const tabChange = (path) => {
-        console.log('切回了')
-        // 设置被激活的 Tab 标签
-        activeTab.value = path
-        // 路由跳转
-        router.push(path)
-    }
+    
 
     // 删除 Tab 标签
     const removeTab = (path) => {

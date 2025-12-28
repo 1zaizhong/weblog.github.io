@@ -6,7 +6,6 @@ import com.zifengliu.weblog.admin.convert.BlogSettingsConvert;
 import com.zifengliu.weblog.admin.model.vo.blogSettings.FindBlogSettingsRspVO;
 import com.zifengliu.weblog.admin.model.vo.blogSettings.UpdateBlogSettingsReqVO;
 import com.zifengliu.weblog.admin.service.AdminBlogSettingsService;
-import com.zifengliu.weblog.admin.utils.SecurityUtils;
 import com.zifengliu.weblog.common.domain.dos.BlogSettingsDO;
 import com.zifengliu.weblog.common.domain.dos.UserDO;
 import com.zifengliu.weblog.common.domain.mapper.BlogSettingsMapper;
@@ -40,7 +39,7 @@ public class AdminBlogSettingsServiceImpl extends ServiceImpl<BlogSettingsMapper
         UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
                 .eq(UserDO::getUsername, authentication.getName()));
         if (userDO == null) {
-            throw new BizException(ResponseCodeEnum.USERNAME_NOT_FOUND);
+            throw new BizException(ResponseCodeEnum.USER_NOT_FOUND);
         }
         return userDO.getUserId();
     }

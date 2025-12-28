@@ -1,17 +1,14 @@
 package com.zifengliu.weblog.admin.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zifengliu.weblog.admin.model.vo.article.UpdateArticleIsTopReqVO;
 import com.zifengliu.weblog.admin.model.vo.category.AddCategoryReqVO;
 import com.zifengliu.weblog.admin.model.vo.category.DeleteCategoryReqVO;
 import com.zifengliu.weblog.admin.model.vo.category.FindCategoryPageListReqVO;
 import com.zifengliu.weblog.admin.model.vo.category.FindCategoryPageListRspVO;
 import com.zifengliu.weblog.admin.service.AdminCategoryService;
 import com.zifengliu.weblog.common.domain.dos.ArticleCategoryRelDO;
-import com.zifengliu.weblog.common.domain.dos.ArticleDO;
 import com.zifengliu.weblog.common.domain.dos.CategoryDO;
 import com.zifengliu.weblog.common.domain.dos.UserDO;
 import com.zifengliu.weblog.common.domain.mapper.*;
@@ -22,7 +19,6 @@ import com.zifengliu.weblog.common.utils.PageResponse;
 import com.zifengliu.weblog.common.utils.Response;
 import lombok.extern.slf4j.Slf4j;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.Authentication;
@@ -30,7 +26,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -70,7 +65,7 @@ public class AdminCategoryServiceImpl  implements AdminCategoryService {
         UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
                 .eq(UserDO::getUsername, authentication.getName()));
         if (userDO == null) {
-            throw new BizException(ResponseCodeEnum.USERNAME_NOT_FOUND);
+            throw new BizException(ResponseCodeEnum.USER_NOT_FOUND);
         }
         return userDO.getUserId();
     }

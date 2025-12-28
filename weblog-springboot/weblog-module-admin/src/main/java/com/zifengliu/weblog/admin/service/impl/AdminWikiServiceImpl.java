@@ -72,7 +72,7 @@ public class AdminWikiServiceImpl implements AdminWikiService {
 
         //
         if (userDO == null) {
-            throw new BizException(ResponseCodeEnum.USERNAME_NOT_FOUND);
+            throw new BizException(ResponseCodeEnum.USER_NOT_FOUND);
         }
         Long UserId = userDO.getUserId();
         // VO 转 DO

@@ -1,6 +1,7 @@
 package com.zifengliu.weblog.admin.controller;
 
 import com.zifengliu.weblog.admin.model.vo.user.AddUserReqVO;
+import com.zifengliu.weblog.admin.model.vo.user.DeleteUserReqVO;
 import com.zifengliu.weblog.admin.model.vo.user.UpdateAdminUserPasswordReqVO;
 import com.zifengliu.weblog.admin.service.AdminUserService;
 import com.zifengliu.weblog.common.aspect.ApiOperationLog;
@@ -47,6 +48,13 @@ public class AdminUserController {
     @ApiOperationLog(description = "新增用户")
     public Response addUser(@RequestBody @Validated AddUserReqVO addUserReqVO) {
         return userService.addUser(addUserReqVO);
+    }
+    // 删除用户
+    @PostMapping("/user/delete")
+    @ApiOperation(value = "删除用户")
+    @ApiOperationLog(description = "删除用户及其关联数据")
+    public Response deleteUser(@RequestBody @Validated DeleteUserReqVO deleteUserReqVO) {
+        return userService.deleteUser(deleteUserReqVO);
     }
 
 }

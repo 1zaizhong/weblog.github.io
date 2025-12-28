@@ -29,7 +29,7 @@ public enum ResponseCodeEnum implements BaseExceptionInterface {
     LOGIN_FAIL("20000", "登录失败"),
     USERNAME_OR_PWD_ERROR("20001", "用户名或密码错误"),
     //用户不存在
-    USERNAME_NOT_FOUND("20003", "该用户不存在"),
+    USER_NOT_FOUND("20003", "该用户不存在"),
     //该类已存在
     CATEGORY_NAME_IS_EXISTED("20005", "该类已存在"),
     TAG_CANT_DUPLICATE("20006", "该标签已存在"),
@@ -49,6 +49,7 @@ public enum ResponseCodeEnum implements BaseExceptionInterface {
     AUTHOR_NO_FOUND("20021", "新博主，之前未登录"),
     USERNAME_HAS_EXISTED("20022", "用户名已存在"),
     Directory_NOT_FOUND("20023", "该收藏夹不存在"),
+    SYSTEM_USER_CANNOT_BE_DELETED( "20024","管理员不能删除"),
     WIKI_NOT_FOUND("20013", "该知识库不存在");
 
 
