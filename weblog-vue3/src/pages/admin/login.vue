@@ -147,8 +147,11 @@ const onSubmit = () => {
             }
         }))
 
-        // 3. 跳转到后台首页
-        router.push('/admin/index')
+     
+        router.push('/admin/index').then(() => {
+             // 刷新当前页面
+              location.reload() 
+         })
       } else {
         console.log('后端返回的错误信息：', res)
         if (res.message.includes('不存在') || res.message.includes('未找到') || res.errorCode === '20001') {

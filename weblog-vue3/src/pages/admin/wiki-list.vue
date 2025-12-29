@@ -150,7 +150,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive,computed } from 'vue'
 import { Search, RefreshRight, Check, Close, Delete, Edit, Tickets, View } from '@element-plus/icons-vue'
 import moment from 'moment'
 import { getWikiPageList, addWiki, updateWikiIsTop, updateWikiIsPublish, deleteWiki, updateWiki } from '@/api/admin/wiki'
@@ -158,7 +158,12 @@ import FormDialog from '@/components/FormDialog.vue'
 import WikiCatalogEditDialog from '@/components/WikiCatalogEditDialog.vue'
 import { uploadFile } from '@/api/admin/file'
 import { showMessage, showModel } from '@/composables/util'
-
+import { useUserStore } from '@/stores/user' // 确保引入了 store
+const userStore = useUserStore()
+const isAdmin = computed(() => {
+    const userInfo = userStore.userInfo
+    return userInfo?.username === 'admin' || userInfo?.userId == 1
+})
 // 模糊搜索的知识库标题
 const searchWikiTitle = ref('')
 // 日期
@@ -489,6 +494,7 @@ const showEditWikiCatalogDialog = (row) => {
     // 显示编辑目录对话框, 并传入知识库 ID
     editCatalogFormDialogRef.value.open(row.id)
 }
+
 </script>
 
 <style scoped>

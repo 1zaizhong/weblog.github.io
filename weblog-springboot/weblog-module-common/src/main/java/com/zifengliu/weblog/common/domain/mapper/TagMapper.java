@@ -67,6 +67,15 @@ public interface TagMapper extends BaseMapper<TagDO> {
         return selectList(Wrappers.<TagDO>lambdaQuery()
                 .in(TagDO::getId, tagIds));
     }
-
+    /**
+     * 根据用户批量查询标签
+     * @param userId
+     * @return
+     */
+    default List<TagDO> selectByUserIdAndTagNames(Long userId, List<String> tagNames) {
+        return selectList(Wrappers.<TagDO>lambdaQuery()
+                .eq(TagDO::getUserId, userId)
+                .in(TagDO::getName, tagNames));
+    }
 
 }

@@ -96,7 +96,7 @@ onMounted(() => {
     
     if (userStr) {
         const userObj = JSON.parse(userStr)
-        // 2. 提取 userID (对应你之前成功的 {"userInfo":{"userID":14...}} 结构)
+        // 2.  {"userInfo":{"userID":14...}} 结构)
         const userId = userObj.userInfo ? userObj.userInfo.userID : null
         
         console.log("当前识别到的用户ID:", userId)

@@ -35,5 +35,6 @@ public class TagDO {
     private  Boolean isDeleted;
 
     private Integer articlesTotal;
+
     private  Long userId;
 }

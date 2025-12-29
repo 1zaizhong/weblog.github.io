@@ -303,7 +303,7 @@ const selectedDirectoryId = ref(null)
 
 // 2. 修改：点击“收藏”按钮逻辑
 const showCollectDialog = () => {
-    // 使用你封装好的函数获取具体的 ID
+    // 获取具体的 ID
     const loginUserId = getLoginUserId()
     
     if (!loginUserId) {

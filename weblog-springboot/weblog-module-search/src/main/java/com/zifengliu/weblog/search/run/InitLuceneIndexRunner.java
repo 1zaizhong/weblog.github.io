@@ -77,9 +77,7 @@ public class InitLuceneIndexRunner implements CommandLineRunner {
             document.add(new TextField(ArticleIndex.COLUMN_CONTENT, articleContentDO.getContent(), Field.Store.YES));
             document.add(new TextField(ArticleIndex.COLUMN_CREATE_TIME, Constants.DATE_TIME_FORMATTER.format(articleDO.getCreateTime()), Field.Store.YES));
 
-            // 使用 IntPoint 存储是为了方便搜索时的 RangeQuery 或 ExactQuery (精确匹配)
             document.add(new IntPoint(ArticleIndex.COLUMN_STATUS, articleDO.getStatus()));
-            // 使用 StoredField 存储是为了如果以后你想在搜索结果里直接拿到这个状态码
             document.add(new StoredField(ArticleIndex.COLUMN_STATUS, articleDO.getStatus()));
 
             documents.add(document);
