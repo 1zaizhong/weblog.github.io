@@ -151,51 +151,83 @@ public class AdminArticleServiceImpl implements AdminArticleService {
      * @param articleId
      * @param publishTags
      */
-    /**
-     * 保存标签
-     * @param articleId 文章ID
-     * @param publishTags 标签名称列表
-     */
     private void insertTags(Long articleId, List<String> publishTags) {
-        Long loginUserId = getLoginUserId();
-        List<ArticleTagRelDO> articleTagRelDOS = Lists.newArrayList();
+      Long userId =getLoginUserId();
+        // 筛选提交的标签（表中不存在的标签）
+        List<String> notExistTags = null;
+        // 筛选提交的标签（表中已存在的标签）
+        List<String> existedTags = null;
 
-        // 遍历每个标签名称
-        for (String tagName : publishTags) {
-            // 每个用户只能在自己名下创建不重名的标签
-            TagDO existsTag = tagMapper.selectOne(Wrappers.<TagDO>lambdaQuery()
-                    .eq(TagDO::getName, tagName)
-                    .eq(TagDO::getUserId, loginUserId));
+        // 查询出所有标签
+        List<TagDO> tagDOS = tagMapper.selectByUserIdAndTagNames(userId, publishTags);
 
-            Long tagId;
+        // 如果表中还没有添加任何标签
+        if (org.springframework.util.CollectionUtils.isEmpty(tagDOS)) {
+            notExistTags = publishTags;
+        } else {
+            List<String> tagIds = tagDOS.stream().map(tagDO -> String.valueOf(tagDO.getId())).collect(Collectors.toList());
+            // 表中已添加相关标签，则需要筛选
+            // 通过标签 ID 来筛选，包含对应 ID 则表示提交的标签是表中存在的
+            existedTags = publishTags.stream().filter(publishTag -> tagIds.contains(publishTag)).collect(Collectors.toList());
+            // 否则则是不存在的
+            notExistTags = publishTags.stream().filter(publishTag -> !tagIds.contains(publishTag)).collect(Collectors.toList());
 
-            if (Objects.nonNull(existsTag)) {
-                // 标签已存在，使用现有标签ID
-                tagId = existsTag.getId();
-            } else {
-                // 标签不存在，创建新标签
-                TagDO tagDO = TagDO.builder()
-                        .name(tagName)
-                        .userId(loginUserId)
-                        .articlesTotal(0)
-                        .createTime(LocalDateTime.now())
-                        .updateTime(LocalDateTime.now())
-                        .isDeleted(false)
-                        .build();
-                tagMapper.insert(tagDO);
-                tagId = tagDO.getId();
+            // 还有一种可能：按字符串名称提交上来的标签，也有可能是表中已存在的，比如表中已经有了 Java 标签，用户提交了个 java 小写的标签，需要内部装换为 Java 标签
+            Map<String, Long> tagNameIdMap = tagDOS.stream().collect(Collectors.toMap(tagDO -> tagDO.getName().toLowerCase(), TagDO::getId));
+
+            // 使用迭代器进行安全的删除操作
+            Iterator<String> iterator = notExistTags.iterator();
+            while (iterator.hasNext()) {
+                String notExistTag = iterator.next();
+                // 转小写, 若 Map 中相同的 key，则表示该新标签是重复标签
+                if (tagNameIdMap.containsKey(notExistTag.toLowerCase())) {
+                    // 从不存在的标签集合中清除
+                    iterator.remove();
+                    // 并将对应的 ID 添加到已存在的标签集合
+                    existedTags.add(String.valueOf(tagNameIdMap.get(notExistTag.toLowerCase())));
+                }
             }
-
-            // 创建文章-标签关联关系
-            ArticleTagRelDO articleTagRelDO = ArticleTagRelDO.builder()
-                    .articleId(articleId)
-                    .tagId(tagId)
-                    .build();
-            articleTagRelDOS.add(articleTagRelDO);
         }
 
-        // 批量插入文章-标签关联关系
-        if (!CollectionUtils.isEmpty(articleTagRelDOS)) {
+        // 将提交的上来的，已存在于表中的标签，文章-标签关联关系入库
+        if (!org.springframework.util.CollectionUtils.isEmpty(existedTags)) {
+            List<ArticleTagRelDO> articleTagRelDOS = Lists.newArrayList();
+            existedTags.forEach(tagId -> {
+                ArticleTagRelDO articleTagRelDO = ArticleTagRelDO.builder()
+                        .articleId(articleId)
+                        .tagId(Long.valueOf(tagId))
+                        .build();
+                articleTagRelDOS.add(articleTagRelDO);
+            });
+            // 批量插入
+            articleTagRelMapper.insertBatchSomeColumn(articleTagRelDOS);
+        }
+
+        // 将提交的上来的，不存在于表中的标签，入库保存
+        if (!org.springframework.util.CollectionUtils.isEmpty(notExistTags)) {
+            // 需要先将标签入库，拿到对应标签 ID 后，再把文章-标签关联关系入库
+            List<ArticleTagRelDO> articleTagRelDOS = Lists.newArrayList();
+            notExistTags.forEach(tagName -> {
+                TagDO tagDO = TagDO.builder()
+                        .name(tagName)
+                        .userId(userId)
+                        .createTime(LocalDateTime.now())
+                        .updateTime(LocalDateTime.now())
+                        .build();
+
+                tagMapper.insert(tagDO);
+
+                // 拿到保存的标签 ID
+                Long tagId = tagDO.getId();
+
+                // 文章-标签关联关系
+                ArticleTagRelDO articleTagRelDO = ArticleTagRelDO.builder()
+                        .articleId(articleId)
+                        .tagId(tagId)
+                        .build();
+                articleTagRelDOS.add(articleTagRelDO);
+            });
+            // 批量插入
             articleTagRelMapper.insertBatchSomeColumn(articleTagRelDOS);
         }
     }

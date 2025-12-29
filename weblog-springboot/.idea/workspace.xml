@@ -5,20 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminArticleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminArticleServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/utils/SecurityUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/utils/SecurityUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/TagDO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/TagDO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/TagMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/TagMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/run/InitLuceneIndexRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-search/src/main/java/com/zifengliu/weblog/search/run/InitLuceneIndexRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/axios.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/axios.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/components/Comment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/components/Comment.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/layouts/admin/components/AdminHeader.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/admin/components/AdminHeader.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/wiki-list.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/wiki-list.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/article-detail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/article-detail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/tag-list.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/tag-list.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -286,15 +273,7 @@
       <workItem from="1766899132338" duration="29885000" />
       <workItem from="1766983663707" duration="687000" />
       <workItem from="1766984719065" duration="5405000" />
-      <workItem from="1766995438651" duration="8212000" />
-    </task>
-    <task id="LOCAL-00035" summary="文章置顶">
-      <option name="closed" value="true" />
-      <created>1766306485901</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1766306485901</updated>
+      <workItem from="1766995438651" duration="8612000" />
     </task>
     <task id="LOCAL-00036" summary="前端代码更新">
       <option name="closed" value="true" />
@@ -680,7 +659,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766946250060</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="完结撒花1">
+      <option name="closed" value="true" />
+      <created>1767006831994</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1767006831995</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -734,7 +721,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="后台知识库功能完善" />
     <MESSAGE value="前台知识库功能完善" />
     <MESSAGE value="后台首页标签统计" />
     <MESSAGE value="后台首页阅读量统计" />
@@ -759,7 +745,8 @@
     <MESSAGE value="用户查询" />
     <MESSAGE value="审核" />
     <MESSAGE value="完结撒花" />
-    <option name="LAST_COMMIT_MESSAGE" value="完结撒花" />
+    <MESSAGE value="完结撒花1" />
+    <option name="LAST_COMMIT_MESSAGE" value="完结撒花1" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
