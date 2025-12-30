@@ -21,5 +21,5 @@ public class FindWikiCatalogListReqVO {
 
     @NotNull(message = "知识库 ID 不能为空")
     private Long id;
-
+    private Long userId;
 }

@@ -234,7 +234,7 @@
 <script setup>
 import WikiHeader from '@/layouts/frontend/components/WikiHeader.vue'
 import WikiFooter from '@/layouts/frontend/components/WikiFooter.vue'
-import { ref, watch, nextTick,onMounted } from 'vue'
+import { ref, watch, nextTick, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getArticleDetail } from '@/api/frontend/article'
 import { useDark } from '@vueuse/core'
@@ -242,85 +242,98 @@ import hljs from 'highlight.js/lib/common'
 import 'highlight.js/styles/tokyo-night-dark.css'
 import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
 import WikiToc from '@/layouts/frontend/components/WikiToc.vue'
-import { getWikiArticlePreNext, getWikiCatalogs } from '@/api/frontend/wiki'
+import { getWikiArticlePreNext, getWikiCatalogs } from '@/api/frontend/wiki' // 确保引用的是正确的API方法
+import { initModals, initAccordions } from 'flowbite'
 
 const route = useRoute()
 const router = useRouter()
 // 是否为暗黑模式
 const isDark = useDark()
 
+// 用户id
+const getUserID = () => {
+    const userStr = localStorage.getItem('user')
+    const userObj = userStr ? JSON.parse(userStr) : null
+    return userObj?.userInfo?.userID 
+}
+
 // 文章数据
 const article = ref({})
 // 上下页
 const preNext = ref(null)
+// 目录数据 (初始化为空数组，而不是包含空对象的数组，避免渲染时报错)
+const catalogs = ref([])
+
 // 获取文章详情
 function refreshArticleDetail(articleId) {
     if (!articleId) {
-        // 该知识库下暂未添加文章
-        router.push({ name: 'NotFound' })
+        // 该知识库下暂未添加文章，或者参数丢失
         return 
     }
 
-    // 文章详情
-    getArticleDetail(articleId).then((res) => {
+    // 1. 修复：调用 getUserID() 方法获取具体数值
+    getArticleDetail(articleId, getUserID()).then((res) => {
         // 该文章不存在(错误码为 20010)
         if (!res.success && res.errorCode == '20010') {
-            // 手动跳转 404 页面
             router.push({ name: 'NotFound' })
             return
         }
-
-        article.value = res.data
+        // 如果数据为空，避免赋值 null 导致 article.title 报错
+        article.value = res.data || {}
         
-
         nextTick(() => {
-            // 获取所有 pre code 节点
+            // 代码高亮逻辑
             let highlight = document.querySelectorAll('pre code')
-            // 循环高亮
             highlight.forEach((block) => {
                 hljs.highlightElement(block)
             })
 
             let preElements = document.querySelectorAll('pre')
             preElements.forEach(preElement => {
-                // 找到第一个 code 元素
                 let firstCode = preElement.querySelector('code');
                 if (firstCode) {
                     let copyCodeBtn = '<button class="hidden copy-code-btn flex items-center justify-center"><div class="copy-icon"></div></button>'
                     firstCode.insertAdjacentHTML('beforebegin', copyCodeBtn);
-
-                    // 获取刚插入的按钮
                     let copyBtn = firstCode.previousSibling;
                     copyBtn.addEventListener('click', () => {
-                        // 添加 copied 样式
                         copyBtn.classList.add('copied');
                         copyToClipboard(preElement.textContent)
-                        // 3秒后移除 copied 样式
                         setTimeout(() => {
                             copyBtn.classList.remove('copied');
                         }, 1500);
                     });
                 }
-
-                // 添加事件监听器
                 preElement.addEventListener('mouseenter', handleMouseEnter);
                 preElement.addEventListener('mouseleave', handleMouseLeave);
             })
         })       
-
     })
-    // 上下页
-    getWikiArticlePreNext({id: route.params.wikiId, articleId: articleId}).then(res => {
+
+    // 上下页 (同样传入 userId)
+    getWikiArticlePreNext({id: route.params.wikiId, articleId: articleId, userId: getUserID()}).then(res => {
         if (res.success) {
             preNext.value = res.data
         }
     })
 }
 
+// 页面加载时获取目录
+const fetchCatalogs = () => {
+    // 2. 修复：传入 userId，确保后端能正确判断目录可见性
+    getWikiCatalogs(route.params.wikiId, getUserID()).then(res => {
+        if (res.success) {
+            catalogs.value = res.data
+            // 获取数据成功后，初始化 Accordions 组件
+            nextTick(() => initAccordions())
+        }
+    })
+}
+
+// 初始化
 refreshArticleDetail(route.query.articleId)
+fetchCatalogs() // 调用获取目录
 
 const handleMouseEnter = (event) => {
-    // 鼠标移入，显示按钮
     let copyBtn = event.target.querySelector('button');
     if (copyBtn) {
         copyBtn.classList.remove('hidden');
@@ -329,7 +342,6 @@ const handleMouseEnter = (event) => {
 }
 
 const handleMouseLeave = (event) => {
-    // 鼠标移出，隐藏按钮
     let copyBtn = event.target.querySelector('button');
     if (copyBtn) {
         copyBtn.classList.add('hidden');
@@ -349,39 +361,15 @@ function copyToClipboard(text) {
 const goWikiArticleDetailPage = (articleId) => {
     router.push({path: '/wiki/' + route.params.wikiId, query: {articleId}})
 }
-// 监听路由
+
+// 监听路由变化
 watch(route, (newRoute, oldRoute) => {
     // 重新渲染文章详情
     refreshArticleDetail(newRoute.query.articleId)
 })
 
-import { 
-    initAccordions, 
-} from 'flowbite'
 onMounted(() => {
-})
-
-// 获取当前知识库的目录数据
-getWikiCatalogs(route.params.wikiId).then(res => {
-    if (res.success) {
-        catalogs.value = res.data
-        // 获取数据成功后，初始化 Accordions 组件
-        nextTick(() => initAccordions())
-    }
-})
-const catalogs = ref([
-        {          
-        }
-    ])
-
-
-    
-
-// 获取当前知识库的目录数据
-getWikiCatalogs(route.params.wikiId).then(res => {
-    if (res.success) {
-        catalogs.value = res.data
-    }
+    initModals();
 })
 </script>
 

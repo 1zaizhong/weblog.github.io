@@ -158,10 +158,11 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     public Response findArticleDetail(FindArticleDetailReqVO findArticleDetailReqVO) {
-
+        Long loginUserId = findArticleDetailReqVO.getUserId();
         Long articleId = findArticleDetailReqVO.getArticleId();
 
         ArticleDO articleDO = articleMapper.selectById(articleId);
+
         Long currentUserId = findArticleDetailReqVO.getUserId();
 
         // 判断文章是否存在
@@ -169,14 +170,10 @@ public class ArticleServiceImpl implements ArticleService {
             throw new BizException(ResponseCodeEnum.ARTICLE_NOT_EXISTED);
         }
           // 权限校验逻辑
-        // 如果文章是“私人/未发布”状态 (status == 1)
-        if (Objects.equals(articleDO.getStatus(), 1)) {
-            // 如果 (当前未登录) 或者 (当前登录人不是这篇文章的作者) -> 拦截
-            if (currentUserId == null || !Objects.equals(currentUserId, articleDO.getUserId())) {
-                log.warn("用户 {} 试图访问未发布文章 {}, 作者是 {}", currentUserId, articleId, articleDO.getUserId());
-                throw new BizException(ResponseCodeEnum.ARTICLE_NOT_EXISTED);
-            }
-            // 如果是作者本人，代码继续往下执行，不做拦截
+        if (!Objects.equals(articleDO.getStatus(), 2)
+                && !Objects.equals(loginUserId, articleDO.getUserId())) {
+            log.warn("==> 用户无权查看该私密文章, articleId: {}, loginUserId: {}", articleId, loginUserId);
+            throw new BizException(ResponseCodeEnum.UNAUTHORIZED);
         }
 
         // 查询正文

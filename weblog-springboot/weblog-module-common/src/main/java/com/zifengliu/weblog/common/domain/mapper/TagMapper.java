@@ -24,21 +24,39 @@ public interface TagMapper extends BaseMapper<TagDO> {
      * @param current,size,name,startDate,endDate
      * @return
      * */
-    default Page<TagDO> selectPageList(long current, long size, String name,
-                                       LocalDate startDate, LocalDate endDate,
-                                       Long userId) { // 增加 userId 参数
+    default Page<TagDO> selectPageList(long current, long size, String name, LocalDate startDate, LocalDate endDate, Long userId) {
+        // 分页对象
         Page<TagDO> page = new Page<>(current, size);
-        LambdaQueryWrapper<TagDO> wrapper = new LambdaQueryWrapper<>();
 
-        // 如果 userId 为空（Admin 情况），则不拼此条件，查全站
-        wrapper.eq(Objects.nonNull(userId), TagDO::getUserId, userId)
-                .like(Objects.nonNull(name), TagDO::getName, name)
-                .ge(Objects.nonNull(startDate), TagDO::getCreateTime, startDate)
-                .le(Objects.nonNull(endDate), TagDO::getCreateTime, endDate)
-                .orderByDesc(TagDO::getCreateTime);
+        // 构建查询条件
+        LambdaQueryWrapper<TagDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper.like(Objects.nonNull(name), TagDO::getName, name) // 模糊查询
+                .ge(Objects.nonNull(startDate), TagDO::getCreateTime, startDate) // 大于等于开始时间
+                .le(Objects.nonNull(endDate), TagDO::getCreateTime, endDate) // 小于等于结束时间
+                .eq(Objects.nonNull(userId), TagDO::getUserId, userId)
+                .orderByDesc(TagDO::getCreateTime); // 根据创建时间降序排序
 
         return selectPage(page, wrapper);
     }
+
+   /*
+     * 带权限过滤的分页查询
+     * @param current,size,name,startDate,endDate,permissionFilter
+     * @return
+     * */
+   default Page<TagDO> selectPageListWithPermission(long current, long size, String name, LocalDate startDate, LocalDate endDate, String permissionFilter) {
+       // 分页对象
+       Page<TagDO> page = new Page<>(current, size);
+       // 构建查询条件
+       LambdaQueryWrapper<TagDO> wrapper = new LambdaQueryWrapper<>();
+       wrapper.like(Objects.nonNull(name), TagDO::getName, name)
+               .ge(Objects.nonNull(startDate), TagDO::getCreateTime, startDate)
+               .le(Objects.nonNull(endDate), TagDO::getCreateTime, endDate)
+               .apply(permissionFilter)
+               .orderByDesc(TagDO::getCreateTime);
+
+       return selectPage(page, wrapper);
+   }
 
 
    /*
@@ -67,15 +85,15 @@ public interface TagMapper extends BaseMapper<TagDO> {
         return selectList(Wrappers.<TagDO>lambdaQuery()
                 .in(TagDO::getId, tagIds));
     }
+
     /**
-     * 根据用户批量查询标签
-     * @param userId
+     * 根据标签 ID 批量查询
+     * @param tagIds
      * @return
      */
-    default List<TagDO> selectByUserIdAndTagNames(Long userId, List<String> tagNames) {
+    default List<TagDO> selectByUserIdAndTagNames(List<String> tagIds,Long userId) {
         return selectList(Wrappers.<TagDO>lambdaQuery()
-                .eq(TagDO::getUserId, userId)
-                .in(TagDO::getName, tagNames));
+                .eq(TagDO::getUserId,userId)
+                .in(TagDO::getId, tagIds));
     }
-
 }

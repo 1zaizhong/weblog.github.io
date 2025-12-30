@@ -128,6 +128,7 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
 
         // 查找这一年内，每日发布的文章数量
         List<ArticlePublishCountDO> articlePublishCountDOS = articleMapper.selectDateArticlePublishCount(startDate, endDate, userId);
+
         Map<LocalDate, Long> map = null;
         if (!CollectionUtils.isEmpty(articlePublishCountDOS)) {
             // DO 转 Map

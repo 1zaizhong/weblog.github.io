@@ -2,8 +2,10 @@ package com.zifengliu.weblog.web.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Lists;
+import com.zifengliu.weblog.common.domain.dos.ArticleDO;
 import com.zifengliu.weblog.common.domain.dos.WikiCatalogDO;
 import com.zifengliu.weblog.common.domain.dos.WikiDO;
+import com.zifengliu.weblog.common.domain.mapper.ArticleMapper;
 import com.zifengliu.weblog.common.domain.mapper.WikiCatalogMapper;
 import com.zifengliu.weblog.common.domain.mapper.WikiMapper;
 import com.zifengliu.weblog.common.enums.WikiCatalogLevelEnum;
@@ -34,7 +36,8 @@ public class WikiServiceImpl implements WikiService {
     private WikiMapper wikiMapper;
     @Autowired
     private WikiCatalogMapper wikiCatalogMapper;
-
+    @Autowired
+   private ArticleMapper articleMapper;
     /**
 
      * @return
@@ -87,65 +90,62 @@ public class WikiServiceImpl implements WikiService {
      * @param findWikiCatalogListReqVO
      * @return
      */
+
     @Override
     public Response findWikiCatalogList(FindWikiCatalogListReqVO findWikiCatalogListReqVO) {
         Long wikiId = findWikiCatalogListReqVO.getId();
+        Long loginUserId = findWikiCatalogListReqVO.getUserId(); // 获取传入的用户ID
 
-        // 获取该知识库下所有目录数据
-        List<WikiCatalogDO> catalogDOS = wikiCatalogMapper.selectByWikiId(wikiId);
+        // 1. 查询所有目录
+        List<WikiCatalogDO> catalogDOs = wikiCatalogMapper.selectByWikiId(wikiId);
+        if (CollectionUtils.isEmpty(catalogDOs)) return Response.success();
 
-        // DO 转 VO
-        List<FindWikiCatalogListRspVO> vos = null;
-        if (!CollectionUtils.isEmpty(catalogDOS)) {
-            vos = Lists.newArrayList();
+        // 2. 获取关联的文章ID
+        List<Long> articleIds = catalogDOs.stream()
+                .map(WikiCatalogDO::getArticleId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
 
-            // 过滤出一级目录，并按 sort 值升序排列
-            List<WikiCatalogDO> level1Catalogs = catalogDOS.stream()
-                    .filter(catalogDO -> Objects.equals(catalogDO.getLevel(), WikiCatalogLevelEnum.ONE.getValue())) // 过滤
-                    .sorted(Comparator.comparing(WikiCatalogDO::getSort)) // 升序
-                    .collect(Collectors.toList());
-
-            // 构造 VO 对象, 并添加到 vos 集合中
-            for (WikiCatalogDO level1Catalog : level1Catalogs) {
-                vos.add(FindWikiCatalogListRspVO.builder()
-                        .id(level1Catalog.getId())
-                        .articleId(level1Catalog.getArticleId())
-                        .title(level1Catalog.getTitle())
-                        .level(level1Catalog.getLevel())
-                        .build());
-            }
-
-            // 循环 vos 集合，开始构造二级目录数据
-            vos.forEach(level1Catalog -> {
-                // 一级目录的 ID
-                Long parentId = level1Catalog.getId();
-
-                // 过滤出当前一级目录下的子目录，并按照 sort 值升序排列
-                List<WikiCatalogDO> level2CatalogDOS = catalogDOS.stream()
-                        .filter(catalogDO -> Objects.equals(catalogDO.getParentId(), parentId)
-                                && Objects.equals(catalogDO.getLevel(), WikiCatalogLevelEnum.TWO.getValue()))
-                        .sorted(Comparator.comparing(WikiCatalogDO::getSort))
-                        .collect(Collectors.toList());
-
-                // 设置子目录数据到 children 字段中
-                if (!CollectionUtils.isEmpty(level2CatalogDOS)) {
-                    List<FindWikiCatalogListRspVO> level2Catalogs = level2CatalogDOS.stream()
-                            .map(catalogDO -> FindWikiCatalogListRspVO.builder()
-                                    .id(catalogDO.getId())
-                                    .articleId(catalogDO.getArticleId())
-                                    .title(catalogDO.getTitle())
-                                    .level(catalogDO.getLevel())
-                                    .build())
-                            .collect(Collectors.toList());
-                    level1Catalog.setChildren(level2Catalogs);
-                }
-            });
+        // 3. 核心：查出“可见”的文章ID集合（公开的 或 自己的）
+        List<Long> visibleArticleIds = Lists.newArrayList();
+        if (!CollectionUtils.isEmpty(articleIds)) {
+            visibleArticleIds = articleMapper.selectList(Wrappers.<ArticleDO>lambdaQuery()
+                    .in(ArticleDO::getId, articleIds)
+                    .and(w -> w.eq(ArticleDO::getStatus, 2)
+                            .or(Objects.nonNull(loginUserId), i -> i.eq(ArticleDO::getUserId, loginUserId)))
+            ).stream().map(ArticleDO::getId).collect(Collectors.toList());
         }
 
-        return Response.success(vos);
+        // 4. 组装目录树（只过滤掉既不公开也不属于自己的文章目录）
+        List<FindWikiCatalogListRspVO> catalogVOS = Lists.newArrayList();
+
+        // 筛选一级目录
+        List<WikiCatalogDO> level1Catalogs = catalogDOs.stream()
+                .filter(c -> Objects.equals(c.getLevel(), WikiCatalogLevelEnum.ONE.getValue()))
+                .sorted(Comparator.comparing(WikiCatalogDO::getSort))
+                .collect(Collectors.toList());
+
+        for (WikiCatalogDO c1 : level1Catalogs) {
+            // 如果关联了文章且不可见，则跳过
+            if (c1.getArticleId() != null && !visibleArticleIds.contains(c1.getArticleId())) continue;
+
+            FindWikiCatalogListRspVO v1 = FindWikiCatalogListRspVO.builder()
+                    .id(c1.getId()).articleId(c1.getArticleId()).title(c1.getTitle()).level(c1.getLevel()).build();
+
+            // 筛选二级目录
+            List<FindWikiCatalogListRspVO> children = catalogDOs.stream()
+                    .filter(c2 -> Objects.equals(c2.getParentId(), c1.getId()))
+                    .filter(c2 -> c2.getArticleId() == null || visibleArticleIds.contains(c2.getArticleId()))
+                    .map(c2 -> FindWikiCatalogListRspVO.builder()
+                            .id(c2.getId()).articleId(c2.getArticleId()).title(c2.getTitle()).level(c2.getLevel()).build())
+                    .collect(Collectors.toList());
+
+            v1.setChildren(children);
+            catalogVOS.add(v1);
+        }
+
+        return Response.success(catalogVOS);
     }
-
-
     /**
      * 获取上下篇文章
      *     * 获取知识库

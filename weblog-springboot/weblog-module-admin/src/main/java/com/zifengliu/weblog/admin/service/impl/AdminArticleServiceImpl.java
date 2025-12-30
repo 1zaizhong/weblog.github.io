@@ -159,7 +159,7 @@ public class AdminArticleServiceImpl implements AdminArticleService {
         List<String> existedTags = null;
 
         // 查询出所有标签
-        List<TagDO> tagDOS = tagMapper.selectByUserIdAndTagNames(userId, publishTags);
+        List<TagDO> tagDOS = tagMapper.selectByUserIdAndTagNames(publishTags,userId);
 
         // 如果表中还没有添加任何标签
         if (org.springframework.util.CollectionUtils.isEmpty(tagDOS)) {
