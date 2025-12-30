@@ -6,14 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminArticleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminArticleServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminDashboardServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminDashboardServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/TagMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/TagMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/wiki/FindWikiCatalogListReqVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/wiki/FindWikiCatalogListReqVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArticleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArticleServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/WikiServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/WikiServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/wiki-detail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/wiki-detail.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -282,15 +276,7 @@
       <workItem from="1766983663707" duration="687000" />
       <workItem from="1766984719065" duration="5405000" />
       <workItem from="1766995438651" duration="9586000" />
-      <workItem from="1767068040048" duration="5909000" />
-    </task>
-    <task id="LOCAL-00037" summary="知识库新增接口">
-      <option name="closed" value="true" />
-      <created>1766307709283</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1766307709283</updated>
+      <workItem from="1767068040048" duration="9735000" />
     </task>
     <task id="LOCAL-00038" summary="后台管理知识库功能">
       <option name="closed" value="true" />
@@ -676,7 +662,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767007477542</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="知识库bug">
+      <option name="closed" value="true" />
+      <created>1767076943360</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1767076943361</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -730,7 +724,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="前台知识库功能完善" />
     <MESSAGE value="后台首页标签统计" />
     <MESSAGE value="后台首页阅读量统计" />
     <MESSAGE value="修改了mapper的一个小错误" />
@@ -755,7 +748,8 @@
     <MESSAGE value="审核" />
     <MESSAGE value="完结撒花" />
     <MESSAGE value="完结撒花1" />
-    <option name="LAST_COMMIT_MESSAGE" value="完结撒花1" />
+    <MESSAGE value="知识库bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="知识库bug" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

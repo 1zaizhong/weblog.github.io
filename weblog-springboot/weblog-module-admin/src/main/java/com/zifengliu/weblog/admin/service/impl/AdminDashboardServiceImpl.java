@@ -111,44 +111,26 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
                 .build());
     }
     /**
-     * 获取文章发布热点统计信息
+     * 获取文章排行
      *
      * @return
      */
     @Override
     public Response findDashboardPublishArticleStatistics() {
+        // 1. 获取 ID，逻辑不变
         Long loginUserId = getLoginUserId();
         Long userId = Objects.equals(loginUserId, 1L) ? null : loginUserId;
-        // 当前日期
-        LocalDate currDate = LocalDate.now();
 
-        // 当前日期倒退一年的日期
-        LocalDate endDate = LocalDate.now().plusDays(1);
-        LocalDate startDate = endDate.minusYears(1);
+        // 2. 查询前5，逻辑不变
+        List<ArticleDO> articles = articleMapper.selectList(Wrappers.<ArticleDO>lambdaQuery()
+                .eq(userId != null, ArticleDO::getUserId, userId)
+                .orderByDesc(ArticleDO::getReadNum)
+                .last("LIMIT 5")
+                .select(ArticleDO::getTitle, ArticleDO::getCover, ArticleDO::getReadNum));
 
-        // 查找这一年内，每日发布的文章数量
-        List<ArticlePublishCountDO> articlePublishCountDOS = articleMapper.selectDateArticlePublishCount(startDate, endDate, userId);
-
-        Map<LocalDate, Long> map = null;
-        if (!CollectionUtils.isEmpty(articlePublishCountDOS)) {
-            // DO 转 Map
-            Map<LocalDate, Long> dateArticleCountMap = articlePublishCountDOS.stream()
-                    .collect(Collectors.toMap(ArticlePublishCountDO::getDate, ArticlePublishCountDO::getCount));
-
-            // 有序 Map, 返回的日期文章数需要以升序排列
-            map = Maps.newLinkedHashMap();
-            // 从上一年的今天循环到今天
-            for (; startDate.isBefore(currDate) || startDate.isEqual(currDate); startDate = startDate.plusDays(1)) {
-                // 以日期作为 key 从 dateArticleCountMap 中取文章发布总量
-                Long count = dateArticleCountMap.get(startDate);
-                // 设置到返参 Map
-                map.put(startDate, Objects.isNull(count) ? 0 : count);
-            }
-        }
-
-        return Response.success(map);
+        // 3. 返回给前端（注意：前端接收的是 res.data，是一个数组）
+        return Response.success(articles);
     }
-
     /**
      * 获取文章最近一周 PV 访问量统计信息
      *
