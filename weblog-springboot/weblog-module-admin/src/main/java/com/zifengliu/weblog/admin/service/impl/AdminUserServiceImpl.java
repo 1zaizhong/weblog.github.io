@@ -214,7 +214,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 
         // 2. 级联清理
 
-        // A. 清理点赞表 (t_article_like) - 新增
+        // A. 清理点赞表 (t_article_like)
         articleLikeMapper.delete(Wrappers.<ArticleLikeDO>lambdaQuery()
                 .eq(ArticleLikeDO::getUserId, targetUserId));
 

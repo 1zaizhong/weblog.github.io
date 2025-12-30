@@ -60,7 +60,7 @@ public class SearchServiceImpl implements SearchService {
         // 查询关键词
         String word = searchArticlePageListReqVO.getWord();
 
-        // 1. ======================== 构建组合查询条件 ========================
+        // 1.
         Analyzer analyzer = new SmartChineseAnalyzer();
         BooleanQuery.Builder booleanQueryBuilder = new BooleanQuery.Builder();
 
@@ -85,8 +85,8 @@ public class SearchServiceImpl implements SearchService {
         // 生成最终的布尔查询对象
         BooleanQuery finalQuery = booleanQueryBuilder.build();
 
-        // 2. ======================== 执行搜索 ========================
-        // 调用 LuceneHelper 中我们新增加的、接收 Query 对象的方法
+
+        // 调用 LuceneHelper
         long total = luceneHelper.searchTotal(ArticleIndex.NAME, finalQuery);
         List<Document> documents = luceneHelper.search(ArticleIndex.NAME, finalQuery, current, size);
 
@@ -95,7 +95,7 @@ public class SearchServiceImpl implements SearchService {
             return PageResponse.success(total, current, size, null);
         }
 
-        // 3. ======================== 关键词高亮处理 ========================
+
         // 高亮只需要针对关键词 word 部分进行解析
         Query highlightQuery = null;
         try {

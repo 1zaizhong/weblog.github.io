@@ -20,5 +20,5 @@ public class LoginRspVO {
     /*
     * Token值*/
     private String token;
-    private Long userID; // 新增：返回给前端的用户ID
+    private Long userID; // 返回给前端的用户ID
 }

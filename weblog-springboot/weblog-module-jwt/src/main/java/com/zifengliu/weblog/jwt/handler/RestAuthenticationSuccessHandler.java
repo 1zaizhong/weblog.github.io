@@ -33,7 +33,7 @@ public class RestAuthenticationSuccessHandler implements AuthenticationSuccessHa
     private JwtTokenHelper jwtTokenHelper;
 
     @Autowired
-    private UserMapper userMapper; // 新增：注入 UserMapper
+    private UserMapper userMapper;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -44,7 +44,7 @@ public class RestAuthenticationSuccessHandler implements AuthenticationSuccessHa
         // 2. 生成 Token
         String token = jwtTokenHelper.generateToken(username);
 
-        // 3. --- 关键修改：从数据库获取对应的 userID ---
+        // 3. 从数据库获取对应的 userID ---
         UserDO userDO = userMapper.selectOne(Wrappers.<UserDO>lambdaQuery()
                 .eq(UserDO::getUsername, username));
 
