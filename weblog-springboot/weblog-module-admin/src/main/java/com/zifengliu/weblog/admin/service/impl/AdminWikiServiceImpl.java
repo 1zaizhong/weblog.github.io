@@ -406,6 +406,7 @@ public class AdminWikiServiceImpl implements AdminWikiService {
                     wikiCatalogMapper.insertBatchSomeColumn(level2Catalogs);
                     // 更新相关文章的 type 字段，知识库类型
                     articleMapper.updateByIds(ArticleDO.builder()
+                                    .status(2)
                             .type(ArticleTypeEnum.WIKI.getValue()).build(), updateArticleIds);
                 }
             });

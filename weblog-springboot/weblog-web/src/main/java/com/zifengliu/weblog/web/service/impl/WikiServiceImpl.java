@@ -54,7 +54,6 @@ public class WikiServiceImpl implements WikiService {
         // 查询已发布的知识库
         List<WikiDO> wikiDOS = wikiMapper.selectList(Wrappers.<WikiDO>lambdaQuery()
                 .eq(WikiDO::getIsPublish, true)
-                .eq(Objects.nonNull(userId), WikiDO::getUserId, userId)
                 .orderByDesc(WikiDO::getWeight)
                 .orderByDesc(WikiDO::getCreateTime));
 

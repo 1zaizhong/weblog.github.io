@@ -41,12 +41,16 @@
                 <el-table-column prop="isTop" label="是否置顶" width="100">
                     <template #default="scope">
                         <el-switch
+                            v-if="currentUser && currentUser.username === 'admin'" 
                             @change="handleIsTopChange(scope.row)"
                             v-model="scope.row.isTop"
                             inline-prompt
                             :active-icon="Check"
                             :inactive-icon="Close"
                         />
+                        <el-tag v-else :type="scope.row.isTop ? 'success' : 'info'" size="small">
+                            {{ scope.row.isTop ? '已置顶' : '未置顶' }}
+                        </el-tag>
                     </template>
                 </el-table-column>
 
@@ -253,6 +257,9 @@ const fetchUserInfo = () => {
     getUserInfo().then(res => {
         if (res.success) {
             currentUser.value = res.data
+            // 打印，看看里面到底是 userId 还是 id
+            console.log('当前登录用户信息:', currentUser.value)
+            console.log('用户信息详情:', res.data)
         }
     })
 }
@@ -492,20 +499,21 @@ getTagSelectList().then(res => {
 
 // 根据用户输入的标签名称，远程模糊查询
 const remoteMethod = (query) => {
-    console.log('远程搜索：' + tags.value)
-    // 如果用户的查询关键词不为空
     if (query) {
-        // 显示 loading
         tagSelectLoading.value = true
-        // 调用标签模糊查询接口
         searchTags(query).then((e) => {
             if (e.success) {
-                // 设置到 tags 变量中
                 tags.value = e.data
             }
-        }).finally(() => tagSelectLoading.value = false) // 隐藏 loading
+        }).finally(() => tagSelectLoading.value = false)
+    } else {
+        // query 为空时还原列表，防止编辑回显丢失
+        getTagSelectList().then(res => {
+            tags.value = res.data
+        })
     }
 }
+
 
 // 发布文章
 const publishArticleSubmit = () => {
@@ -545,14 +553,15 @@ const publishArticleSubmit = () => {
 
 // 是否显示编辑文章对话框
 const isArticleUpdateEditorShow = ref(false)
-// 编辑文章表单引用
-const updateArticleFormRef = ref(null)
+
 // 编辑文章按钮点击事件
 const showArticleUpdateEditor = (row) => {
     // 显示编辑文章对话框
     isArticleUpdateEditorShow.value = true
     // 拿到文章 ID
     let articleId = row.id
+    getTagSelectList().then(tagRes => {
+        tags.value = tagRes.data
     getArticleDetail(articleId).then((res) => {
         if (res.success) {
             // 设置表单数据
@@ -562,11 +571,14 @@ const showArticleUpdateEditor = (row) => {
             updateArticleForm.content = res.data.content
             updateArticleForm.categoryId = res.data.categoryId
             updateArticleForm.tags = res.data.tagIds
+            updateArticleForm.tags = res.data.tagIds.map(id => Number(id)) 
             updateArticleForm.summary = res.data.summary
-        }
+         }
+        })
     })
 }
-
+// 编辑文章表单引用
+const updateArticleFormRef = ref(null)
 // 保存文章
 const updateSubmit = () => {
     console.log('tijiao')
@@ -603,6 +615,11 @@ const goArticleDetailPage = (articleId) => {
 
 // 点击置顶
 const handleIsTopChange = (row) => {
+    if (currentUser.value.username !== 'admin') {
+        showMessage('权限不足，只有管理员可设置置顶', 'error')
+        getTableData()
+        return
+    }
     updateArticleIsTop({id: row.id, isTop: row.isTop}).then((res) => {
         // 重新请求分页接口，渲染列表数据
         getTableData()
