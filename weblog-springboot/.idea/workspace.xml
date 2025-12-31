@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CategoryServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminCommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminCommentServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/TagServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/TagServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -280,14 +280,6 @@
       <workItem from="1767115543251" duration="24000" />
       <workItem from="1767115639538" duration="315000" />
       <workItem from="1767160972028" duration="7396000" />
-    </task>
-    <task id="LOCAL-00041" summary="评论过滤敏感词">
-      <option name="closed" value="true" />
-      <created>1766328102965</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1766328102965</updated>
     </task>
     <task id="LOCAL-00042" summary="首页评论功能(qq获取未完善)">
       <option name="closed" value="true" />
@@ -673,7 +665,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767171363070</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="标签分类列表">
+      <option name="closed" value="true" />
+      <created>1767198653267</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1767198653267</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -725,7 +725,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/blog" />
+                        <option value="blog" />
                       </list>
                     </value>
                   </entry>
@@ -739,7 +739,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="评论,后台查询" />
     <MESSAGE value="评论,后台完善" />
     <MESSAGE value="评论,前台发布修改" />
     <MESSAGE value="前台统计" />
@@ -764,7 +763,8 @@
     <MESSAGE value="完结" />
     <MESSAGE value="修改注释" />
     <MESSAGE value="标签bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="标签bug" />
+    <MESSAGE value="标签分类列表" />
+    <option name="LAST_COMMIT_MESSAGE" value="标签分类列表" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

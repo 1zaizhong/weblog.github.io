@@ -65,6 +65,9 @@ public class TagServiceImpl implements TagService {
 
         return Response.success(vos);
     }
+    /*
+    * 标签下的文章*/
+
     @Override
     public PageResponse findTagPageList(FindTagArticlePageListReqVO findTagArticlePageListReqVO) {
         Long current = findTagArticlePageListReqVO.getCurrent();
@@ -77,8 +80,7 @@ public class TagServiceImpl implements TagService {
             log.warn("==> 该标签不存在, tagId: {}", tagId);
             throw new BizException(ResponseCodeEnum.TAG_NOT_EXISTED);
         }
-
-        // 2. 获取关联关系 (完全保留你原本的逻辑)
+        // 2. 获取关联关系
         List<ArticleTagRelDO> articleTagRelDOS = articleTagRelMapper.selectByTagId(tagId);
 
         if (CollectionUtils.isEmpty(articleTagRelDOS)) {
@@ -88,12 +90,15 @@ public class TagServiceImpl implements TagService {
 
         // 3. 提取文章 ID
         List<Long> articleIds = articleTagRelDOS.stream().map(ArticleTagRelDO::getArticleId).collect(Collectors.toList());
+        Page<ArticleDO> page = new Page<>(current, size);
 
-        // 4. 查询文章分页数据 (完全保留你原本的逻辑)
-        Page<ArticleDO> page = articleMapper.selectPageListByArticleIds(current, size, articleIds);
-        List<ArticleDO> articleDOS = page.getRecords();
+        // 4. 查询文章分页数据
+        articleMapper.selectPage(page, Wrappers.<ArticleDO>lambdaQuery()
+                .in(ArticleDO::getId, articleIds)
+                .eq(ArticleDO::getStatus, 2)
+                .orderByDesc(ArticleDO::getCreateTime));List<ArticleDO> articleDOS = page.getRecords();
 
-        // 5. DO 转 VO (确保字段与 FindTagArticlePageListRspVO 匹配)
+        // 5. DO 转 VO
         List<FindTagArticlePageListRspVO> vos = null;
         if (!CollectionUtils.isEmpty(articleDOS)) {
             vos = articleDOS.stream().map(articleDO -> FindTagArticlePageListRspVO.builder()

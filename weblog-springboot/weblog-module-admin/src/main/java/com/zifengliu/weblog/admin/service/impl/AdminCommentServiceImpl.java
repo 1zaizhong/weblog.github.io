@@ -122,10 +122,7 @@ public class AdminCommentServiceImpl implements AdminCommentService {
             throw new BizException(ResponseCodeEnum.COMMENT_NOT_FOUND);
         }
 
-        Long loginUserId = getLoginUserId();
-        if (!Objects.equals(loginUserId, 1L) && !Objects.equals(commentDO.getUserId(), loginUserId)) {
-            throw new BizException(ResponseCodeEnum.UNAUTHORIZED); // 抛出无权限异常
-        }
+
         // 删除评论
         commentMapper.deleteById(commentId);
 
