@@ -46,21 +46,9 @@ public class TagServiceImpl implements TagService {
      */
     @Override
     public Response findTagList(FindTagListReqVO reqVO) {
-        Long targetUserId = reqVO.getUserId();
-        log.info("==> 前台查询标签列表, 目标用户 ID: {}", targetUserId);
-
-        // 如果没传 ID，直接返回空，确保安全性
-        if (targetUserId == null) {
-            targetUserId = null;
-        }
-
-        // 逻辑控制：Admin (ID=1) 查全站(11个)；普通博主只查自己的 (如 6个)
-        // 假设 Admin 的 userID 存的是 1L
-        Long filterUserId = Objects.equals(targetUserId, 1L) ? null : targetUserId;
 
         // 执行 SQL 过滤
         List<TagDO> tagDOS = tagMapper.selectList(Wrappers.<TagDO>lambdaQuery()
-                .eq(filterUserId != null, TagDO::getUserId, filterUserId)
                 .orderByDesc(TagDO::getArticlesTotal));
 
         // DO 转 VO
