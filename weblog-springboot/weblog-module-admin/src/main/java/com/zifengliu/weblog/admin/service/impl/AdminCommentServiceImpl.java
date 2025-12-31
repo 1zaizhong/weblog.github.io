@@ -112,8 +112,10 @@ public class AdminCommentServiceImpl implements AdminCommentService {
     public Response deleteComment(DeleteCommentReqVO deleteCommentReqVO) {
         Long commentId = deleteCommentReqVO.getId();
 
+        // 1. 获取当前登录用户 ID
+        Long loginUserId = getLoginUserId();
 
-        // 查询该评论是一级评论，还是二级评论
+        // 2. 查询评论
         CommentDO commentDO = commentMapper.selectById(commentId);
 
         // 判断评论是否存在
@@ -123,7 +125,15 @@ public class AdminCommentServiceImpl implements AdminCommentService {
         }
 
 
-        // 删除评论
+        if (!Objects.equals(loginUserId, 1L) &&
+                !Objects.equals(commentDO.getStatus(), 2)) {
+
+            log.warn("普通用户尝试删除未审核评论, userId: {}, commentId: {}", loginUserId, commentId);
+            // 抛出错误提示：评论未审核，不可删除
+            throw new BizException(ResponseCodeEnum.COMMENT_UNAPPROVED_CANNOT_DELETE);
+        }
+
+        // 4. 执行删除逻辑 (以下为你原本的代码)
         commentMapper.deleteById(commentId);
 
         Long replayCommentId = commentDO.getReplyCommentId();

@@ -50,6 +50,7 @@ public enum ResponseCodeEnum implements BaseExceptionInterface {
     USERNAME_HAS_EXISTED("20022", "用户名已存在"),
     Directory_NOT_FOUND("20023", "该收藏夹不存在"),
     SYSTEM_USER_CANNOT_BE_DELETED( "20024","管理员不能删除"),
+    COMMENT_UNAPPROVED_CANNOT_DELETE("20024","评论未审核"),
     WIKI_NOT_FOUND("20013", "该知识库不存在");
 
 
