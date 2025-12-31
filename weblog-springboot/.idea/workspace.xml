@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/resources/word/sensi_words.txt" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/resources/word/sensi_words.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminArticleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminArticleServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/TagMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/TagMapper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -278,14 +278,8 @@
       <workItem from="1766995438651" duration="9586000" />
       <workItem from="1767068040048" duration="13516000" />
       <workItem from="1767115543251" duration="24000" />
-    </task>
-    <task id="LOCAL-00039" summary="知识库功能">
-      <option name="closed" value="true" />
-      <created>1766324092920</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1766324092920</updated>
+      <workItem from="1767115639538" duration="315000" />
+      <workItem from="1767160972028" duration="4841000" />
     </task>
     <task id="LOCAL-00040" summary="发布评论">
       <option name="closed" value="true" />
@@ -671,7 +665,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767080681538</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="修改注释">
+      <option name="closed" value="true" />
+      <created>1767115940995</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1767115940996</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -725,7 +727,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="后台首页阅读量统计" />
     <MESSAGE value="修改了mapper的一个小错误" />
     <MESSAGE value="评论,后台查询" />
     <MESSAGE value="评论,后台完善" />
@@ -750,7 +751,8 @@
     <MESSAGE value="完结撒花1" />
     <MESSAGE value="知识库bug" />
     <MESSAGE value="完结" />
-    <option name="LAST_COMMIT_MESSAGE" value="完结" />
+    <MESSAGE value="修改注释" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改注释" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

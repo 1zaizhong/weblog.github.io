@@ -88,12 +88,12 @@ public interface TagMapper extends BaseMapper<TagDO> {
 
     /**
      * 根据标签 ID 批量查询
-     * @param tagIds
+     * @param tagNames
      * @return
      */
-    default List<TagDO> selectByUserIdAndTagNames(List<String> tagIds,Long userId) {
+    default List<TagDO> selectByUserIdAndTagNames(List<String> tagNames, Long userId) {
         return selectList(Wrappers.<TagDO>lambdaQuery()
-                .eq(TagDO::getUserId,userId)
-                .in(TagDO::getId, tagIds));
+                .eq(TagDO::getUserId, userId)
+                .in(TagDO::getName, tagNames)); // 这里必须是 Name 字段
     }
 }
