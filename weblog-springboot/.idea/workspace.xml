@@ -7,8 +7,6 @@
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminCommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminCommentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/enums/ResponseCodeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/enums/ResponseCodeEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/resources/word/sensi_words.txt" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/resources/word/sensi_words.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -281,14 +279,6 @@
       <workItem from="1767115543251" duration="24000" />
       <workItem from="1767115639538" duration="315000" />
       <workItem from="1767160972028" duration="7396000" />
-    </task>
-    <task id="LOCAL-00043" summary="qq获取">
-      <option name="closed" value="true" />
-      <created>1766333091155</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1766333091155</updated>
     </task>
     <task id="LOCAL-00044" summary="评论删除,获取列表">
       <option name="closed" value="true" />
@@ -674,7 +664,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767199917691</updated>
     </task>
-    <option name="localTasksCounter" value="92" />
+    <task id="LOCAL-00092" summary="普通用户不能删除未审核评论">
+      <option name="closed" value="true" />
+      <created>1767200965285</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1767200965285</updated>
+    </task>
+    <option name="localTasksCounter" value="93" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -740,7 +738,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="评论,前台发布修改" />
     <MESSAGE value="前台统计" />
     <MESSAGE value="博客设置多用户区分" />
     <MESSAGE value="lunch搜索引擎添加status=2查询" />
@@ -765,7 +762,8 @@
     <MESSAGE value="标签bug" />
     <MESSAGE value="标签分类列表" />
     <MESSAGE value="管理员删除评论" />
-    <option name="LAST_COMMIT_MESSAGE" value="管理员删除评论" />
+    <MESSAGE value="普通用户不能删除未审核评论" />
+    <option name="LAST_COMMIT_MESSAGE" value="普通用户不能删除未审核评论" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

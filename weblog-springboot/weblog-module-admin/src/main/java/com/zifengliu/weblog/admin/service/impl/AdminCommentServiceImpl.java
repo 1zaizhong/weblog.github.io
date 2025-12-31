@@ -64,23 +64,21 @@ public class AdminCommentServiceImpl implements AdminCommentService {
      * @return
      */
     @Override
-    public Response findCommentPageList(FindCommentPageListReqVO findCommentPageListReqVO) {
-        // 获取当前页、以及每页需要展示的数据数量
+    public PageResponse findCommentPageList(FindCommentPageListReqVO findCommentPageListReqVO) {
+        // 分页参数
         Long current = findCommentPageListReqVO.getCurrent();
         Long size = findCommentPageListReqVO.getSize();
-        LocalDate startDate = findCommentPageListReqVO.getStartDate();
-        LocalDate endDate = findCommentPageListReqVO.getEndDate();
-        String routerUrl = findCommentPageListReqVO.getRouterUrl();
-        Integer status = findCommentPageListReqVO.getStatus();
-        // 1. 获取当前登录用户
-        Long loginUserId = getLoginUserId();
-        // 管理员看全部，普通用户看自己
-        Long userId = Objects.equals(loginUserId, 1L) ? null : loginUserId;
 
-        // 执行分页查询
-        Page<CommentDO> commentDOPage = commentMapper.selectPageList(current, size, routerUrl, startDate, endDate, status,userId);
+        // 构建查询条件
+        Page<CommentDO> page = commentMapper.selectPage(new Page<>(current, size),
+                Wrappers.<CommentDO>lambdaQuery()
+                        // 使用 last 拼接自定义 SQL 排序逻辑
+                        // CASE status WHEN 1 THEN 0 ELSE 1 END 表示：如果状态是1，则优先级为0（最前），否则为1
+                        .last("ORDER BY CASE status WHEN 1 THEN 0 ELSE 1 END ASC, create_time DESC")
+        );
 
-        List<CommentDO> commentDOS = commentDOPage.getRecords();
+        
+        List<CommentDO> commentDOS = page.getRecords();
 
         // DO 转 VO
         List<FindCommentPageListRspVO> vos = null;
@@ -90,22 +88,14 @@ public class AdminCommentServiceImpl implements AdminCommentService {
                     .collect(Collectors.toList());
         }
 
-        return PageResponse.success(commentDOPage, vos);
+        return PageResponse.success(page, vos);
     }
-
     /**
      * 删除评论
      *
      * @param deleteCommentReqVO
      * @return
-     * 逻辑:在方法上添加 @Transactional(rollbackFor = Exception.class) 事务回滚注解，
-     * 因为删除评论逻辑中，可能会多次更新数据库，需要保证整个操作的原子性；
-     * 接着，查询想要删除的评论，通过 replayCommentId 字段值是否为空，来判断其类型，
-     * 是一级评论呢，还是二级评论；
-     * 如果是一级评论，除了将该记录本身删除掉外，还需要将其所有子评论删除；
-     * 如果是二级评论，删除本身的同时，需要判断该评论是否被会回复了，
-     * 如果有被回复，需要将回复的评论删除掉，注意，回复的评论被回复了，均需要删除，这里使用到了递归调用
-     * ，直到下级数据全部删除成功为止，避免留下脏数据。
+     * 在方法上添加 @Transactional(rollbackFor = Exception.class) 事务回滚注解，
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -133,7 +123,7 @@ public class AdminCommentServiceImpl implements AdminCommentService {
             throw new BizException(ResponseCodeEnum.COMMENT_UNAPPROVED_CANNOT_DELETE);
         }
 
-        // 4. 执行删除逻辑 (以下为你原本的代码)
+        // 4. 执行删除逻辑
         commentMapper.deleteById(commentId);
 
         Long replayCommentId = commentDO.getReplyCommentId();
