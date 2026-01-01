@@ -12,3 +12,7 @@ export function getStatisticsInfo(data) {
 export function getAuthorInfo(articleId) {
     return axios.post("/statistics/author/info", { articleId });
 }
+// 获取博主看板统计数据
+export function getAuthorDashboard(authorId) {
+    return axios.post("/statistics/author/dashboard", { authorId });
+}

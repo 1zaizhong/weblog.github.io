@@ -30,3 +30,7 @@ export function getHotArticleList() {
 export function getLikeArticlePageList(data) {
     return axios.post("/article/like/list", data);
 }
+// 获取指定博主（用户ID）的文章分页列表
+export function getAuthorArticlePageList(data) {
+    return axios.post("/article/author/page", data);
+}

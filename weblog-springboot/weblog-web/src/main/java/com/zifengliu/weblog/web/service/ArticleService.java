@@ -1,5 +1,6 @@
 package com.zifengliu.weblog.web.service;
 
+import com.zifengliu.weblog.common.utils.PageResponse;
 import com.zifengliu.weblog.common.utils.Response;
 import com.zifengliu.weblog.web.model.vo.article.FindArticleDetailReqVO;
 import com.zifengliu.weblog.web.model.vo.article.FindIndexArticlePageListReqVO;
@@ -29,4 +30,10 @@ public interface ArticleService {
      * @return
      */
      Response findHotArticleList();
+
+    /**
+     * 获取博主分页信息
+     * @return
+     */
+    PageResponse findAuthorArticlePageList(FindIndexArticlePageListReqVO reqVO);
 }

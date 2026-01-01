@@ -1,6 +1,7 @@
 package com.zifengliu.weblog.web.controller;
 
 import com.zifengliu.weblog.common.aspect.ApiOperationLog;
+import com.zifengliu.weblog.common.utils.PageResponse;
 import com.zifengliu.weblog.common.utils.Response;
 import com.zifengliu.weblog.web.model.vo.article.FindArticleDetailReqVO;
 import com.zifengliu.weblog.web.model.vo.article.FindIndexArticlePageListReqVO;
@@ -8,6 +9,7 @@ import com.zifengliu.weblog.web.service.ArticleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,5 +48,10 @@ public class ArticleController {
     public Response findHotArticleList( ) {
         return articleService.findHotArticleList();
     }
-
+    @PostMapping("/author/page")
+    @ApiOperation(value = "博主文章信息")
+    @ApiOperationLog(description = "获取博主文章信息")
+    public PageResponse findAuthorArticlePageList(@RequestBody @Validated FindIndexArticlePageListReqVO reqVO) {
+        return articleService.findAuthorArticlePageList(reqVO);
+    }
 }

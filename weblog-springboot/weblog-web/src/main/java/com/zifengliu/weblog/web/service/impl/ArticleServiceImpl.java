@@ -3,8 +3,9 @@ package com.zifengliu.weblog.web.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.google.common.collect.Lists;
+
 import com.zifengliu.weblog.admin.event.ReadArticleEvent;
+import com.zifengliu.weblog.web.model.vo.article.FindArticlePageListRspVO;
 import com.zifengliu.weblog.common.domain.dos.*;
 import com.zifengliu.weblog.common.domain.mapper.*;
 import com.zifengliu.weblog.common.exception.BizException;
@@ -293,5 +294,56 @@ public class ArticleServiceImpl implements ArticleService {
                 .collect(Collectors.toList());
 
         return Response.success(vos);
+    }
+
+    /**
+     * 分页查询博主的文章列表
+     */
+    /**
+     * 关注中心：查询指定博主的文章分页列表 (复用后台自定义查询逻辑)
+     */
+    @Override
+    public PageResponse findAuthorArticlePageList(FindIndexArticlePageListReqVO reqVO) {
+
+        Long searchUserId = reqVO.getUserId();
+
+        if (Objects.isNull(searchUserId)) {
+            return PageResponse.success(new Page<>(), Collections.emptyList());
+        }
+
+        // 2. 获取分页参数
+        Long current = reqVO.getCurrent();
+        Long size = reqVO.getSize();
+        Page<ArticleDO> page = new Page<>(current, size);
+
+
+        Page<ArticleDO> articleDOPage = articleMapper.selectPageList(
+                page,
+                null,
+                null,
+                null,
+                null,
+                searchUserId,
+                2
+        );
+
+        // 4. 数据转换 (DO -> VO)
+        List<ArticleDO> articleDOS = articleDOPage.getRecords();
+        List<FindArticlePageListRspVO> vos = null;
+
+        if (!CollectionUtils.isEmpty(articleDOS)) {
+            vos = articleDOS.stream()
+                    .map(articleDO -> FindArticlePageListRspVO.builder()
+                            .id(articleDO.getId())
+                            .title(articleDO.getTitle())
+                            .cover(articleDO.getCover())
+                            .createTime(articleDO.getCreateTime())
+                            .summary(articleDO.getSummary())
+                            .readNum(articleDO.getReadNum())
+                            .build())
+                    .collect(Collectors.toList());
+        }
+
+        return PageResponse.success(articleDOPage, vos);
     }
 }

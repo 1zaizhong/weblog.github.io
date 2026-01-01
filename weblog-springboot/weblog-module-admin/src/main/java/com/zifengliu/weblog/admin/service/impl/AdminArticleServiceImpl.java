@@ -262,13 +262,13 @@ public PageResponse findArticlePageList(FindArticlePageListReqVO findArticlePage
 
     //
     Page<ArticleDO> articleDOPage = articleMapper.selectPageList(
-            page,               // 第 1 个参数：IPage 对象
-            title,              // 第 2 个参数：标题
-            startDate,          // 第 3 个参数：开始日期
-            endDate,            // 第 4 个参数：结束日期
-            type,               // 第 5 个参数：类型
-            searchUserId,       // 第 6 个参数：用户 ID
-            null                // 第 7 个参数：状态
+            page,
+            title,
+            startDate,
+            endDate,
+            type,
+            searchUserId,
+            null
     );
 
     // 数据转换 (DO -> VO) ---
