@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
  * @author 粟英朝
  * @version 0.0.3
  * @date 2025/12/28 下午3:16
- * @description 前台点赞VO
+ * @description 前台点赞VO判断是不是点赞了的
  **/
 @Data
 @AllArgsConstructor

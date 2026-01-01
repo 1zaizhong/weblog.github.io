@@ -26,3 +26,7 @@ export function checkArticleIsLiked(articleId, userId) {
 export function getHotArticleList() {
     return axios.post("/article/hot/list", {})
 }
+// 分页查询我的点赞列表
+export function getLikeArticlePageList(data) {
+    return axios.post("/article/like/list", data);
+}

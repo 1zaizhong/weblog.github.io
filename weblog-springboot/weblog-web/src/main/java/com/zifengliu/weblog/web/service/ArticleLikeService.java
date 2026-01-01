@@ -2,6 +2,7 @@ package com.zifengliu.weblog.web.service;
 
 import com.zifengliu.weblog.common.utils.Response;
 import com.zifengliu.weblog.web.model.vo.like.CheckArticleLikedReqVO;
+import com.zifengliu.weblog.web.model.vo.like.FindLikeArticlePageListReqVO;
 import com.zifengliu.weblog.web.model.vo.like.LikeArticleReqVO;
 
 /**
@@ -20,4 +21,8 @@ public interface ArticleLikeService {
      * 检查用户是否已点赞该文章
      */
     Response checkIsLiked(CheckArticleLikedReqVO reqVO);
+    /**
+     * 根据用户，查点赞列表
+     * */
+    Response findLikeArticlePageList(FindLikeArticlePageListReqVO reqVO);
 }

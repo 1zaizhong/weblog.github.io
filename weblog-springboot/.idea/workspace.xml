@@ -5,15 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/collection/CollectionDirectoryRspVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/user-like.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/like/FindLikeArticlePageListReqVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/like/FindLikeArticlePageListRspVO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/WebCollectionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/WebCollectionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CollectionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CollectionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/ArticleLikeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/ArticleLikeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/like/LikeArticleReqVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/like/LikeArticleReqVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/ArticleLikeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/ArticleLikeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArticleLikeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/ArticleLikeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/api/frontend/article.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/frontend/article.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/Header.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/TagListCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/TagListCard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/wiki-detail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/wiki-detail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/user-like.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/user-like.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/router/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -288,15 +289,7 @@
       <workItem from="1767115639538" duration="315000" />
       <workItem from="1767160972028" duration="7396000" />
       <workItem from="1767205924195" duration="774000" />
-      <workItem from="1767243654622" duration="25787000" />
-    </task>
-    <task id="LOCAL-00051" summary="前台标签功能完善">
-      <option name="closed" value="true" />
-      <created>1766764589332</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1766764589332</updated>
+      <workItem from="1767243654622" duration="27316000" />
     </task>
     <task id="LOCAL-00052" summary="后台分类功能完善">
       <option name="closed" value="true" />
@@ -682,7 +675,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767274311547</updated>
     </task>
-    <option name="localTasksCounter" value="100" />
+    <task id="LOCAL-00100" summary="前台收藏功能完成">
+      <option name="closed" value="true" />
+      <created>1767278404400</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1767278404400</updated>
+    </task>
+    <option name="localTasksCounter" value="101" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -748,7 +749,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="博客设置卡片" />
     <MESSAGE value="前台文章详情" />
     <MESSAGE value="前台点赞功能" />
     <MESSAGE value="后台点赞功能" />
@@ -773,7 +773,8 @@
     <MESSAGE value="后台接入DeepSeekApi" />
     <MESSAGE value="前台实现跨域进行对话" />
     <MESSAGE value="前台收藏文章列表" />
-    <option name="LAST_COMMIT_MESSAGE" value="前台收藏文章列表" />
+    <MESSAGE value="前台收藏功能完成" />
+    <option name="LAST_COMMIT_MESSAGE" value="前台收藏功能完成" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

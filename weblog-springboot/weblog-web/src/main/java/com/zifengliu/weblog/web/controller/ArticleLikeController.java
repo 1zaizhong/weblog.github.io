@@ -3,6 +3,7 @@ package com.zifengliu.weblog.web.controller;
 import com.zifengliu.weblog.common.aspect.ApiOperationLog;
 import com.zifengliu.weblog.common.utils.Response;
 import com.zifengliu.weblog.web.model.vo.like.CheckArticleLikedReqVO;
+import com.zifengliu.weblog.web.model.vo.like.FindLikeArticlePageListReqVO;
 import com.zifengliu.weblog.web.model.vo.like.LikeArticleReqVO;
 import com.zifengliu.weblog.web.service.ArticleLikeService;
 import io.swagger.annotations.Api;
@@ -40,5 +41,10 @@ public class ArticleLikeController {
     @ApiOperation(value = "检查是否点赞")
     public Response isLiked(@RequestBody @Validated CheckArticleLikedReqVO reqVO) {
         return articleLikeService.checkIsLiked(reqVO);
+    }
+    @PostMapping("/like/list")
+    @ApiOperation(value = "查询用户点赞文章列表")
+    public Response findLikeArticlePageList(@RequestBody @Validated FindLikeArticlePageListReqVO reqVO) {
+        return articleLikeService.findLikeArticlePageList(reqVO);
     }
 }

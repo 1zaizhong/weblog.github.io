@@ -2,11 +2,16 @@ package com.zifengliu.weblog.web.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zifengliu.weblog.common.domain.dos.ArticleDO;
 import com.zifengliu.weblog.common.domain.dos.ArticleLikeDO;
 import com.zifengliu.weblog.common.domain.mapper.ArticleLikeMapper;
 import com.zifengliu.weblog.common.domain.mapper.ArticleMapper;
+import com.zifengliu.weblog.common.utils.PageResponse;
 import com.zifengliu.weblog.common.utils.Response;
 import com.zifengliu.weblog.web.model.vo.like.CheckArticleLikedReqVO;
+import com.zifengliu.weblog.web.model.vo.like.FindLikeArticlePageListReqVO;
+import com.zifengliu.weblog.web.model.vo.like.FindLikeArticlePageListRspVO;
 import com.zifengliu.weblog.web.model.vo.like.LikeArticleReqVO;
 import com.zifengliu.weblog.web.service.ArticleLikeService;
 
@@ -15,9 +20,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author 粟英朝
@@ -33,7 +43,8 @@ public class ArticleLikeServiceImpl implements ArticleLikeService {
 
     @Autowired
     private ArticleMapper articleMapper;
-
+/*
+* 点赞*/
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Response likeOrUnlikeArticle(LikeArticleReqVO reqVO) {
@@ -81,5 +92,56 @@ public class ArticleLikeServiceImpl implements ArticleLikeService {
                 .eq(ArticleLikeDO::getUserId, userId));
 
         return Response.success(count > 0);
+    }
+    /*点赞列表
+    * */
+    // 在 ArticleLikeServiceImpl.java 中添加
+
+    @Override
+    public Response findLikeArticlePageList(FindLikeArticlePageListReqVO reqVO) {
+        Long userId = reqVO.getUserId();
+
+        // 1. 分页查询点赞关联表 t_article_like
+        Page<ArticleLikeDO> page = new Page<>(reqVO.getCurrent(), reqVO.getSize());
+        LambdaQueryWrapper<ArticleLikeDO> wrapper = Wrappers.<ArticleLikeDO>lambdaQuery()
+                .eq(ArticleLikeDO::getUserId, userId)
+                .orderByDesc(ArticleLikeDO::getCreateTime); // 按点赞时间倒序
+
+        Page<ArticleLikeDO> likePage = articleLikeMapper.selectPage(page, wrapper);
+        List<ArticleLikeDO> likeDOList = likePage.getRecords();
+
+        // 2. 判空处理
+        if (CollectionUtils.isEmpty(likeDOList)) {
+            return Response.success(PageResponse.success(likePage, Collections.emptyList()));
+        }
+
+        // 3. 提取文章 ID 集合
+        List<Long> articleIds = likeDOList.stream()
+                .map(ArticleLikeDO::getArticleId)
+                .collect(Collectors.toList());
+
+        // 4. 根据文章 ID 集合查询文章详情
+        List<ArticleDO> articleDOList = articleMapper.selectList(Wrappers.<ArticleDO>lambdaQuery()
+                .in(ArticleDO::getId, articleIds));
+
+        // 5. 保持点赞顺序（Map转换）
+        Map<Long, ArticleDO> articleMap = articleDOList.stream()
+                .collect(Collectors.toMap(ArticleDO::getId, a -> a));
+
+        // 6. DO 转 VO
+        List<FindLikeArticlePageListRspVO> vos = likeDOList.stream().map(likeDO -> {
+            ArticleDO articleDO = articleMap.get(likeDO.getArticleId());
+            if (Objects.isNull(articleDO)) return null;
+
+            return FindLikeArticlePageListRspVO.builder()
+                    .id(articleDO.getId())
+                    .title(articleDO.getTitle())
+                    .cover(articleDO.getCover())
+                    .summary(articleDO.getSummary())
+                    .createTime(articleDO.getCreateTime())
+                    .build();
+        }).filter(Objects::nonNull).collect(Collectors.toList());
+
+        return Response.success(PageResponse.success(likePage, vos));
     }
 }

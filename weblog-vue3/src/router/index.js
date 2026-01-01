@@ -41,7 +41,7 @@ const routes = [
    
     {
         path: '/personal/like', 
-        component: () => import('@/pages/frontend/user-like.vue'), // 需创建此页面
+        component: () => import('@/pages/frontend/user-like.vue'), 
         meta: { title: '我的喜欢' }
     },
     {
