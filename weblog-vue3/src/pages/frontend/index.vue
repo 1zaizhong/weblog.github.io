@@ -102,7 +102,8 @@
                 <div class="sticky top-[5.5rem]">
                     <!-- 博主信息 -->
                     <UserInfoCard></UserInfoCard>
-
+                    <!--热度排行 -->
+                    <HotArticle></HotArticle>
                 </div>
             </aside>
     </div>
@@ -126,6 +127,7 @@ import { initTooltips } from 'flowbite'
 import { onMounted, ref } from 'vue'
 import { getArticlePageList } from '@/api/frontend/article'
 import { useRouter } from 'vue-router'
+import HotArticle  from '@/layouts/frontend/components/HotArticle.vue'
 
 const router = useRouter()
 

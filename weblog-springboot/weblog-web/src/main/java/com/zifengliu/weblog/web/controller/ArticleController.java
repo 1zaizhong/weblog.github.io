@@ -40,4 +40,11 @@ public class ArticleController {
     public Response findArticleDetail(@RequestBody FindArticleDetailReqVO findArticleDetailReqVO) {
         return articleService.findArticleDetail(findArticleDetailReqVO);
     }
+    @PostMapping("/hot/list")
+    @ApiOperation(value = "获取文章热度信息")
+    @ApiOperationLog(description = "获取文章热度信息")
+    public Response findHotArticleList( ) {
+        return articleService.findHotArticleList();
+    }
+
 }

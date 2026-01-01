@@ -24,5 +24,9 @@ public interface ArticleService {
      */
     Response findArticleDetail(FindArticleDetailReqVO findArticleDetailReqVO);
 
-
+    /**
+     * 获取文章热度信息
+     * @return
+     */
+     Response findHotArticleList();
 }

@@ -24,10 +24,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -242,5 +241,57 @@ public class ArticleServiceImpl implements ArticleService {
         eventPublisher.publishEvent(new ReadArticleEvent(this, articleId));
         return Response.success(vo);
     }
+    /**
+     * 获取热门文章排行（前10名）
+     * 基于 7 天内数据，计算公式：Score = ReadNum / (Days + 2)^1.5
+     *
+     * @return
+     */
+    @Override
+    public Response findHotArticleList() {
+        // 1. 确定时间范围：只计算 7 天内的文章
+        LocalDateTime sevenDaysAgo = LocalDateTime.now().minusDays(7);
 
+        // 2. 查询 7 天内已发布的所有文章
+        LambdaQueryWrapper<ArticleDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(ArticleDO::getStatus, 2) // 必须是已发布的
+                .ge(ArticleDO::getCreateTime, sevenDaysAgo);
+
+        List<ArticleDO> articleDOS = articleMapper.selectList(wrapper);
+
+        // 如果没有文章，直接返回空列表
+        if (CollectionUtils.isEmpty(articleDOS)) {
+            return Response.success(Collections.emptyList());
+        }
+
+        // 3. 计算热度并排序
+        double gravity = 1.5; // 重力系数，值越大老文章热度掉得越快
+        LocalDateTime now = LocalDateTime.now();
+
+        List<FindHotArticleRspVO> vos = articleDOS.stream()
+                .map(articleDO -> {
+                    // 计算发布至今的天数
+                    long days = ChronoUnit.DAYS.between(articleDO.getCreateTime(), now);
+
+                    // 热度得分计算
+                    double score = articleDO.getReadNum() / Math.pow((days + 2), gravity);
+
+                    // 构建响应 VO
+                    return FindHotArticleRspVO.builder()
+                            .id(articleDO.getId())
+                            .title(articleDO.getTitle())
+                            .cover(articleDO.getCover())
+                            .readNum(articleDO.getReadNum())
+                            .createTime(articleDO.getCreateTime())
+                            .score(score) // 携带分数，方便前端调试或显示热度值
+                            .build();
+                })
+                // 按 Score 分数降序排列
+                .sorted(Comparator.comparingDouble(FindHotArticleRspVO::getScore).reversed())
+                // 只取前 10 名
+                .limit(10)
+                .collect(Collectors.toList());
+
+        return Response.success(vos);
+    }
 }
