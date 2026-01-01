@@ -79,45 +79,45 @@
 
                     <!-- 已经登录，展示用户头像 -->
                     <div class="flex items-center md:order-2">
-    <button type="button" @click="clickSearchBtn"
-        class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 mr-1">
-        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-        </svg>
-    </button>
+                    <button type="button" @click="clickSearchBtn"
+                        class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 mr-1">
+                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                    </button>
 
-    <div class="flex items-center">
-        <button v-if="!isLogined" @click="$router.push('/login')" type="button"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 ml-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-            登录
-        </button>
+                    <div class="flex items-center">
+                        <button v-if="!isLogined" @click="$router.push('/login')" type="button"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 ml-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            登录
+                        </button>
 
-        <div v-else class="ml-3 flex items-center">
-            <button @click="$router.push('/admin/index')" type="button"
-                class="flex items-center justify-center w-10 h-10 bg-blue-50 rounded-full border-2 border-blue-200 hover:scale-110 transition-transform focus:outline-none overflow-hidden"
-                title="进入后台">
-                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-9 h-9">
-                    <path d="M50 60 L35 25 L75 45 Z" fill="#87CEEB" />
-                    <path d="M150 60 L165 25 L125 45 Z" fill="#87CEEB" />
-                    <circle cx="100" cy="100" r="70" fill="#E0F7FA" />
-                    <circle cx="75" cy="95" r="7" fill="#2C3E50" />
-                    <circle cx="125" cy="95" r="7" fill="#2C3E50" />
-                    <path d="M96 115 L104 115 L100 122 Z" fill="#5DADE2" />
-                    <path d="M88 132 Q100 142 112 132" stroke="#5DADE2" stroke-width="3" fill="none" stroke-linecap="round" />
-                    <line x1="45" y1="110" x2="25" y2="105" stroke="#B0E0E6" stroke-width="2" />
-                    <line x1="45" y1="120" x2="25" y2="125" stroke="#B0E0E6" stroke-width="2" />
-                    <line x1="155" y1="110" x2="175" y2="105" stroke="#B0E0E6" stroke-width="2" />
-                    <line x1="155" y1="120" x2="175" y2="125" stroke="#B0E0E6" stroke-width="2" />
-                </svg>
-            </button>
-            <button @click="logout" class="ml-2 text-xs text-gray-400 hover:text-blue-500 transition-colors">
-                [退出]
-            </button>
-        </div>
-    </div>
+                        <div v-else class="ml-3 flex items-center">
+                            <button @click="$router.push('/admin/index')" type="button"
+                                class="flex items-center justify-center w-10 h-10 bg-blue-50 rounded-full border-2 border-blue-200 hover:scale-110 transition-transform focus:outline-none overflow-hidden"
+                                title="进入后台">
+                                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-9 h-9">
+                                    <path d="M50 60 L35 25 L75 45 Z" fill="#87CEEB" />
+                                    <path d="M150 60 L165 25 L125 45 Z" fill="#87CEEB" />
+                                    <circle cx="100" cy="100" r="70" fill="#E0F7FA" />
+                                    <circle cx="75" cy="95" r="7" fill="#2C3E50" />
+                                    <circle cx="125" cy="95" r="7" fill="#2C3E50" />
+                                    <path d="M96 115 L104 115 L100 122 Z" fill="#5DADE2" />
+                                    <path d="M88 132 Q100 142 112 132" stroke="#5DADE2" stroke-width="3" fill="none" stroke-linecap="round" />
+                                    <line x1="45" y1="110" x2="25" y2="105" stroke="#B0E0E6" stroke-width="2" />
+                                    <line x1="45" y1="120" x2="25" y2="125" stroke="#B0E0E6" stroke-width="2" />
+                                    <line x1="155" y1="110" x2="175" y2="105" stroke="#B0E0E6" stroke-width="2" />
+                                    <line x1="155" y1="120" x2="175" y2="125" stroke="#B0E0E6" stroke-width="2" />
+                                </svg>
+                            </button>
+                            <button @click="logout" class="ml-2 text-xs text-gray-400 hover:text-blue-500 transition-colors">
+                                [退出]
+                            </button>
+                        </div>
+                    </div>
 
-    </div>
+                    </div>
 
 
 
@@ -188,7 +188,12 @@
                                 </ul>
                             </div>
                         </li>
-                        
+                        <li>
+                            <a @click="router.push('/follow/list')" 
+                            :class="[currPath == '/archive/list' ? 'text-sky-600 md:border-b-2 md:border-sky-600 dark:text-sky-500 dark:md:border-sky-600' : 'text-gray-900 dark:text-white']"
+                                class="block py-2 pl-3 pr-4 rounded md:rounded-none hover:bg-gray-100 md:hover:bg-transparent md:hover:text-sky-600 md:p-0 md:dark:hover:text-sky-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                                我的关注</a>
+                        </li>
                         <li>
                             <a @click="router.push('/archive/list')"
                                 :class="[currPath == '/archive/list' ? 'text-sky-600 md:border-b-2 md:border-sky-600 dark:text-sky-500 dark:md:border-sky-600' : 'text-gray-900 dark:text-white']"
@@ -472,6 +477,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { showMessage } from '@/composables/util'
 import { getArticleSearchPageList } from '@/api/frontend/search'
 import { useDark, useToggle } from '@vueuse/core'
+import { getFollowingList } from '@/api/frontend/follow'
 
 const modalOptions = {
     placement: 'top-center', // 弹框位置

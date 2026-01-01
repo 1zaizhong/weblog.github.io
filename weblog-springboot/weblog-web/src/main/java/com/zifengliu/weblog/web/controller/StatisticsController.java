@@ -2,6 +2,7 @@ package com.zifengliu.weblog.web.controller;
 
 import com.zifengliu.weblog.common.aspect.ApiOperationLog;
 import com.zifengliu.weblog.common.utils.Response;
+import com.zifengliu.weblog.web.model.vo.author.FindAuthorDashboardReqVO;
 import com.zifengliu.weblog.web.model.vo.statistics.FindAuthorInfoByArticleIdReqVO;
 import com.zifengliu.weblog.web.model.vo.statistics.FindStatisticsInfoReqVO;
 import com.zifengliu.weblog.web.service.StatisticsService;
@@ -40,5 +41,12 @@ public class StatisticsController {
     @ApiOperationLog(description = "根据文章 ID 获取作者详细统计信息")
     public Response findAuthorInfoByArticleId(@RequestBody @Validated FindAuthorInfoByArticleIdReqVO reqVO) {
         return statisticsService.findAuthorInfoByArticleId(reqVO.getArticleId());
+    }
+
+    @PostMapping("/author/dashboard")
+    @ApiOperation(value = "获取博主主页")
+    @ApiOperationLog(description = "获取博主主页")
+    public Response findAuthorDashboardData(@RequestBody @Validated FindAuthorDashboardReqVO reqVO) {
+        return statisticsService.findAuthorDashboardData(reqVO);
     }
 }

@@ -55,6 +55,11 @@ const routes = [
         meta: { title: '收藏内容详情' }
     },
     {
+        path: '/follow/list',
+        component: () => import('@/pages/frontend/follow-list.vue'), // 确保路径正确
+        meta: { title: '我的关注' }
+    },
+    {
         path: '/article/:articleId', // 文章详情页
         component: ArticleDetail,
         meta: { title: 'Weblog 详情页' }

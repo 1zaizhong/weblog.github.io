@@ -1,6 +1,7 @@
 package com.zifengliu.weblog.web.service;
 
 import com.zifengliu.weblog.common.utils.Response;
+import com.zifengliu.weblog.web.model.vo.author.FindAuthorDashboardReqVO;
 
 /**
  * @author 粟英朝
@@ -19,4 +20,9 @@ public interface StatisticsService {
      * @return
      */
     Response findAuthorInfoByArticleId(Long articleId);
+
+    /**
+     * 获取博主主页看板数据
+     */
+    Response findAuthorDashboardData(FindAuthorDashboardReqVO reqVO);
 }
