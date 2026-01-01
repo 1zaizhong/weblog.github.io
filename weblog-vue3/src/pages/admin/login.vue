@@ -160,7 +160,6 @@ const onSubmit = () => {
              showMessage('用户不存在，已为您开启注册弹窗', 'warning')
 
       }else {
-            // 真正的密码错误会走这里
             showMessage(res.message || '用户名或密码错误', 'error')
         }
       }

@@ -16,7 +16,7 @@ import AdminCommentList from '@/pages/admin/comment-list.vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Admin from '@/layouts/admin/admin.vue'
 
-// 统一在这里声明所有路由
+// 声明路由
 const routes = [
     {
         path: '/', // 路由地址，首页
@@ -99,7 +99,11 @@ const routes = [
                 component: AdminCategoryList,
                 meta: { title: '分类管理' }
             },
-            // 已删除 AdminTagList 路由
+            {
+                path: "/admin/tag/list",
+                component: () => import("@/pages/admin/tag-list.vue"),
+                meta: { title: '标签管理' }
+            },
             {
                 path: "/admin/blog/settings",
                 component: AdminBlogSettings,
@@ -124,6 +128,11 @@ const routes = [
                 path: "/admin/collection/article",
                 component: () => import("@/pages/admin/collection-article.vue"),
                 meta: { title: '文章收藏' }
+            },
+            {
+                path: '/admin/follow/list',
+                component: () => import('@/pages/admin/userfollow-list.vue'),
+                meta: { title: '关注管理' }
             },
             {
                 path: "/admin/comment/list",

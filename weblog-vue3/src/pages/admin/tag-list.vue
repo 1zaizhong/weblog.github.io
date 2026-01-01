@@ -193,13 +193,13 @@ const form = reactive({
 
 
 const onSubmit = () => {
-    // 先校验表单（虽然现在主要输入在 dynamicTags 里）
+    // 先校验表单
     formRef.value.validate((valid) => {
         if (!valid) return
 
         formDialogRef.value.showBtnLoading()
 
-        // 核心改动：将 dynamicTags 数组封装进 tags 字段，匹配 AddTagReqVO
+        // 将 dynamicTags 数组封装进 tags 字段，匹配 AddTagReqVO
         addTag({ tags: dynamicTags.value }).then((res) => {
             if (res.success == true) {
                 showMessage('添加成功')
@@ -222,7 +222,6 @@ const deleteTagSubmit = (row) => {
                 showMessage('删除成功')
                 getTableData()
             } else {
-                // 后端抛出的“此标签下包含文章，无法删除”会在这里显示
                 showMessage(res.message, 'error')
             }
         })

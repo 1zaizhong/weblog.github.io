@@ -248,7 +248,7 @@ const articlePVInfo = ref({
 // 获取 PV 数据
 getArticlePVStatisticsInfo().then(res => {
     if (res.success) {
-        // 这里的 res.data 是 {"pvDates": [...], "pvCounts": [...]}
+       
         articlePVInfo.value = res.data
     }
 })

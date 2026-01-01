@@ -34,7 +34,7 @@ public class LinkNodeRenderer implements NodeRenderer {
 
     @Override
     public Set<Class<? extends Node>> getNodeTypes() {
-        // 指定想要自定义渲染的节点，这里指定为超链接 Link
+        // 为超链接 Link
         return Sets.newHashSet(Link.class);
     }
 

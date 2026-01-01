@@ -179,7 +179,7 @@ const userObj = userStr ? JSON.parse(userStr) : null
 const userId = userObj?.userInfo?.userID
 //获取分类列表
 const initCategories = () => {
-    // 这里传参必须是 { userId: xxx }，对应后端的 FindCategoryListReqVO
+    
     getCategoryList({ userId: userId }).then((res) => {
         if (res.success) {
             categories.value = res.data

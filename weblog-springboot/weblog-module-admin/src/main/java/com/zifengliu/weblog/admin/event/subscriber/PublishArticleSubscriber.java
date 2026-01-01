@@ -41,7 +41,6 @@ public class PublishArticleSubscriber implements ApplicationListener<PublishArti
     @Override
     @Async("threadPoolTaskExecutor")
     public void onApplicationEvent(PublishArticleEvent event) {
-        // 在这里处理收到的事件，可以是任何逻辑操作
         Long articleId = event.getArticleId();
 
         // 获取当前线程名称
@@ -52,7 +51,8 @@ public class PublishArticleSubscriber implements ApplicationListener<PublishArti
 
         // 搜索新发布的文章
         ArticleDO articleDO = articleMapper.selectById(articleId);
-        // 这里也将文字正文保存到了文档中，但是检索的时候并没有查询正文，小伙伴们可自行决定是否要将正文，添加到检索字段中
+
+        // 这里也将文字正文保存到了文档中，但是检索的时候并没有查询正文
         ArticleContentDO articleContentDO = articleContentMapper.selectByArticleId(articleId);
 
         // 构建文档
@@ -63,7 +63,7 @@ public class PublishArticleSubscriber implements ApplicationListener<PublishArti
         document.add(new TextField(ArticleIndex.COLUMN_SUMMARY, articleDO.getSummary(), Field.Store.YES));
         document.add(new TextField(ArticleIndex.COLUMN_CONTENT, articleContentDO.getContent(), Field.Store.YES));
         document.add(new TextField(ArticleIndex.COLUMN_CREATE_TIME, Constants.DATE_TIME_FORMATTER.format(articleDO.getCreateTime()), Field.Store.YES));
-// IntPoint 用于支持 SearchServiceImpl 中的精确数值查询 (status = 2)
+  // IntPoint 用于支持 SearchServiceImpl 中的精确数值查询 (status = 2)
         document.add(new IntPoint(ArticleIndex.COLUMN_STATUS, articleDO.getStatus()));
         document.add(new StoredField(ArticleIndex.COLUMN_STATUS, articleDO.getStatus()));
         // 添加文档

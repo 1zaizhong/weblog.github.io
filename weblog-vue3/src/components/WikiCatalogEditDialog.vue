@@ -419,7 +419,7 @@ const onAddCatalogSubmit = () => {
         
         // 构造新的目录对象
         let newCatalog = {
-            id: tmpId.value, // 新的目录由于没有 ID, 这里给个临时 ID, 负数表示, 标识是一个新添加的目录  
+            id: tmpId.value, 
             title: addCatalogForm.title,
             editing: false,
             level: 1,
@@ -447,7 +447,7 @@ const searchArticleTitle = ref('')
 // 日期
 const pickDate = ref('')
 
-// 查询条件：开始结束时间
+// 开始结束时间
 const startDate = reactive({})
 const endDate = reactive({})
 

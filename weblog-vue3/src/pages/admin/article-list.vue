@@ -296,7 +296,7 @@ const searchArticleTitle = ref('')
 // 日期
 const pickDate = ref('')
 
-// 查询条件：开始结束时间
+// 、开始结束时间
 const startDate = reactive({})
 const endDate = reactive({})
 
@@ -464,7 +464,7 @@ const handleCoverChange = (file) => {
     })
 }
 
-// 编辑文章：上传文章封面图片
+// 传文章封面图片
 const handleUpdateCoverChange = (file) => {
     // 表单对象
     let formData = new FormData()
@@ -692,10 +692,10 @@ const handleStatusChange = (row) => {
 const handleAiAdopt = (content) => {
     if (!content) return
 
-    // 逻辑：如果内容小于 40 个字且不包含换行，优先认为是“标题”；否则认为是“正文”
+   
     const isShortText = content.length <= 40 && !content.includes('\n')
 
-    // 情况 A：当前正在“发布文章”对话框
+   
     if (isArticlePublishEditorShow.value) {
         if (isShortText) {
             form.title = content
@@ -705,7 +705,7 @@ const handleAiAdopt = (content) => {
             showMessage('已采纳为【发布】文章正文')
         }
     } 
-    // 情况 B：当前正在“编辑/更新文章”对话框
+    
     else if (isArticleUpdateEditorShow.value) {
         if (isShortText) {
             updateArticleForm.title = content
@@ -715,12 +715,10 @@ const handleAiAdopt = (content) => {
             showMessage('已采纳为【编辑】文章正文')
         }
     } 
-    // 情况 C：用户没打开任何编辑器
+  
     else {
         showMessage('请先点击“写文章”或“编辑”，再进行采纳', 'warning')
-        // 可选：如果用户没开，可以自动帮他打开“写文章”并填充
-        // isArticlePublishEditorShow.value = true
-        // form.content = content
+       
     }
 }
 </script>

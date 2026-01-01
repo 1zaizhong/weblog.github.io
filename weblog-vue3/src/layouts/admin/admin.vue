@@ -65,7 +65,7 @@ onMounted(() => {
     padding: 0!important;
 }
 
-/* 内容区域过渡动画：淡入淡出效果 */
+/* 淡入淡出效果 */
 /* 刚开始进入时 */
 .fade-enter-from {
     /* 透明度 */

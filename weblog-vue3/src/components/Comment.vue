@@ -187,7 +187,7 @@ function initComments() {
     getComments(route.path).then(res => {
         if (res.success) {
             total.value = res.data.total
-            // 重点：注入 isExpanded 状态控制二级显示
+          
             comments.value = res.data.comments.map(c => ({ 
                 ...c, 
                 isShowReplyForm: false,

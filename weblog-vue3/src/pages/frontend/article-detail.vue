@@ -299,7 +299,7 @@ const collectLoading = ref(false)
 const directories = ref([])
 const selectedDirectoryId = ref(null)
 
-// 2. 修改：点击“收藏”按钮逻辑
+// 2. 点击“收藏”按钮逻辑
 const showCollectDialog = () => {
     // 获取具体的 ID
     const loginUserId = getLoginUserId()
@@ -326,7 +326,7 @@ const showCollectDialog = () => {
     })
 }
 
-// 3. 修改：提交收藏逻辑
+// 3. 提交收藏
 const handleCollect = () => {
     const loginUserId = getLoginUserId()
 
@@ -423,7 +423,7 @@ const handleLike = () => {
         return
     }
 
-    // 1.拿到 ID
+    // 文章 ID
     const articleId = Number(route.params.articleId)
     console.log('获取到的文章ID:', articleId)
     if (!articleId) {
@@ -431,10 +431,10 @@ const handleLike = () => {
         return
     }
 
-    // 2. 拿到用户 ID
+    // 用户 ID
     const loginUserId = JSON.parse(userStr).userInfo?.userID
 
-    // 3. 调用接口：注意这里必须传对象 { articleId, userId }
+    
     likeArticle({ articleId: articleId, userId: loginUserId }).then(res => {
         if (res.success) {
             // 切换本地点赞状态

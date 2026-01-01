@@ -79,13 +79,17 @@ const allMenus = [
     },
     {
         'name': '收藏管理',
-        'icon': 'Collection', // 或者使用 'Folder'
+        'icon': 'Collection', 
         'path': '/admin/collection/list',
     },
     {
         'name': '评论管理',
         'icon': 'ChatDotSquare',
         'path': '/admin/comment/list',
+    },{
+        'name': '关注管理',
+        'icon': 'UserFilled', 
+        'path': '/admin/follow/list',
     },
     {
     'name': '用户管理',
