@@ -242,7 +242,7 @@ import hljs from 'highlight.js/lib/common'
 import 'highlight.js/styles/tokyo-night-dark.css'
 import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
 import WikiToc from '@/layouts/frontend/components/WikiToc.vue'
-import { getWikiArticlePreNext, getWikiCatalogs } from '@/api/frontend/wiki' // 确保引用的是正确的API方法
+import { getWikiArticlePreNext, getWikiCatalogs } from '@/api/frontend/wiki' 
 import { initModals, initAccordions } from 'flowbite'
 
 const route = useRoute()
@@ -271,7 +271,7 @@ function refreshArticleDetail(articleId) {
         return 
     }
 
-    // 1. 修复：调用 getUserID() 方法获取具体数值
+    // 1. 调用 getUserID() 方法获取具体数值
     getArticleDetail(articleId, getUserID()).then((res) => {
         // 该文章不存在(错误码为 20010)
         if (!res.success && res.errorCode == '20010') {
@@ -319,7 +319,7 @@ function refreshArticleDetail(articleId) {
 
 // 页面加载时获取目录
 const fetchCatalogs = () => {
-    // 2. 修复：传入 userId，确保后端能正确判断目录可见性
+    // 2. 传入 userId，确保后端能正确判断目录可见性
     getWikiCatalogs(route.params.wikiId, getUserID()).then(res => {
         if (res.success) {
             catalogs.value = res.data
@@ -331,7 +331,7 @@ const fetchCatalogs = () => {
 
 // 初始化
 refreshArticleDetail(route.query.articleId)
-fetchCatalogs() // 调用获取目录
+fetchCatalogs() 
 
 const handleMouseEnter = (event) => {
     let copyBtn = event.target.querySelector('button');

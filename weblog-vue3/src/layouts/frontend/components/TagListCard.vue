@@ -22,7 +22,7 @@
 
             <span class="grow"></span>
             <!-- 查看更多 -->
-            <a @click="router.push('/tag/list')" class=" bg-gray-100 flex items-center px-2.5 py-1 text-xs font-medium text-center 
+            <a class=" bg-gray-100 flex items-center px-2.5 py-1 text-xs font-medium text-center 
             text-gray-900  rounded-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-200 
             dark:bg-gray-800 dark:text-white dark:border dark:border-gray-700 dark:hover:bg-gray-700 dark:hover:border-gray-700
              dark:focus:ring-gray-700">
@@ -35,7 +35,7 @@
         </div>
 
         <!-- 标签列表 -->
-        <span v-for="(tag, index) in tags" :key="index" @click="goTagArticleListPage(tag.id, tag.name)"
+        <span v-for="(tag, index) in tags" :key="index" 
             class="inline-block mb-1 cursor-pointer bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 
             rounded hover:bg-green-200 hover:text-green-900 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-950">
             {{ tag.name }}

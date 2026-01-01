@@ -11,10 +11,7 @@ import com.zifengliu.weblog.common.domain.mapper.CollectionArticleRelMapper;
 import com.zifengliu.weblog.common.domain.mapper.CollectionDirectoryMapper;
 import com.zifengliu.weblog.common.utils.PageResponse;
 import com.zifengliu.weblog.common.utils.Response;
-import com.zifengliu.weblog.web.model.vo.collection.CollectArticleReqVO;
-import com.zifengliu.weblog.web.model.vo.collection.FindCollectionArticlePageListReqVO;
-import com.zifengliu.weblog.web.model.vo.collection.FindCollectionArticlePageListRspVO;
-import com.zifengliu.weblog.web.model.vo.collection.FindCollectionDirectoryReqVO;
+import com.zifengliu.weblog.web.model.vo.collection.*;
 import com.zifengliu.weblog.web.service.WebCollectionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +21,8 @@ import org.springframework.util.CollectionUtils;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -41,17 +40,40 @@ public class CollectionServiceImpl implements WebCollectionService {
     @Autowired
     private CollectionArticleRelMapper relMapper;
 
+/*
+* 查询收藏夹列表*/
     @Override
     public Response findCollectionDirectoryList(FindCollectionDirectoryReqVO reqVO) {
-        // 根据前端传来的 userId 查询
-        List<CollectionDirectoryDO> list = directoryMapper.selectList(Wrappers.<CollectionDirectoryDO>lambdaQuery()
+        // 1. 根据用户ID查询所有的收藏夹 (对应 t_collection_directory 表)
+        List<CollectionDirectoryDO> directories = directoryMapper.selectList(Wrappers.<CollectionDirectoryDO>lambdaQuery()
                 .eq(CollectionDirectoryDO::getUserId, reqVO.getUserId())
-                .select(CollectionDirectoryDO::getId, CollectionDirectoryDO::getName)
                 .orderByDesc(CollectionDirectoryDO::getCreateTime));
 
-        return Response.success(list);
-    }
+        // 如果该用户没有收藏夹，直接返回空列表
+        if (CollectionUtils.isEmpty(directories)) {
+            return Response.success(Collections.emptyList());
+        }
 
+        // 2. 将 DO 转换为 VO，并填充统计数据
+        List<CollectionDirectoryRspVO> vos = directories.stream().map(directory -> {
+
+            // 3. 统计该收藏夹下的文章数量 (对应 t_collection_article_rel 表)
+            // 使用 relMapper 根据 directory_id 分组计数
+            Long count = relMapper.selectCount(Wrappers.<CollectionArticleRelDO>lambdaQuery()
+                    .eq(CollectionArticleRelDO::getDirectoryId, directory.getId()));
+
+            // 构建返回对象
+            return CollectionDirectoryRspVO.builder()
+                    .id(directory.getId())
+                    .name(directory.getName())
+                    .articlesTotal(count.intValue())
+                    .build();
+        }).collect(Collectors.toList());
+
+        return Response.success(vos);
+    }
+    /*根据收藏夹列表查文章
+    * */
     @Override
     public Response collectArticle(CollectArticleReqVO reqVO) {
         Long userId = reqVO.getUserId();
@@ -92,13 +114,12 @@ public class CollectionServiceImpl implements WebCollectionService {
     /*
     * 查找收藏文章分页
     * */
-
     @Override
     public Response findCollectionArticlePageList(FindCollectionArticlePageListReqVO reqVO) {
         Long directoryId = reqVO.getDirectoryId();
         Long userId = reqVO.getUserId();
 
-        // 1. 分页查询关联表，获取文章 ID 集合
+        // 1. 分页查询关联表
         Page<CollectionArticleRelDO> page = new Page<>(reqVO.getCurrent(), reqVO.getSize());
         LambdaQueryWrapper<CollectionArticleRelDO> wrapper = Wrappers.<CollectionArticleRelDO>lambdaQuery()
                 .eq(CollectionArticleRelDO::getDirectoryId, directoryId)
@@ -108,23 +129,27 @@ public class CollectionServiceImpl implements WebCollectionService {
         Page<CollectionArticleRelDO> relPage = relMapper.selectPage(page, wrapper);
         List<CollectionArticleRelDO> relDOList = relPage.getRecords();
 
-        // 2. 如果收藏夹是空的，直接返回
         if (CollectionUtils.isEmpty(relDOList)) {
             return Response.success(PageResponse.success(relPage, Collections.emptyList()));
         }
 
-        // 3. 提取文章 ID 集合
+        //  提取文章 ID
         List<Long> articleIds = relDOList.stream()
                 .map(CollectionArticleRelDO::getArticleId)
                 .collect(Collectors.toList());
 
-        // 4. 根据文章 ID 集合查询文章详情
-        // 注意：这里要保持关联表的排序，或者根据 ID 集合批量查询
+        // 批量查询文章，并转为 Map 方便后续按关联表顺序提取
         List<ArticleDO> articleDOList = articleMapper.selectList(Wrappers.<ArticleDO>lambdaQuery()
                 .in(ArticleDO::getId, articleIds));
 
-        // 5. DO 转 VO (这里建议使用 Map 转换以保证顺序正确)
-        List<FindCollectionArticlePageListRspVO> vos = articleDOList.stream().map(articleDO -> {
+        Map<Long, ArticleDO> articleMap = articleDOList.stream()
+                .collect(Collectors.toMap(ArticleDO::getId, a -> a));
+
+        // 按照 relDOList 的顺序构建 VO
+        List<FindCollectionArticlePageListRspVO> vos = relDOList.stream().map(rel -> {
+            ArticleDO articleDO = articleMap.get(rel.getArticleId());
+            if (articleDO == null) return null;
+
             return FindCollectionArticlePageListRspVO.builder()
                     .id(articleDO.getId())
                     .title(articleDO.getTitle())
@@ -132,7 +157,7 @@ public class CollectionServiceImpl implements WebCollectionService {
                     .summary(articleDO.getSummary())
                     .createTime(articleDO.getCreateTime())
                     .build();
-        }).collect(Collectors.toList());
+        }).filter(Objects::nonNull).collect(Collectors.toList());
 
         return Response.success(PageResponse.success(relPage, vos));
     }

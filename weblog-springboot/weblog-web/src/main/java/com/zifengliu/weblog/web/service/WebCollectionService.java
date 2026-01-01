@@ -21,5 +21,8 @@ public interface WebCollectionService {
      * 收藏文章（显式传入用户ID）
      */
     Response collectArticle(CollectArticleReqVO reqVO);
+    /**
+     * 获取收藏夹下文章列表
+     * */
     Response findCollectionArticlePageList(FindCollectionArticlePageListReqVO reqVO);
 }

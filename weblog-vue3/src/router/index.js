@@ -45,9 +45,14 @@ const routes = [
         meta: { title: '我的喜欢' }
     },
     {
-        path: '/personal/collection', 
-        component: () => import('@/pages/frontend/user-collection.vue'), // 需创建此页面
-        meta: { title: '我的收藏' }
+        path: '/collection/list', 
+        component: () => import('@/pages/frontend/collection-list.vue'), 
+        meta: { title: '我的收藏夹' }
+    },
+    {
+        path: '/collection/article/list', 
+        component: () => import('@/pages/frontend/collection-article-list.vue'), 
+        meta: { title: '收藏内容详情' }
     },
     {
         path: '/article/:articleId', // 文章详情页
