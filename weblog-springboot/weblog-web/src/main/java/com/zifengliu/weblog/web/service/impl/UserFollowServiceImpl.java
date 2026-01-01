@@ -53,6 +53,13 @@ public class UserFollowServiceImpl implements UserFollowService {
     private ArticleMapper articleMapper;
 
     @Override
+    public Long countFansByUserId(Long userId) {
+        // 粉丝：谁关注了我 (following_user_id = 我的ID)
+        return userFollowMapper.selectCount(Wrappers.<UserFollowDO>lambdaQuery()
+                .eq(UserFollowDO::getFollowingUserId, userId));
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public Response followOrUnfollowUser(FollowUserReqVO reqVO) {
         Long userId = reqVO.getUserId();

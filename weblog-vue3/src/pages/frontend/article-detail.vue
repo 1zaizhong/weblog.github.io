@@ -246,12 +246,9 @@
             <!-- 右边侧边栏，占用一列 -->
             <aside class="col-span-4 md:col-span-1">
                 <div>
-                    <!-- 博主信息 -->
-                    <UserInfoCard></UserInfoCard>
-
-                    
-
-                    
+                    <aside class="col-span-4 md:col-span-1">
+                        <AuthorInfoCard :articleId="articleId" />
+                    </aside>   
                 </div>
                 
                 <!-- 文章目录 -->
@@ -270,7 +267,7 @@
 <script setup>
 import Header from '@/layouts/frontend/components/Header.vue'
 import Footer from '@/layouts/frontend/components/Footer.vue'
-import UserInfoCard from '@/layouts/frontend/components/UserInfoCard.vue'
+import AuthorInfoCard from '@/layouts/frontend/components/AuthorInfoCard.vue'
 import TagListCard from '@/layouts/frontend/components/TagListCard.vue'
 import CategoryListCard from '@/layouts/frontend/components/CategoryListCard.vue'
 import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
@@ -286,6 +283,7 @@ import { showMessage,showModel } from '@/composables/util'
 import { useDark } from '@vueuse/core'
 import { getWebCollectionDirectoryList, collectArticle } from '@/api/frontend/collection'
 import { followOrUnfollow, checkFollowStatus } from '@/api/frontend/follow'
+
 
 // 是否是暗黑模式
 const isDark = useDark()

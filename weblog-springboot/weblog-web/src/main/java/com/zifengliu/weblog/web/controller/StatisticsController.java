@@ -2,6 +2,7 @@ package com.zifengliu.weblog.web.controller;
 
 import com.zifengliu.weblog.common.aspect.ApiOperationLog;
 import com.zifengliu.weblog.common.utils.Response;
+import com.zifengliu.weblog.web.model.vo.statistics.FindAuthorInfoByArticleIdReqVO;
 import com.zifengliu.weblog.web.model.vo.statistics.FindStatisticsInfoReqVO;
 import com.zifengliu.weblog.web.service.StatisticsService;
 import io.swagger.annotations.Api;
@@ -33,5 +34,11 @@ public class StatisticsController {
     @ApiOperationLog(description = "前台获取统计信息")
     public Response findInfo(@RequestBody @Validated FindStatisticsInfoReqVO reqVO) {
         return statisticsService.findInfo(reqVO.getUserId());
+    }
+    @PostMapping("/author/info")
+    @ApiOperation(value = "根据文章 ID 获取作者详细统计信息")
+    @ApiOperationLog(description = "根据文章 ID 获取作者详细统计信息")
+    public Response findAuthorInfoByArticleId(@RequestBody @Validated FindAuthorInfoByArticleIdReqVO reqVO) {
+        return statisticsService.findAuthorInfoByArticleId(reqVO.getArticleId());
     }
 }
