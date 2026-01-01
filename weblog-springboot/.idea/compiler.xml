@@ -19,9 +19,9 @@
         </processorPath>
         <module name="weblog-module-admin" />
         <module name="weblog-module-common" />
+        <module name="weblog-web" />
         <module name="weblog-module-jwt" />
         <module name="weblog-module-search" />
-        <module name="weblog-web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

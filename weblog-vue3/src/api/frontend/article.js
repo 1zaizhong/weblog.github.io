@@ -22,3 +22,7 @@ export function likeArticle(data) {
 export function checkArticleIsLiked(articleId, userId) {
     return axios.post('/article/isLiked', { articleId, userId })
 }
+// 获取热门文章排行
+export function getHotArticleList() {
+    return axios.post("/article/hot/list", {})
+}
