@@ -1,20 +1,30 @@
 package com.zifengliu.weblog.web.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zifengliu.weblog.common.domain.dos.ArticleDO;
 import com.zifengliu.weblog.common.domain.dos.CollectionArticleRelDO;
 import com.zifengliu.weblog.common.domain.dos.CollectionDirectoryDO;
+import com.zifengliu.weblog.common.domain.mapper.ArticleMapper;
 import com.zifengliu.weblog.common.domain.mapper.CollectionArticleRelMapper;
 import com.zifengliu.weblog.common.domain.mapper.CollectionDirectoryMapper;
+import com.zifengliu.weblog.common.utils.PageResponse;
 import com.zifengliu.weblog.common.utils.Response;
 import com.zifengliu.weblog.web.model.vo.collection.CollectArticleReqVO;
+import com.zifengliu.weblog.web.model.vo.collection.FindCollectionArticlePageListReqVO;
+import com.zifengliu.weblog.web.model.vo.collection.FindCollectionArticlePageListRspVO;
 import com.zifengliu.weblog.web.model.vo.collection.FindCollectionDirectoryReqVO;
 import com.zifengliu.weblog.web.service.WebCollectionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author 粟英朝
@@ -24,7 +34,7 @@ import java.util.List;
  **/
 @Service
 @Slf4j
-public class WebCollectionServiceImpl implements WebCollectionService {
+public class CollectionServiceImpl implements WebCollectionService {
 
     @Autowired
     private CollectionDirectoryMapper directoryMapper;
@@ -76,5 +86,54 @@ public class WebCollectionServiceImpl implements WebCollectionService {
 
         relMapper.insert(relDO);
         return Response.success();
+    }
+    @Autowired
+    private ArticleMapper articleMapper;
+    /*
+    * 查找收藏文章分页
+    * */
+
+    @Override
+    public Response findCollectionArticlePageList(FindCollectionArticlePageListReqVO reqVO) {
+        Long directoryId = reqVO.getDirectoryId();
+        Long userId = reqVO.getUserId();
+
+        // 1. 分页查询关联表，获取文章 ID 集合
+        Page<CollectionArticleRelDO> page = new Page<>(reqVO.getCurrent(), reqVO.getSize());
+        LambdaQueryWrapper<CollectionArticleRelDO> wrapper = Wrappers.<CollectionArticleRelDO>lambdaQuery()
+                .eq(CollectionArticleRelDO::getDirectoryId, directoryId)
+                .eq(CollectionArticleRelDO::getUserId, userId)
+                .orderByDesc(CollectionArticleRelDO::getCreateTime);
+
+        Page<CollectionArticleRelDO> relPage = relMapper.selectPage(page, wrapper);
+        List<CollectionArticleRelDO> relDOList = relPage.getRecords();
+
+        // 2. 如果收藏夹是空的，直接返回
+        if (CollectionUtils.isEmpty(relDOList)) {
+            return Response.success(PageResponse.success(relPage, Collections.emptyList()));
+        }
+
+        // 3. 提取文章 ID 集合
+        List<Long> articleIds = relDOList.stream()
+                .map(CollectionArticleRelDO::getArticleId)
+                .collect(Collectors.toList());
+
+        // 4. 根据文章 ID 集合查询文章详情
+        // 注意：这里要保持关联表的排序，或者根据 ID 集合批量查询
+        List<ArticleDO> articleDOList = articleMapper.selectList(Wrappers.<ArticleDO>lambdaQuery()
+                .in(ArticleDO::getId, articleIds));
+
+        // 5. DO 转 VO (这里建议使用 Map 转换以保证顺序正确)
+        List<FindCollectionArticlePageListRspVO> vos = articleDOList.stream().map(articleDO -> {
+            return FindCollectionArticlePageListRspVO.builder()
+                    .id(articleDO.getId())
+                    .title(articleDO.getTitle())
+                    .cover(articleDO.getCover())
+                    .summary(articleDO.getSummary())
+                    .createTime(articleDO.getCreateTime())
+                    .build();
+        }).collect(Collectors.toList());
+
+        return Response.success(PageResponse.success(relPage, vos));
     }
 }

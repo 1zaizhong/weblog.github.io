@@ -2,6 +2,7 @@ package com.zifengliu.weblog.web.service;
 
 import com.zifengliu.weblog.common.utils.Response;
 import com.zifengliu.weblog.web.model.vo.collection.CollectArticleReqVO;
+import com.zifengliu.weblog.web.model.vo.collection.FindCollectionArticlePageListReqVO;
 import com.zifengliu.weblog.web.model.vo.collection.FindCollectionDirectoryReqVO;
 
 /**
@@ -20,4 +21,5 @@ public interface WebCollectionService {
      * 收藏文章（显式传入用户ID）
      */
     Response collectArticle(CollectArticleReqVO reqVO);
+    Response findCollectionArticlePageList(FindCollectionArticlePageListReqVO reqVO);
 }

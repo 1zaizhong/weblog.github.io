@@ -28,6 +28,12 @@
                 </el-tooltip>
 
                 <AiChatDialog v-model="showAiDialog" />
+
+                <AiChatDialog 
+                    v-model="showAiDialog" 
+                    @adopt="handleAiAdopt" 
+                    append-to-body
+                />
             </div>
         </el-card>
 
@@ -127,12 +133,13 @@
                         <h4 class="font-bold">写文章</h4>
                         <!-- 靠右对齐 -->
                         <div class="ml-auto flex">
+                            <el-button type="warning" plain @click="showAiDialog = true">
+                                <el-icon class="mr-1"><MagicStick /></el-icon>AI 助手
+                            </el-button>
+                            
                             <el-button @click="isArticlePublishEditorShow = false">取消</el-button>
                             <el-button type="primary" @click="publishArticleSubmit">
-                                <el-icon class="mr-1">
-                                    <Promotion />
-                                </el-icon>
-                                发布
+                                <el-icon class="mr-1"><Promotion /></el-icon>发布
                             </el-button>
                         </div>
                     </div>
@@ -191,12 +198,13 @@
                         <h4 class="font-bold">编辑文章</h4>
                         <!-- 靠右对齐 -->
                         <div class="ml-auto flex">
+                            <el-button type="warning" plain @click="showAiDialog = true">
+                                <el-icon class="mr-1"><MagicStick /></el-icon>AI 助手
+                            </el-button>
+                            
                             <el-button @click="isArticleUpdateEditorShow = false">取消</el-button>
                             <el-button type="primary" @click="updateSubmit">
-                                <el-icon class="mr-1">
-                                    <Promotion />
-                                </el-icon>
-                                保存
+                                <el-icon class="mr-1"><Promotion /></el-icon>保存
                             </el-button>
                         </div>
                     </div>
@@ -679,6 +687,41 @@ const handleStatusChange = (row) => {
         // 异常处理：比如网络报错，强制刷新数据恢复开关状态
         getTableData()
     })
+}
+// AI 采纳逻辑：填充到发布或编辑表单
+const handleAiAdopt = (content) => {
+    if (!content) return
+
+    // 逻辑：如果内容小于 40 个字且不包含换行，优先认为是“标题”；否则认为是“正文”
+    const isShortText = content.length <= 40 && !content.includes('\n')
+
+    // 情况 A：当前正在“发布文章”对话框
+    if (isArticlePublishEditorShow.value) {
+        if (isShortText) {
+            form.title = content
+            showMessage('已采纳为【发布】文章标题')
+        } else {
+            form.content = content
+            showMessage('已采纳为【发布】文章正文')
+        }
+    } 
+    // 情况 B：当前正在“编辑/更新文章”对话框
+    else if (isArticleUpdateEditorShow.value) {
+        if (isShortText) {
+            updateArticleForm.title = content
+            showMessage('已采纳为【编辑】文章标题')
+        } else {
+            updateArticleForm.content = content
+            showMessage('已采纳为【编辑】文章正文')
+        }
+    } 
+    // 情况 C：用户没打开任何编辑器
+    else {
+        showMessage('请先点击“写文章”或“编辑”，再进行采纳', 'warning')
+        // 可选：如果用户没开，可以自动帮他打开“写文章”并填充
+        // isArticlePublishEditorShow.value = true
+        // form.content = content
+    }
 }
 </script>
 

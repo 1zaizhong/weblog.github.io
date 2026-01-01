@@ -6,8 +6,8 @@ import com.zifengliu.weblog.common.domain.dos.ArticleLikeDO;
 import com.zifengliu.weblog.common.domain.mapper.ArticleLikeMapper;
 import com.zifengliu.weblog.common.domain.mapper.ArticleMapper;
 import com.zifengliu.weblog.common.utils.Response;
-import com.zifengliu.weblog.web.model.vo.article.CheckArticleLikedReqVO;
-import com.zifengliu.weblog.web.model.vo.article.LikeArticleReqVO;
+import com.zifengliu.weblog.web.model.vo.like.CheckArticleLikedReqVO;
+import com.zifengliu.weblog.web.model.vo.like.LikeArticleReqVO;
 import com.zifengliu.weblog.web.service.ArticleLikeService;
 
 import lombok.extern.slf4j.Slf4j;

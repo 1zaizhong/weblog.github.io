@@ -2,8 +2,8 @@ package com.zifengliu.weblog.web.controller;
 
 import com.zifengliu.weblog.common.aspect.ApiOperationLog;
 import com.zifengliu.weblog.common.utils.Response;
-import com.zifengliu.weblog.web.model.vo.article.CheckArticleLikedReqVO;
-import com.zifengliu.weblog.web.model.vo.article.LikeArticleReqVO;
+import com.zifengliu.weblog.web.model.vo.like.CheckArticleLikedReqVO;
+import com.zifengliu.weblog.web.model.vo.like.LikeArticleReqVO;
 import com.zifengliu.weblog.web.service.ArticleLikeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

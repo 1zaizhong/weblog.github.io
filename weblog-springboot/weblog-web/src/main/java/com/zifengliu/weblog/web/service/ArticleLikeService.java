@@ -1,8 +1,8 @@
 package com.zifengliu.weblog.web.service;
 
 import com.zifengliu.weblog.common.utils.Response;
-import com.zifengliu.weblog.web.model.vo.article.CheckArticleLikedReqVO;
-import com.zifengliu.weblog.web.model.vo.article.LikeArticleReqVO;
+import com.zifengliu.weblog.web.model.vo.like.CheckArticleLikedReqVO;
+import com.zifengliu.weblog.web.model.vo.like.LikeArticleReqVO;
 
 /**
  * @author 粟英朝

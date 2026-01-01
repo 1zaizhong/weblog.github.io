@@ -1,4 +1,4 @@
-package com.zifengliu.weblog.web.model.vo.article;
+package com.zifengliu.weblog.web.model.vo.like;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

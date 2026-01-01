@@ -3,6 +3,7 @@ package com.zifengliu.weblog.web.controller;
 import com.zifengliu.weblog.common.aspect.ApiOperationLog;
 import com.zifengliu.weblog.common.utils.Response;
 import com.zifengliu.weblog.web.model.vo.collection.CollectArticleReqVO;
+import com.zifengliu.weblog.web.model.vo.collection.FindCollectionArticlePageListReqVO;
 import com.zifengliu.weblog.web.model.vo.collection.FindCollectionDirectoryReqVO;
 import com.zifengliu.weblog.web.service.WebCollectionService;
 import io.swagger.annotations.Api;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/collection")
 @Api(tags = "Web 收藏模块")
-public class WebCollectionController {
+public class CollectionController {
 
     @Autowired
     private WebCollectionService collectionService;
@@ -40,5 +41,11 @@ public class WebCollectionController {
     @ApiOperationLog(description = "收藏文章")
     public Response collectArticle(@RequestBody @Validated CollectArticleReqVO collectArticleReqVO) {
         return collectionService.collectArticle(collectArticleReqVO);
+    }
+    @PostMapping("/article/list")
+    @ApiOperation(value = "获取指定收藏夹内的文章列表")
+    @ApiOperationLog(description = "获取指定收藏夹内的文章列表")
+    public Response findCollectionArticlePageList(@RequestBody @Validated FindCollectionArticlePageListReqVO reqVO) {
+        return collectionService.findCollectionArticlePageList(reqVO);
     }
 }
