@@ -134,8 +134,7 @@
                         </div>
                         <div class="flex justify-center items-center gap-6 mt-14 mb-10">
                      
-                 <!-- 点赞 -->       
-               
+                 <!-- 点赞 -->           
     <div class="flex flex-col items-center gap-2">
         <button @click="handleLike" 
                 :class="[isLiked ? 'bg-red-50 text-red-500 border-red-200 shadow-inner' : 'bg-gray-50 text-gray-500 border-gray-100']"
@@ -148,31 +147,51 @@
             {{ article.likeNum || 0 }} 人点赞
         </span>
     </div>
+    <!-- 关注 -->
+    <div class="flex items-center">
+        <button @click="handleFollow" 
+                :disabled="followLoading"
+                class="mr-3 flex items-center justify-center px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300"
+                :class="isFollowed ? 'bg-gray-100 text-gray-500 border border-gray-200 hover:bg-red-50 hover:text-red-500 hover:border-red-200' : 'bg-sky-500 text-white hover:bg-sky-600 shadow-sm'">
+            
+            <el-icon v-if="followLoading" class="is-loading mr-1"><Loading /></el-icon>
+            <el-icon v-else class="mr-1">
+                <Check v-if="isFollowed" />
+                <Plus v-else />
+            </el-icon>
 
+            {{ isFollowed ? '已关注' : '关注' }}
+        </button>
+
+        <div @click="handleLike" class="cursor-pointer">
+            </div>
+    </div>
+
+    <!-- 收藏 -->
     <div class="flex items-center cursor-pointer hover:text-blue-600" @click="showCollectDialog">
     <el-icon size="18"><Star /></el-icon>
     <span class="ml-1">收藏</span>
     </div>
     <el-dialog v-model="collectDialogVisible" title="选择收藏夹" width="400px" center>
-    <el-form label-width="80px">
-        <el-form-item label="收藏夹">
-            <el-select v-model="selectedDirectoryId" placeholder="请选择收藏夹" class="w-full">
-                <el-option 
-                    v-for="item in directories" 
-                    :key="item.id" 
-                    :label="item.name" 
-                    :value="item.id" 
-                />
-            </el-select>
-        </el-form-item>
-    </el-form>
-    <template #footer>
-        <el-button @click="collectDialogVisible = false">取消</el-button>
-        <el-button type="primary" :loading="collectLoading" @click="handleCollect">确认收藏</el-button>
-    </template>
-</el-dialog>
+        <el-form label-width="80px">
+            <el-form-item label="收藏夹">
+                <el-select v-model="selectedDirectoryId" placeholder="请选择收藏夹" class="w-full">
+                    <el-option 
+                        v-for="item in directories" 
+                        :key="item.id" 
+                        :label="item.name" 
+                        :value="item.id" 
+                        />
+                    </el-select>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <el-button @click="collectDialogVisible = false">取消</el-button>
+                <el-button type="primary" :loading="collectLoading" @click="handleCollect">确认收藏</el-button>
+            </template>
+    </el-dialog>
 
-</div>
+    </div>
 
     
 
@@ -263,28 +282,29 @@ import hljs from 'highlight.js'
 import 'highlight.js/styles/tokyo-night-dark.css'
 import { initTooltips } from 'flowbite'
 import Comment from '@/components/Comment.vue'
-import { showMessage } from '@/composables/util'
+import { showMessage,showModel } from '@/composables/util'
 import { useDark } from '@vueuse/core'
 import { getWebCollectionDirectoryList, collectArticle } from '@/api/frontend/collection'
+import { followOrUnfollow, checkFollowStatus } from '@/api/frontend/follow'
 
 // 是否是暗黑模式
 const isDark = useDark()
 
-// 初始化 Flowbit 组件
-onMounted(() => {
-    initTooltips();
-})
+
 
 const route = useRoute()
 const router = useRouter()
 // 路由传递过来的文章 ID
 console.log(route.params.articleId)
 const articleId = route.params.articleId
+const isFollowed = ref(false)            // 关注状态
+const followLoading = ref(false)
 
 // 文章数据
 const article = ref({})
 // 是否已点赞
 const isLiked = ref(false) 
+
 // 获取当前用户ID的辅助函数
 const getLoginUserId = () => {
     const userStr = localStorage.getItem('user')
@@ -293,13 +313,15 @@ const getLoginUserId = () => {
     }
     return null
 }
-// 1. 弹窗相关响应式数据
+const loginUserId = getLoginUserId()
+
+//  弹窗相关响应式数据
 const collectDialogVisible = ref(false)
 const collectLoading = ref(false)
 const directories = ref([])
 const selectedDirectoryId = ref(null)
 
-// 2. 点击“收藏”按钮逻辑
+// 点击“收藏”按钮逻辑
 const showCollectDialog = () => {
     // 获取具体的 ID
     const loginUserId = getLoginUserId()
@@ -326,7 +348,7 @@ const showCollectDialog = () => {
     })
 }
 
-// 3. 提交收藏
+// 提交收藏
 const handleCollect = () => {
     const loginUserId = getLoginUserId()
 
@@ -461,6 +483,66 @@ const handleLike = () => {
         console.error('点赞接口请求失败:', err)
     })
 }
+// 初始化检查关注状态
+const initCheckFollow = () => {
+    if (!loginUserId) return // 未登录不检查
+
+    checkFollowStatus({
+        userId: loginUserId,
+        articleId: articleId
+    }).then(res => {
+        if (res.success) {
+            isFollowed.value = res.data
+        }
+    })
+}
+
+// 点击关注/取消关注逻辑
+const handleFollow = () => {
+    // 1. 检查登录
+    if (!loginUserId) {
+        showMessage('请先登录后再关注作者', 'warning')
+        return
+    }
+
+    // 2. 根据状态执行不同逻辑
+    if (isFollowed.value) {
+        // 如果已关注，点击则弹出“取消关注”确认框
+        showModel('确定要取消关注该博主吗？').then(() => {
+            // 用户点击确认，执行请求
+            executeFollowAction()
+        }).catch(() => {
+            // 用户点击取消，不做任何事
+            console.log('用户取消了操作')
+        })
+    } else {
+        // 如果未关注，直接执行关注请求
+        executeFollowAction()
+    }
+}
+
+// 执行具体的接口请求
+const executeFollowAction = () => {
+    followLoading.value = true
+    
+    
+    followOrUnfollow({
+        userId: loginUserId,
+        articleId: articleId
+    }).then(res => {
+        if (res.success) {
+           
+            isFollowed.value = !isFollowed.value
+            showMessage(res.data) 
+        } else {
+            showMessage(res.message, 'error')
+        }
+    }).finally(() => {
+        followLoading.value = false
+    })
+}
+
+
 // 跳转分类文章列表页
 const goCategoryArticleListPage = (id, name) => {
     // 跳转时通过 query 携带参数（分类 ID、分类名称）
@@ -505,6 +587,13 @@ const handleMouseLeave = (event) => {
         copyBtn.classList.add('hidden');
     }
 }
+
+// 初始化 Flowbit 组件
+onMounted(() => {
+    initTooltips();
+    initCheckFollow();
+    
+})
 </script>
 
 <style scoped>

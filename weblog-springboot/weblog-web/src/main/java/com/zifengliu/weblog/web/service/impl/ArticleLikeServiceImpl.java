@@ -43,8 +43,10 @@ public class ArticleLikeServiceImpl implements ArticleLikeService {
 
     @Autowired
     private ArticleMapper articleMapper;
-/*
-* 点赞*/
+/**
+* 点赞
+ * param reqVO
+ * */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Response likeOrUnlikeArticle(LikeArticleReqVO reqVO) {
@@ -78,6 +80,9 @@ public class ArticleLikeServiceImpl implements ArticleLikeService {
         }
     }
 
+    /**检查是否点赞
+     * @param reqVO
+     * */
     @Override
     public Response checkIsLiked(CheckArticleLikedReqVO reqVO) {
         Long userId = reqVO.getUserId();
@@ -93,10 +98,10 @@ public class ArticleLikeServiceImpl implements ArticleLikeService {
 
         return Response.success(count > 0);
     }
-    /*点赞列表
+    /**
+     * 查找点赞列表
+     * param reqVO
     * */
-    // 在 ArticleLikeServiceImpl.java 中添加
-
     @Override
     public Response findLikeArticlePageList(FindLikeArticlePageListReqVO reqVO) {
         Long userId = reqVO.getUserId();

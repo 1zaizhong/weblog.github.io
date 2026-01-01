@@ -22,5 +22,5 @@ public class LikeArticleReqVO {
     private Long articleId;
 
     @NotNull(message = "用户ID不能为空")
-    private Long userId; // 前台显式传入当前登录人ID
+    private Long userId;
 }

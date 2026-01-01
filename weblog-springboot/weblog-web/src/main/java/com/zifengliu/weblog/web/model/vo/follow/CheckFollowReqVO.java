@@ -1,4 +1,4 @@
-package com.zifengliu.weblog.web.model.vo.like;
+package com.zifengliu.weblog.web.model.vo.follow;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,16 +10,14 @@ import javax.validation.constraints.NotNull;
 /**
  * @author 粟英朝
  * @version 0.0.3
- * @date 2025/12/28 下午3:30
- * @description 检查是否点赞了
+ * @date 2026/1/2 上午2:57
+ * @description
  **/
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class CheckArticleLikedReqVO {
-    @NotNull(message = "文章ID不能为空")
-    private Long articleId;
-
+@Data
+public class CheckFollowReqVO {
     private Long userId;
+    private Long articleId;
 }

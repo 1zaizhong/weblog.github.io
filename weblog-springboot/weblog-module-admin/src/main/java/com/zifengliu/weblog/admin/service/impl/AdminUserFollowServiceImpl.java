@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  * @description
  **/
 @Service
-public class UserFollowServiceImpl implements UserFollowService {
+public class AdminUserFollowServiceImpl implements UserFollowService {
 
     @Autowired
     private UserFollowMapper userFollowMapper;
