@@ -20,8 +20,5 @@ public interface UserFollowService {
 
     // 分页查询我的关注列表
     Response findFollowPageList(FindFollowPageListReqVO reqVO);
-    /**
-     * 统计博主的粉丝数
-     */
-    Long countFansByUserId(Long userId);
+
 }

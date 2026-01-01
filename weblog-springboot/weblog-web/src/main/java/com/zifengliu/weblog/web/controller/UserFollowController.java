@@ -8,6 +8,7 @@ import com.zifengliu.weblog.web.service.UserFollowService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +42,7 @@ public class UserFollowController {
 
     @PostMapping("/list")
     @ApiOperation(value = "获取我的关注列表")
-    public Response list(@RequestBody FindFollowPageListReqVO reqVO) {
+    public Response findFollowPageList(@RequestBody @Validated FindFollowPageListReqVO reqVO) {
         return userFollowService.findFollowPageList(reqVO);
     }
 }

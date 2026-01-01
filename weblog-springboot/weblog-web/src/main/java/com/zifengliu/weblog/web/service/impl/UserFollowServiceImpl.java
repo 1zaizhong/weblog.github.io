@@ -3,7 +3,8 @@ package com.zifengliu.weblog.web.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zifengliu.weblog.admin.model.vo.follow.FindFollowingUserRspVO;
+
+import com.zifengliu.weblog.web.model.vo.follow.FindFollowingUserRspVO;
 import com.zifengliu.weblog.common.domain.dos.ArticleDO;
 import com.zifengliu.weblog.common.domain.dos.BlogSettingsDO;
 import com.zifengliu.weblog.common.domain.dos.UserDO;
@@ -12,8 +13,6 @@ import com.zifengliu.weblog.common.domain.mapper.ArticleMapper;
 import com.zifengliu.weblog.common.domain.mapper.BlogSettingsMapper;
 import com.zifengliu.weblog.common.domain.mapper.UserFollowMapper;
 import com.zifengliu.weblog.common.domain.mapper.UserMapper;
-import com.zifengliu.weblog.common.enums.ResponseCodeEnum;
-import com.zifengliu.weblog.common.exception.BizException;
 import com.zifengliu.weblog.common.utils.PageResponse;
 import com.zifengliu.weblog.common.utils.Response;
 import com.zifengliu.weblog.web.model.vo.follow.CheckFollowReqVO;
@@ -52,13 +51,9 @@ public class UserFollowServiceImpl implements UserFollowService {
     @Autowired
     private ArticleMapper articleMapper;
 
-    @Override
-    public Long countFansByUserId(Long userId) {
-        // 粉丝：谁关注了我 (following_user_id = 我的ID)
-        return userFollowMapper.selectCount(Wrappers.<UserFollowDO>lambdaQuery()
-                .eq(UserFollowDO::getFollowingUserId, userId));
-    }
-
+   /**
+   * 关注/取消关注
+    * */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Response followOrUnfollowUser(FollowUserReqVO reqVO) {
@@ -104,6 +99,9 @@ public class UserFollowServiceImpl implements UserFollowService {
         }
     }
 
+    /**
+     * 检查是否啊棍子
+     * */
     @Override
     public Response checkIsFollowed(CheckFollowReqVO reqVO) {
         if (Objects.isNull(reqVO.getUserId())) return Response.success(false);
@@ -119,6 +117,9 @@ public class UserFollowServiceImpl implements UserFollowService {
         return Response.success(count > 0);
     }
 
+    /**
+    * 关注列表
+    * */
     @Override
     public Response findFollowPageList(FindFollowPageListReqVO reqVO) {
         // 1. 分页查询关注表

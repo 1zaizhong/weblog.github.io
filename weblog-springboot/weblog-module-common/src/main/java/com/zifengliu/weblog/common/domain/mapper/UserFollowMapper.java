@@ -10,4 +10,5 @@ import com.zifengliu.weblog.common.domain.dos.UserFollowDO;
  * @description
  **/
 public interface UserFollowMapper extends BaseMapper<UserFollowDO> {
+    
 }
