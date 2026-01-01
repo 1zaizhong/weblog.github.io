@@ -6,7 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminCommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminCommentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/comment/FindCommentPageListRspVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/comment/FindCommentPageListRspVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/CommentDO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/dos/CommentDO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/CommentMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/CommentMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/convert/CommentConvert.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/convert/CommentConvert.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/comment/FindCommentItemRspVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/comment/FindCommentItemRspVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/comment/FindCommentListReqVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/comment/FindCommentListReqVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/comment/PublishCommentReqVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/model/vo/comment/PublishCommentReqVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/CommentServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,41 +83,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
-    "Maven.weblog-module-common [clean].executor": "Run",
-    "Maven.weblog-module-common [install].executor": "Run",
-    "Maven.weblog-springboot [clean].executor": "Run",
-    "Maven.weblog-springboot [install].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.WeblogModuleCommonApplication.executor": "Run",
-    "Spring Boot.WeblogWebApplication.executor": "Run",
-    "git-widget-placeholder": "blog",
-    "ignore.preview.features.used": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "E:/workSpaceIDEA/weblog/weblog-springboot/weblog-web/src/main/resources/word",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "SDK",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "vcs.Git",
-    "vue.rearranger.settings.migration": "true",
-    "应用程序.MarkdownHelper.executor": "Run",
-    "应用程序.PasswordEncoderConfig.executor": "Run",
-    "应用程序.WeblogWebApplication.executor": "Run"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.weblog-module-common [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.weblog-module-common [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.weblog-springboot [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.weblog-springboot [install].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.WeblogModuleCommonApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.WeblogWebApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;blog&quot;,
+    &quot;ignore.preview.features.used&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/workSpaceIDEA/weblog/weblog-springboot/weblog-web/src/main/resources/word&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDK&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;应用程序.MarkdownHelper.executor&quot;: &quot;Run&quot;,
+    &quot;应用程序.PasswordEncoderConfig.executor&quot;: &quot;Run&quot;,
+    &quot;应用程序.WeblogWebApplication.executor&quot;: &quot;Run&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\workSpaceIDEA\weblog\weblog-springboot\weblog-web\src\main\resources\word" />
@@ -279,14 +286,8 @@
       <workItem from="1767115543251" duration="24000" />
       <workItem from="1767115639538" duration="315000" />
       <workItem from="1767160972028" duration="7396000" />
-    </task>
-    <task id="LOCAL-00044" summary="评论删除,获取列表">
-      <option name="closed" value="true" />
-      <created>1766334385509</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1766334385509</updated>
+      <workItem from="1767205924195" duration="774000" />
+      <workItem from="1767243654622" duration="8618000" />
     </task>
     <task id="LOCAL-00045" summary="区分不同用户,查看不同文章功能">
       <option name="closed" value="true" />
@@ -672,7 +673,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767200965285</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <task id="LOCAL-00093" summary="评论权重，未审核优先显示">
+      <option name="closed" value="true" />
+      <created>1767201671954</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1767201671954</updated>
+    </task>
+    <option name="localTasksCounter" value="94" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -738,7 +747,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="前台统计" />
     <MESSAGE value="博客设置多用户区分" />
     <MESSAGE value="lunch搜索引擎添加status=2查询" />
     <MESSAGE value="博客设置的bug,已经完善" />
@@ -763,7 +771,8 @@
     <MESSAGE value="标签分类列表" />
     <MESSAGE value="管理员删除评论" />
     <MESSAGE value="普通用户不能删除未审核评论" />
-    <option name="LAST_COMMIT_MESSAGE" value="普通用户不能删除未审核评论" />
+    <MESSAGE value="评论权重，未审核优先显示" />
+    <option name="LAST_COMMIT_MESSAGE" value="评论权重，未审核优先显示" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

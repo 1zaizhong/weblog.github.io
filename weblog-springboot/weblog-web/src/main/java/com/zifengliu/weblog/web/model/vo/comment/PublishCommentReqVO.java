@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author 粟英朝
@@ -23,21 +24,13 @@ import javax.validation.constraints.NotBlank;
 public class PublishCommentReqVO {
 
     /**
-     * 头像
+     * 头像不用一点传
      */
     private String avatar;
 
-    @NotBlank(message = "昵称不能为空")
+
     private String nickname;
 
-    @NotBlank(message = "邮箱不能为空")
-    @Email(message = "邮箱格式错误")
-    private String mail;
-
-    /**
-     * 网址
-     */
-    private String website;
 
     @NotBlank(message = "路由地址不能为空")
     private String routerUrl;
@@ -46,6 +39,8 @@ public class PublishCommentReqVO {
     @Length(min = 1, max = 120, message = "评论内容需大于 1 小于 120 字符")
     private String content;
 
+    @NotNull(message = "评论人不能为空")
+    private Long fromUserId;
     /**
      * 回复的评论 ID
      */

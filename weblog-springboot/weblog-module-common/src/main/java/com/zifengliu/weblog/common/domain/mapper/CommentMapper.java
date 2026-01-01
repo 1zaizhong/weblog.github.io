@@ -44,7 +44,7 @@ public interface CommentMapper extends BaseMapper<CommentDO> {
 
     default Page<CommentDO> selectPageList(Long current, Long size, String routerUrl,
                                             LocalDate startDate, LocalDate endDate,
-                                            Integer status, Long userId) { // 增加 userId 参数
+                                            Integer status, Long userId) {
         Page<CommentDO> page = new Page<>(current, size);
 
         LambdaQueryWrapper<CommentDO> wrapper = Wrappers.<CommentDO>lambdaQuery()

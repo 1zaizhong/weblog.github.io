@@ -35,12 +35,9 @@ public class FindCommentItemRspVO {
      * 昵称
      */
     private String nickname;
-
-    /**
-     * 网址
-     */
-    private String website;
-
+/*
+* 评论人*/
+    private Long fromUserId;
     /**
      * 评论内容
      */

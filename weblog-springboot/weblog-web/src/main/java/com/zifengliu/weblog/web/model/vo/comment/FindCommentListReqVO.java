@@ -22,5 +22,7 @@ public class FindCommentListReqVO {
 
     @NotBlank(message = "路由地址不能为空")
     private String routerUrl;
-
+    /*评论人
+    * */
+    private Long fromUserId;
 }

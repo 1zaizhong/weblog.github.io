@@ -32,8 +32,9 @@ public class CommentDO {
 
     private String nickname;
 
-    private String mail;
+    private Long fromUserId;
 
+    private String mail;
     private String website;
 
     private String routerUrl;

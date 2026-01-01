@@ -23,6 +23,7 @@ public interface CommentConvert {
      * @param bean
      * @return
      */
+
     FindCommentItemRspVO convertDO2VO(CommentDO bean);
 
 }

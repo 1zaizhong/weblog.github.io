@@ -1,5 +1,6 @@
 package com.zifengliu.weblog.web.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zifengliu.weblog.common.domain.dos.ArticleDO;
@@ -115,8 +116,12 @@ public class CommentServiceImpl implements CommentService {
         String nickname = publishCommentReqVO.getNickname();
         // 网站地址
         String routerUrl = publishCommentReqVO.getRouterUrl();
+        //获取前端传来的当前登录人 ID
+        Long fromUserId = publishCommentReqVO.getFromUserId();
+
         Long authorId = null;
-        // 用户 ID
+
+        // 解析文章作者 ID (authorId)
         if (routerUrl.contains("/article/")) {
             try {
                 // 截取路径中的 ID 部分
@@ -133,7 +138,19 @@ public class CommentServiceImpl implements CommentService {
                 throw new BizException(ResponseCodeEnum.URL_ID_NO_FOUND);
             }
         }
-        // 查询博客设置相关信息（约定的 ID 为 1）
+        BlogSettingsDO userSettings = blogSettingsMapper.selectOne(Wrappers.<BlogSettingsDO>lambdaQuery()
+                .eq(BlogSettingsDO::getUserId, fromUserId));
+        if (userSettings != null) {
+           String finalAvatar = userSettings.getAvatar();
+            nickname = userSettings.getAuthor();
+        } else {
+            // 如果真的查不到，日志记录一下 ID，方便排查数据库数据
+            log.error("数据库异常：未找到 ID 为 {} 的博客设置", fromUserId);
+            // 降级使用前端传来的数据
+            String  finalAvatar = publishCommentReqVO.getAvatar();
+            nickname = publishCommentReqVO.getNickname();
+        }
+        // 查询博客设置相关信息（ID 为 1）
         BlogSettingsDO blogSettingsDO = blogSettingsMapper.selectById(1L);
         // 是否开启了敏感词过滤
         boolean isCommentSensiWordOpen = blogSettingsDO.getIsCommentSensiWordOpen();
@@ -169,20 +186,23 @@ public class CommentServiceImpl implements CommentService {
             }
         }
 
+
+
         CommentDO commentDO = CommentDO.builder()
-                .avatar(publishCommentReqVO.getAvatar())
+                .avatar(userSettings.getAvatar())
                 .content(content)
-                .mail(publishCommentReqVO.getMail())
                 .createTime(LocalDateTime.now())
-                .nickname(nickname)
+                .nickname(userSettings.getName())
                 .routerUrl(publishCommentReqVO.getRouterUrl())
-                .website(publishCommentReqVO.getWebsite())
                 .replyCommentId(replyCommentId)
+                .userId(authorId)
+                .fromUserId(publishCommentReqVO.getFromUserId())
                 .parentCommentId(publishCommentReqVO.getParentCommentId())
                 .status(status)
                 .reason(reason)
                 .build();
-        //设置作者id
+
+        //设置mo认作者id
         commentDO.setUserId(authorId != null ? authorId : 1L);
         commentMapper.insert(commentDO);
 

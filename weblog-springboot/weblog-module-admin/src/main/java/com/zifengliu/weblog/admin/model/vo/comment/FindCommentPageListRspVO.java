@@ -28,8 +28,9 @@ public class FindCommentPageListRspVO {
     private String nickname;
 
     private String mail;
-
     private String website;
+
+    private Long fromUserId;
 
     private LocalDateTime createTime;
 
