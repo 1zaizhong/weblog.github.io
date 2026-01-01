@@ -94,7 +94,7 @@ onMounted(() => {
 
     console.log("即将发送的请求 ID:", userId)
 
-    // 关键点：如果后端用了 @RequestBody，这里必须传对象
+    // 这里必须传对象
     getCategoryList({ userId: userId }).then((res) => {
         console.log("后端返回的原始数据:", res) 
         if (res.success) {

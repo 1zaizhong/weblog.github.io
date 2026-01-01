@@ -103,11 +103,6 @@
                     <!-- 博主信息 -->
                     <UserInfoCard></UserInfoCard>
 
-                    <!-- 分类 -->
-                    <CategoryListCard></CategoryListCard>
-
-                    <!-- 标签 -->
-                    <TagListCard></TagListCard>
                 </div>
             </aside>
     </div>

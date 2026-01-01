@@ -78,7 +78,7 @@ onMounted(() => {
         const currentLoginUserId = userObj.userInfo?.userID 
 
         if (currentLoginUserId) {
-            // 2. 【关键修改】调用 Store 方法时传入当前登录的 userID
+            
             blogSettingsStore.getBlogSettings(currentLoginUserId)
 
             // 3. 获取统计信息

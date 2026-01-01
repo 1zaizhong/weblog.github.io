@@ -67,9 +67,12 @@ public class ArticleServiceImpl implements ArticleService {
         Long size = findIndexArticlePageListReqVO.getSize();
         //y用户id
         Long UserId = findIndexArticlePageListReqVO.getUserId();
+
         // 显式创建 Page 对象，MyBatis Plus 需要这个对象来承载分页结果和 Total 总数
-        Page<ArticleDO> page = new Page<>(findIndexArticlePageListReqVO.getCurrent(), findIndexArticlePageListReqVO.getSize());
+        Page<ArticleDO> page = new Page<>(current,size);
+
         LambdaQueryWrapper<ArticleDO> wrapper = new LambdaQueryWrapper<>();
+
       //查询条件：根据用户或者公布
         if (Objects.nonNull(UserId)) {
             // 使用 .and(w -> ...) 确保 OR 逻辑被括号包裹，不干扰其他查询条件
@@ -80,9 +83,11 @@ public class ArticleServiceImpl implements ArticleService {
             // 如果前端没传 userId（用户未登录），则只能看到已发布的文章
             wrapper.eq(ArticleDO::getStatus, 2);
         }
-        //倒叙
-        wrapper.orderByDesc(ArticleDO::getWeight)
-                .orderByDesc(ArticleDO::getCreateTime);
+        //排序：
+        wrapper.orderByDesc(ArticleDO::getWeight);
+        //pinjie随机
+        wrapper.last(", RAND()");
+
 
         // 2. 分页查询文章主体记录
       //必须确保第一个参数是 Page 对象
@@ -214,7 +219,7 @@ public class ArticleServiceImpl implements ArticleService {
 
         Long userId = articleDO.getUserId();
         // 上一篇
-        ArticleDO preArticleDO = articleMapper.selectPreArticle(articleId, userId); // 传入 userId
+        ArticleDO preArticleDO = articleMapper.selectPreArticle(articleId); // 传入 userId
         if (Objects.nonNull(preArticleDO)) {
             FindPreNextArticleRspVO preArticleVO = FindPreNextArticleRspVO.builder()
                     .articleId(preArticleDO.getId())
@@ -224,7 +229,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
         // 下一篇
-        ArticleDO nextArticleDO = articleMapper.selectNextArticle(articleId, userId); // 传入 userId
+        ArticleDO nextArticleDO = articleMapper.selectNextArticle(articleId); // 传入 userId
         if (Objects.nonNull(nextArticleDO)) {
             FindPreNextArticleRspVO nextArticleVO = FindPreNextArticleRspVO.builder()
                     .articleId(nextArticleDO.getId())

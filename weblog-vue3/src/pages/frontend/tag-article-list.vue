@@ -173,7 +173,7 @@ const userObj = userStr ? JSON.parse(userStr) : null
 //
 const userId = userObj && userObj.userInfo ? userObj.userInfo.userID : null
 const initTags = () => {
-    // 关键：必须把 userId 传给后端，否则会显示全部标签
+    // 必须把 userId 传给后端，否则会显示全部标签
     getTagList({ userId: userId }).then((res) => {
         if (res.success) {
             tags.value = res.data
