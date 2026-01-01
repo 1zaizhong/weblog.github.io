@@ -16,6 +16,18 @@
 
                 <el-button type="primary" class="ml-3" :icon="Search" @click="getTableData">查询</el-button>
                 <el-button class="ml-3" :icon="RefreshRight" @click="reset">重置</el-button>
+                <el-tooltip content="没思路？AI 帮你想" placement="top">
+                    <el-button 
+                        type="warning" 
+                        class="ml-3" 
+                        circle 
+                        @click="showAiDialog = true"
+                    >
+                        <el-icon><MagicStick /></el-icon>
+                    </el-button>
+                </el-tooltip>
+
+                <AiChatDialog v-model="showAiDialog" />
             </div>
         </el-card>
 
@@ -236,7 +248,7 @@
 
 <script setup>
 import { ref, reactive ,onMounted} from 'vue'
-import { Search, RefreshRight, Check, Close } from '@element-plus/icons-vue'
+import { Search, RefreshRight, Check, Close,MagicStick } from '@element-plus/icons-vue'
 import { getArticlePageList, deleteArticle, publishArticle, getArticleDetail, updateArticle, updateArticleIsTop,updateArticleStatus } from '@/api/admin/article'
 import { uploadFile } from '@/api/admin/file'
 import { getCategorySelectList } from '@/api/admin/category'
@@ -247,9 +259,12 @@ import { MdEditor } from 'md-editor-v3'
 import 'md-editor-v3/lib/style.css'
 import { useRouter } from 'vue-router'
 import { getUserInfo } from "@/api/admin/user"
+import AiChatDialog from '@/layouts/admin/components/AiChatDialog.vue'
 
 
 const router = useRouter()
+const showAiDialog = ref(false)
+
 // 定义当前登录用户信息
 const currentUser = ref({})
 // 获取当前登录用户信息
