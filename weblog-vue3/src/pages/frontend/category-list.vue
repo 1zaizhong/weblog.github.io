@@ -69,7 +69,7 @@
     <!-- 返回顶部 -->
     <ScrollToTopButton></ScrollToTopButton>
 
-    <Footer></Footer>
+   
 </template>
 
 <script setup>

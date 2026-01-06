@@ -28,7 +28,7 @@ public interface CategoryMapper extends BaseMapper<CategoryDO> {
         LambdaQueryWrapper<CategoryDO> wrapper = new LambdaQueryWrapper<>();
 
         wrapper
-                .eq(Objects.nonNull(userId), CategoryDO::getUserId, userId) // 关键：隔离用户数据
+                .eq(Objects.nonNull(userId), CategoryDO::getUserId, userId)
                 .like(StringUtils.isNotBlank(name), CategoryDO::getName, name.trim())
                 .ge(Objects.nonNull(startDate), CategoryDO::getCreateTime, startDate)
                 .le(Objects.nonNull(endDate), CategoryDO::getCreateTime, endDate)

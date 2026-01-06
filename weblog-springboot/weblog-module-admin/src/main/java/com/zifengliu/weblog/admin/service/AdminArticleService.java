@@ -1,7 +1,7 @@
 package com.zifengliu.weblog.admin.service;
 
 import com.zifengliu.weblog.admin.model.vo.article.*;
-import com.zifengliu.weblog.admin.model.vo.category.FindCategoryPageListReqVO;
+import com.zifengliu.weblog.admin.model.vo.category.FindCategoryArticlePageListReqVO;
 import com.zifengliu.weblog.common.utils.PageResponse;
 import com.zifengliu.weblog.common.utils.Response;
 
@@ -62,6 +62,7 @@ public interface AdminArticleService {
      * @return
      */
     Response updateArticleStatus(UpdateArticleStatusReqVO updateArticleStatusReqVO);
+
 
 
 }

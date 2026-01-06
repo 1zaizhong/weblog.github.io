@@ -8,10 +8,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zifengliu.weblog.common.domain.dos.ArticleContentDO;
+import com.zifengliu.weblog.common.domain.dos.*;
 import com.zifengliu.weblog.common.domain.dos.ArticleDO;
-import com.zifengliu.weblog.common.domain.dos.ArticleDO;
-import com.zifengliu.weblog.common.domain.dos.ArticlePublishCountDO;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -214,5 +212,44 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
         this.update(null, Wrappers.lambdaUpdate(ArticleDO.class)
                 .eq(ArticleDO::getId, articleId)
                 .setSql("like_num = like_num + " + step));
+    }
+
+    /**
+     * 【新增】根据分类 ID 和用户 ID 查询文章分页数据
+     * 内部逻辑：先查关联表，再根据 ID 集合查文章表
+     */
+    default Page<ArticleDO> selectPageListByCategoryId(
+            Long current,
+            Long size,
+            Long categoryId,
+            Long userId,
+            ArticleCategoryRelMapper articleCategoryRelMapper) {
+
+        // 1. 从关联表中查询该分类下的所有文章 ID
+        List<ArticleCategoryRelDO> rels = articleCategoryRelMapper.selectList(
+                Wrappers.<ArticleCategoryRelDO>lambdaQuery()
+                        .eq(ArticleCategoryRelDO::getCategoryId, categoryId)
+        );
+
+        // 2. 提取文章 ID 集合
+        List<Long> articleIds = rels.stream()
+                .map(ArticleCategoryRelDO::getArticleId)
+                .collect(Collectors.toList());
+
+        // 3. 创建分页对象
+        Page<ArticleDO> page = new Page<>(current, size);
+
+        // 4. 如果该分类下没有文章，直接返回空分页
+        if (articleIds.isEmpty()) {
+            return page;
+        }
+
+        // 5. 构建查询条件：匹配 ID 集合 且 匹配所属用户
+        LambdaQueryWrapper<ArticleDO> wrapper = Wrappers.<ArticleDO>lambdaQuery()
+                .in(ArticleDO::getId, articleIds)
+                .eq(ArticleDO::getUserId, userId) // 数据隔离，只能看自己的
+                .orderByDesc(ArticleDO::getCreateTime);
+
+        return selectPage(page, wrapper);
     }
 }

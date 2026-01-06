@@ -1,9 +1,6 @@
 package com.zifengliu.weblog.admin.controller;
 
-import com.zifengliu.weblog.admin.model.vo.category.AddCategoryReqVO;
-import com.zifengliu.weblog.admin.model.vo.category.DeleteCategoryReqVO;
-import com.zifengliu.weblog.admin.model.vo.category.FindCategoryPageListReqVO;
-import com.zifengliu.weblog.admin.model.vo.category.FindCategoryPageListRspVO;
+import com.zifengliu.weblog.admin.model.vo.category.*;
 import com.zifengliu.weblog.admin.service.AdminCategoryService;
 import com.zifengliu.weblog.admin.service.AdminUserService;
 import com.zifengliu.weblog.common.aspect.ApiOperationLog;
@@ -60,5 +57,11 @@ public class AdminCategoryController {
     @ApiOperationLog(description = "分类Select 下拉列表数据获取")
     public  Response findCategorySelectList( ){
         return categoryService.findeCategorySelectList();
+    }
+    @PostMapping("/category/article/list")
+    @ApiOperation(value = "查询专栏下的文章分页数据")
+    @ApiOperationLog(description = "查询专栏下的文章分页数据")
+    public PageResponse findCategoryArticlePageList(@RequestBody @Validated FindCategoryArticlePageListReqVO reqVO) {
+        return categoryService.findCategoryArticlePageList(reqVO);
     }
 }

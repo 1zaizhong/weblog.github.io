@@ -3,6 +3,7 @@ package com.zifengliu.weblog.admin.service;
 import com.zifengliu.weblog.admin.model.vo.article.UpdateArticleIsTopReqVO;
 import com.zifengliu.weblog.admin.model.vo.category.AddCategoryReqVO;
 import com.zifengliu.weblog.admin.model.vo.category.DeleteCategoryReqVO;
+import com.zifengliu.weblog.admin.model.vo.category.FindCategoryArticlePageListReqVO;
 import com.zifengliu.weblog.admin.model.vo.category.FindCategoryPageListReqVO;
 
 import com.zifengliu.weblog.common.utils.PageResponse;
@@ -43,6 +44,11 @@ public interface AdminCategoryService {
     * @return
     * */
     Response findeCategorySelectList();
+    /**
+     * 查询专栏下的文章分页数据
+     */
+    PageResponse findCategoryArticlePageList(FindCategoryArticlePageListReqVO findCategoryArticlePageListReqVO);
+
 
 
 

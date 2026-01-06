@@ -3,12 +3,11 @@ package com.zifengliu.weblog.admin.service.impl;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zifengliu.weblog.admin.model.vo.category.AddCategoryReqVO;
-import com.zifengliu.weblog.admin.model.vo.category.DeleteCategoryReqVO;
-import com.zifengliu.weblog.admin.model.vo.category.FindCategoryPageListReqVO;
-import com.zifengliu.weblog.admin.model.vo.category.FindCategoryPageListRspVO;
+import com.zifengliu.weblog.admin.model.vo.article.FindArticlePageListRspVO;
+import com.zifengliu.weblog.admin.model.vo.category.*;
 import com.zifengliu.weblog.admin.service.AdminCategoryService;
 import com.zifengliu.weblog.common.domain.dos.ArticleCategoryRelDO;
+import com.zifengliu.weblog.common.domain.dos.ArticleDO;
 import com.zifengliu.weblog.common.domain.dos.CategoryDO;
 import com.zifengliu.weblog.common.domain.dos.UserDO;
 import com.zifengliu.weblog.common.domain.mapper.*;
@@ -26,6 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -79,21 +79,22 @@ public class AdminCategoryServiceImpl  implements AdminCategoryService {
         String name = addCategoryReqVO.getName();
 
         Long userId = getLoginUserId();
-
+        if (!Objects.equals(userId, 1L)) {
+            return Response.fail("权限不足：只有管理员可以创建新专栏");
+        }
         // 校验：同一个用户下不能有同名的分类
-        CategoryDO categoryDO = categoryMapper.selectOne(Wrappers.<CategoryDO>lambdaQuery()
-                .eq(CategoryDO::getName, name)
-                .eq(CategoryDO::getUserId, userId)); // 加上用户 ID 校验
-
-        if (Objects.nonNull(categoryDO)) {
-            log.warn("==> 该分类已存在: {}, userId: {}", name, userId);
+        String categoryName = addCategoryReqVO.getName();
+        CategoryDO categoryDO = categoryMapper.selectByName(categoryName);
+        if (categoryDO != null) {
             throw new BizException(ResponseCodeEnum.CATEGORY_NAME_IS_EXISTED);
         }
 
         // 构建 DO 并保存
         CategoryDO insertCategoryDO = CategoryDO.builder()
-                .name(name.trim())
-                .userId(userId) // 设置所属用户
+                .name(categoryName)
+                .userId(1L)
+                .createTime(LocalDateTime.now())
+                .updateTime(LocalDateTime.now())
                 .build();
 
         categoryMapper.insert(insertCategoryDO);
@@ -103,7 +104,7 @@ public class AdminCategoryServiceImpl  implements AdminCategoryService {
 
     /*
      * 分类分页数据查询
-     * @param findCategoryPageListReqVO
+     * @param
      * @return
      * */
     @Override
@@ -119,7 +120,7 @@ public class AdminCategoryServiceImpl  implements AdminCategoryService {
         Long filterUserId = Objects.equals(userId, 1L) ? null : userId;
         // 执行分页查询
         Page<CategoryDO> categoryDOPage = categoryMapper.
-                selectPageList(current, size,  name, startDate, endDate,filterUserId);
+                selectPageList(current, size,  name, startDate, endDate,1L);
 
         List<CategoryDO> categoryDOS = categoryDOPage.getRecords();
 
@@ -189,7 +190,7 @@ public class AdminCategoryServiceImpl  implements AdminCategoryService {
 
         // 2. 仅查询属于该用户的分类 (且未删除)
         List<CategoryDO> categoryDOS = categoryMapper.selectList(Wrappers.<CategoryDO>lambdaQuery()
-                .eq(CategoryDO::getUserId, userId) // 关键过滤
+                .eq(CategoryDO::getUserId, 1L) // 关键过滤
                 .eq(CategoryDO::getIsDeleted, false)
                 .orderByDesc(CategoryDO::getCreateTime));
 
@@ -206,6 +207,40 @@ public class AdminCategoryServiceImpl  implements AdminCategoryService {
                     .collect(Collectors.toList());
         }
         return Response.success(selectRspVOS);
+    }
+    /**
+     * 查询专栏（分类）下的文章列表
+     */
+    @Override
+    public PageResponse findCategoryArticlePageList(FindCategoryArticlePageListReqVO reqVO) {
+        // 1. 获取当前登录用户 ID
+        Long loginUserId = getLoginUserId();
+
+        // 2. 调用 ArticleMapper专栏查询方法
+        Page<ArticleDO> articleDOPage = articleMapper.selectPageListByCategoryId(
+                reqVO.getCurrent(),
+                reqVO.getSize(),
+                reqVO.getCategoryId(),
+                loginUserId,
+                articleCategoryRelMapper
+        );
+
+        List<ArticleDO> articleDOS = articleDOPage.getRecords();
+
+        // 3. DO 转 VO
+        List<FindArticlePageListRspVO> vos = null;
+        if (!CollectionUtils.isEmpty(articleDOS)) {
+            vos = articleDOS.stream()
+                    .map(articleDO -> FindArticlePageListRspVO.builder()
+                            .id(articleDO.getId())
+                            .title(articleDO.getTitle())
+                            .cover(articleDO.getCover())
+                            .createTime(articleDO.getCreateTime())
+                            .build())
+                    .collect(Collectors.toList());
+        }
+
+        return PageResponse.success(articleDOPage, vos);
     }
 
 }

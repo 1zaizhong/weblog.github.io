@@ -38,7 +38,7 @@ const routes = [
         component: CategoryArticleList,
         meta: { title: 'Weblog 分类文章页' }
     },
-   
+  
     {
         path: '/personal/like', 
         component: () => import('@/pages/frontend/user-like.vue'), 
@@ -103,6 +103,12 @@ const routes = [
                 path: "/admin/category/list",
                 component: AdminCategoryList,
                 meta: { title: '分类管理' }
+            },
+              {
+                path: '/admin/category/article',
+                component: () => import('@/pages/admin/category-article-list.vue'), 
+                name: '专栏文章管理',
+                meta: { title: '专栏文章管理' }
             },
             {
                 path: "/admin/tag/list",
