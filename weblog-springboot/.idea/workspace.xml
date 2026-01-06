@@ -6,10 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/TagController.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/TagController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/TagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/TagService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/TagServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/TagServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/api/admin/category.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/admin/category.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/category-list.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/category-list.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/category-article-list.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/category-article-list.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/category-list.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/category-list.vue" afterDir="false" />
@@ -289,22 +285,6 @@
       <workItem from="1767243654622" duration="46946000" />
       <workItem from="1767337867209" duration="2681000" />
       <workItem from="1767369111201" duration="14723000" />
-    </task>
-    <task id="LOCAL-00060" summary="后台首页阅读量统计">
-      <option name="closed" value="true" />
-      <created>1766827426543</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1766827426543</updated>
-    </task>
-    <task id="LOCAL-00061" summary="修改了mapper的一个小错误">
-      <option name="closed" value="true" />
-      <created>1766827731427</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1766827731427</updated>
     </task>
     <task id="LOCAL-00062" summary="评论,后台查询">
       <option name="closed" value="true" />
@@ -682,7 +662,23 @@
       <option name="project" value="LOCAL" />
       <updated>1767705455979</updated>
     </task>
-    <option name="localTasksCounter" value="109" />
+    <task id="LOCAL-00109" summary="前台逛逛功能">
+      <option name="closed" value="true" />
+      <created>1767710484704</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1767710484704</updated>
+    </task>
+    <task id="LOCAL-00110" summary="前台逛逛功能">
+      <option name="closed" value="true" />
+      <created>1767710677224</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1767710677224</updated>
+    </task>
+    <option name="localTasksCounter" value="111" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -748,7 +744,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="完结撒花" />
     <MESSAGE value="完结撒花1" />
     <MESSAGE value="知识库bug" />
     <MESSAGE value="完结" />
@@ -773,7 +768,8 @@
     <MESSAGE value="前台后端博主的统计信息" />
     <MESSAGE value="前台关注/博主详情页" />
     <MESSAGE value="后台分类管理文章" />
-    <option name="LAST_COMMIT_MESSAGE" value="后台分类管理文章" />
+    <MESSAGE value="前台逛逛功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="前台逛逛功能" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

@@ -37,10 +37,10 @@
                     <div class="mt-10 pt-8 border-t border-gray-100 dark:border-gray-700">
                         <div class="flex items-center justify-between mb-6">
                             <h2 class="flex items-center font-bold text-gray-900 uppercase dark:text-white text-sm">
-                                <el-icon class="mr-2 text-orange-600"><PriceTag /></el-icon>
+                                <el-icon class="mr-2 text-orange-500"><PriceTag /></el-icon>
                                 <span>发现标签</span>
                             </h2>
-                            <button @click="initTags" class="text-xs font-bold flex items-center text-sky-600 hover:text-sky-700 transition-all active:scale-95">
+                            <button @click="initTags" class="text-xs flex items-center text-sky-600 hover:text-sky-700 transition-all active:scale-95">
                                 <el-icon class="mr-1"><RefreshRight /></el-icon>换一换
                             </button>
                         </div>
@@ -49,9 +49,9 @@
                             <div v-if="tags.length === 0" class="text-gray-400 text-sm italic">暂无标签数据...</div>
                             <a v-for="(tag, index) in tags" :key="index"
                                 @click="goTagArticleListPage(tag.id, tag.name)"
-                                class="cursor-pointer inline-flex items-center px-4 py-2 text-sm font-bold text-black bg-white border border-gray-400 rounded-md hover:border-black hover:bg-gray-50 transition-all dark:bg-gray-700 dark:text-gray-300">
+                                class="cursor-pointer inline-flex items-center px-4 py-1.5 text-sm font-medium text-gray-700 bg-gray-50 border border-gray-200 rounded-md hover:border-sky-400 hover:text-sky-600 hover:bg-sky-50 transition-all dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600">
                                 # {{ tag.name }}
-                                <span class="ml-1 text-[11px] text-gray-500">({{ tag.articlesTotal }})</span>
+                                <span class="ml-1.5 text-[11px] text-gray-400 font-normal">({{ tag.articlesTotal }})</span>
                             </a>
                         </div>
                     </div>
@@ -104,7 +104,6 @@ const initCategories = () => {
 const initTags = () => {
     getTagList().then((res) => {
         if (res.success) {
-            // 如果后端返回数据很多，可以在这里做随机截取逻辑，目前展示全部
             tags.value = res.data
         }
     })

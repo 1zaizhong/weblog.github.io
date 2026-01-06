@@ -1,147 +1,191 @@
 <template>
-    <div class="grid grid-cols-12 gap-6 p-4">
-        <div class="col-span-12 md:col-span-3">
-            <div class="w-full p-5 mb-5 bg-white border border-gray-200 rounded-lg shadow-sm">
-                <h2 class="flex items-center mb-4 font-bold text-gray-900 uppercase">
-                    <el-icon class="mr-2 text-sky-500"><FolderOpened /></el-icon>专栏
-                </h2>
-                <div class="flex flex-col gap-1">
-                    <div v-if="categories.length === 0" class="text-gray-400 text-sm p-4 text-center">加载中...</div>
-                    <div v-for="(category, index) in categories" :key="index"
-                        @click="goCategoryArticleListPage(category.id, category.name)"
-                        :class="[route.query.type !== 'tag' && route.query.id == category.id ? 'bg-sky-50 text-sky-600 border-sky-200' : 'text-gray-600 border-transparent hover:bg-gray-50']"
-                        class="px-4 py-3 text-sm font-medium border rounded-lg cursor-pointer transition-all flex justify-between items-center">
-                        <span>{{ category.name }}</span>
-                        <el-icon v-if="route.query.type !== 'tag' && route.query.id == category.id"><ArrowRight /></el-icon>
-                    </div>
+    <div>
+        <el-card shadow="never" class="mb-5">
+            <div class="flex items-center">
+                <el-text>专栏名称</el-text>
+                <div class="ml-3 w-52 mr-5"><el-input v-model="searchCategoryName" placeholder="请输入名称" clearable /></div>
+
+                <el-text>创建日期</el-text>
+                <div class="ml-3 w-30 mr-5">
+                    <el-date-picker v-model="pickDate" type="daterange" range-separator="至" start-placeholder="开始时间"
+                        end-placeholder="结束时间" size="default" :shortcuts="shortcuts" @change="datepickerChange"/>
                 </div>
+
+                <el-button type="primary" class="ml-3" :icon="Search" @click="getTableData">查询</el-button>
+                <el-button class="ml-3" :icon="RefreshRight" @click="reset">重置</el-button>
+            </div>
+        </el-card>
+
+        <el-card shadow="never">
+            <div class="mb-5" v-if="isAdmin">
+                <el-button type="primary" @click="addCategoryBtnClick">
+                    <el-icon class="mr-1"><Plus /></el-icon>新增官方专栏
+                </el-button>
             </div>
 
-            <div class="w-full p-5 bg-white border border-gray-200 rounded-lg shadow-sm">
-                <div class="flex items-center justify-between mb-4">
-                    <h2 class="flex items-center font-bold text-gray-900 uppercase">
-                        <el-icon class="mr-2 text-orange-500"><PriceTag /></el-icon>标签
-                    </h2>
-                    <button @click="initTags" class="text-xs flex items-center text-sky-600 hover:text-sky-700 active:scale-95">
-                        <el-icon class="mr-1"><RefreshRight /></el-icon>换一换
-                    </button>
-                </div>
-                <div class="flex flex-wrap gap-2">
-                    <div v-if="tags.length === 0" class="text-gray-400 text-sm p-2 text-center w-full">暂无标签</div>
-                    <span v-for="(tag, index) in tags" :key="index"
-                        @click="goTagArticleListPage(tag.id, tag.name)"
-                        :class="[route.query.type === 'tag' && route.query.id == tag.id ? 'bg-sky-500 text-white border-sky-500' : 'bg-gray-100 text-gray-600 border-gray-200 hover:border-sky-500 hover:text-sky-500 hover:bg-white']"
-                        class="px-2 py-1 text-xs border rounded-md cursor-pointer transition-all">
-                        # {{ tag.name }}
-                    </span>
-                </div>
-            </div>
-        </div>
+            <el-table :data="tableData" border stripe style="width: 100%" v-loading="tableLoading">
+                <el-table-column prop="name" label="专栏名称" width="180" align="center" />
+                <el-table-column prop="createTime" label="创建时间" width="180" align="center" />
+                <el-table-column label="操作" align="center">
+                    <template #default="scope">
+                        <el-button size="small" @click="goCategoryArticle(scope.row)">
+                            <el-icon class="mr-1"><FolderOpened /></el-icon>管理文章
+                        </el-button>
 
-        <div class="col-span-12 md:col-span-9">
-            <div v-if="route.query.id" class="mb-5 p-4 bg-gray-50 border border-gray-200 rounded-lg flex items-center justify-between">
-                <div>
-                    <span class="text-gray-500 text-sm">当前：</span>
-                    <span class="font-bold text-sky-600">{{ route.query.type === 'tag' ? '标签' : '专栏' }}</span>
-                    <span class="mx-2 text-gray-300">/</span>
-                    <span class="text-gray-800 font-medium">{{ route.query.name }}</span>
-                </div>
-            </div>
+                        <el-button v-if="isAdmin" type="danger" size="small" @click="deleteCategorySubmit(scope.row)">
+                            <el-icon class="mr-1"><Delete /></el-icon>删除
+                        </el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
 
-            <div v-if="articles && articles.length > 0">
-                <div v-for="(article, index) in articles" :key="index" class="mb-5">
-                    <el-card shadow="hover" :body-style="{ padding: '0px' }" class="rounded-xl border-none shadow-sm">
-                        <div class="flex flex-col md:flex-row">
-                            <img :src="article.cover" class="w-full md:w-56 h-40 object-cover">
-                            <div class="p-5 flex flex-col justify-between flex-1">
-                                <h3 class="text-lg font-bold hover:text-sky-600 cursor-pointer line-clamp-2">
-                                    {{ article.title }}
-                                </h3>
-                                <div class="flex items-center text-gray-400 text-xs">
-                                    <el-icon class="mr-1"><Calendar /></el-icon>
-                                    {{ article.createDate }}
-                                </div>
-                            </div>
-                        </div>
-                    </el-card>
-                </div>
-                <div class="flex justify-center mt-10">
-                    <el-pagination v-model:current-page="current" :page-size="size" layout="prev, pager, next" :total="total" @current-change="loadArticleData" background />
-                </div>
+            <div class="mt-10 flex justify-center">
+                <el-pagination v-model:current-page="current" v-model:page-size="size" :page-sizes="[10, 20, 50]"
+                    :background="true" layout="total, sizes, prev, pager, next, jumper"
+                    :total="total" @size-change="handleSizeChange" @current-change="getTableData" />
             </div>
+        </el-card>
 
-            <el-empty v-else description="请选择左侧专栏或标签查看文章" />
-        </div>
+        <FormDialog ref="formDialogRef" title="新增官方专栏" destroyOnClose @submit="onSubmit">
+            <el-form ref="formRef" :rules="rules" :model="form">
+                <el-form-item label="专栏名称" prop="name" label-width="80px" size="large">
+                    <el-input v-model="form.name" placeholder="请输入专栏名称" maxlength="20" show-word-limit clearable/>
+                </el-form-item>
+            </el-form>
+        </FormDialog>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { getCategoryList, getCategoryArticlePageList } from '@/api/frontend/category'
-import { getTagList, getTagArticlePageList } from '@/api/frontend/tag'
-import { FolderOpened, PriceTag, RefreshRight, Calendar, ArrowRight } from '@element-plus/icons-vue'
+import { Search, RefreshRight, Plus, Delete, FolderOpened } from '@element-plus/icons-vue'
+import { ref, reactive, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { getCategoryPageList, addCategory, deleteCategory } from '@/api/admin/category'
+import moment from 'moment'
+import { showMessage, showModel } from '@/composables/util'
+import FormDialog from '@/components/FormDialog.vue'
 
-const route = useRoute()
 const router = useRouter()
 
-const categories = ref([])
-const tags = ref([])
-const articles = ref([])
-const current = ref(1)
-const size = ref(10)
-const total = ref(0)
+// --- 权限控制逻辑 ---
+const isAdmin = computed(() => {
+    const userStr = localStorage.getItem('user')
+    if (userStr) {
+        const userObj = JSON.parse(userStr)
+        // 这里的字段名需对应你登录接口存入 localStorage 的结构
+        const userID = userObj.userInfo?.userID || userObj.id 
+        return userID === 1
+    }
+    return false
+})
 
-// 1. 初始化分类列表 (注意后端需要 VO 对象，传空对象防止报错)
-const initCategories = () => {
-    getCategoryList({}).then(res => {
-        if (res.success) categories.value = res.data
-    })
-}
-
-// 2. 初始化标签
-const initTags = () => {
-    getTagList().then(res => {
-        if (res.success) tags.value = res.data
-    })
-}
-
-// 3. 加载文章列表
-const loadArticleData = (pageNum = 1) => {
-    const id = route.query.id
-    if (!id) return
-
-    const type = route.query.type || 'category'
-    const params = { current: pageNum, size: size.value, id: id }
-    
-    const apiCall = (type === 'tag') ? getTagArticlePageList(params) : getCategoryArticlePageList(params)
-
-    apiCall.then(res => {
-        if (res.success) {
-            articles.value = res.data
-            total.value = res.total
-            current.value = res.current
+// --- 页面跳转逻辑 ---
+const goCategoryArticle = (row) => {
+    router.push({
+        path: '/admin/category/article', // 这是你接下来需要创建的路由
+        query: { 
+            id: row.id,
+            name: row.name 
         }
     })
 }
 
-const goCategoryArticleListPage = (id, name) => {
-    router.push({ query: { id, name, type: 'category' } })
-}
+// --- 原有逻辑保持并优化 ---
+const searchCategoryName = ref('')
+const pickDate = ref('')
+const startDate = ref(null)
+const endDate = ref(null)
 
-const goTagArticleListPage = (id, name) => {
-    router.push({ query: { id, name, type: 'tag' } })
-}
-
-// 监听 Query 变化，执行数据加载
-watch(() => route.query, (newQuery) => {
-    if (newQuery.id) {
-        loadArticleData(1)
+const datepickerChange = (e) => {
+    if (e) {
+        startDate.value = moment(e[0]).format('YYYY-MM-DD')
+        endDate.value = moment(e[1]).format('YYYY-MM-DD')
+    } else {
+        startDate.value = null
+        endDate.value = null
     }
-}, { immediate: true })
+}
 
-onMounted(() => {
-    initCategories()
-    initTags()
-})
+const tableLoading = ref(false)
+const tableData = ref([])
+const current = ref(1)
+const total = ref(0)
+const size = ref(10)
+
+function getTableData() {
+    tableLoading.value = true
+    getCategoryPageList({
+        current: current.value, 
+        size: size.value, 
+        startDate: startDate.value, 
+        endDate: endDate.value, 
+        name: searchCategoryName.value
+    })
+    .then((res) => {
+        if (res.success) {
+            tableData.value = res.data
+            total.value = res.total
+        }
+    })
+    .finally(() => tableLoading.value = false)
+}
+getTableData()
+
+const handleSizeChange = (chooseSize) => {
+    size.value = chooseSize
+    getTableData()
+}
+
+const reset = () => {
+    searchCategoryName.value = ''
+    pickDate.value = ''
+    startDate.value = null
+    endDate.value = null
+    getTableData()
+}
+
+const formDialogRef = ref(null)
+const addCategoryBtnClick = () => formDialogRef.value.open()
+
+const formRef = ref(null)
+const form = reactive({ name: '' })
+const rules = {
+    name: [{ required: true, message: '名称不能为空', trigger: 'blur' }]
+}
+
+const onSubmit = () => {
+    formRef.value.validate((valid) => {
+        if (!valid) return
+        formDialogRef.value.showBtnLoading()
+        addCategory(form).then((res) => {
+            if (res.success) {
+                showMessage('添加成功')
+                form.name = ''
+                formDialogRef.value.close()
+                getTableData()
+            } else {
+                showMessage(res.message, 'error')
+            }
+        }).finally(() => formDialogRef.value.closeBtnLoading())
+    })
+}
+
+const deleteCategorySubmit = (row) => {
+    showModel('确定要删除该专栏吗？此操作不可逆。').then(() => {
+        deleteCategory(row.id).then((res) => {
+            if (res.success) {
+                showMessage('删除成功')
+                getTableData()
+            } else {
+                showMessage(res.message, 'error')
+            }
+        })
+    }).catch(() => {})
+}
+
+// 快捷选项
+const shortcuts = [
+    { text: '最近一周', value: () => [new Date(Date.now() - 3600 * 1000 * 24 * 7), new Date()] },
+    { text: '最近一个月', value: () => [new Date(Date.now() - 3600 * 1000 * 24 * 30), new Date()] }
+]
 </script>

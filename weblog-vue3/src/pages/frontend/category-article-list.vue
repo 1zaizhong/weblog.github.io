@@ -32,10 +32,10 @@
                     <div>
                         <div class="flex justify-between items-center mb-4">
                             <h2 class="flex items-center font-bold text-gray-900 uppercase dark:text-white text-sm">
-                                <el-icon class="mr-2 text-orange-600"><PriceTag /></el-icon>
+                                <el-icon class="mr-2 text-orange-500"><PriceTag /></el-icon>
                                 发现标签
                             </h2>
-                            <button @click="shuffleTags" class="flex items-center text-xs font-bold text-sky-600 hover:text-sky-700 cursor-pointer group">
+                            <button @click="shuffleTags" class="flex items-center text-xs text-sky-600 hover:text-sky-700 cursor-pointer group">
                                 <el-icon class="mr-1 group-active:rotate-180 transition-transform duration-500"><Refresh /></el-icon>
                                 换一换
                             </button>
@@ -44,10 +44,14 @@
                         <div class="flex flex-wrap gap-3">
                             <a @click="goListPage(tag.id, tag.name, 'tag')"
                                 v-for="(tag, index) in displayTags" :key="index"
-                                :class="[route.query.type == 'tag' && route.query.id == tag.id ? 'bg-gray-900 text-white border-gray-900 shadow-md' : 'bg-white text-black border-gray-400 hover:border-black']"
-                                class="inline-flex cursor-pointer items-center px-4 py-1.5 text-sm font-bold border rounded-md transition-all">
+                                :class="[
+                                    route.query.type == 'tag' && route.query.id == tag.id 
+                                    ? 'bg-sky-500 text-white border-sky-500 shadow-sm' 
+                                    : 'bg-gray-50 text-gray-700 border-gray-200 hover:border-sky-400 hover:text-sky-600 hover:bg-sky-50'
+                                ]"
+                                class="inline-flex cursor-pointer items-center px-4 py-1.5 text-sm font-medium border rounded-md transition-all">
                                 # {{ tag.name }}
-                                <span class="ms-2 text-[11px]" :class="route.query.type == 'tag' && route.query.id == tag.id ? 'text-gray-300' : 'text-gray-500'">
+                                <span class="ms-2 text-[11px] opacity-60" :class="route.query.type == 'tag' && route.query.id == tag.id ? 'text-white' : 'text-gray-500'">
                                     ({{ tag.articlesTotal }})
                                 </span>
                             </a>
