@@ -31,8 +31,8 @@ public class TagController {
     @PostMapping("/list")
     @ApiOperation(value = "前台获取标签列表")
     @ApiOperationLog(description = "前台获取标签列表")
-    public Response findTagList(@RequestBody @Validated FindTagListReqVO findTagListReqVO) {
-        return tagService.findTagList(findTagListReqVO);
+    public Response findTagList( ) {
+        return tagService.findTagList();
     }
 
 

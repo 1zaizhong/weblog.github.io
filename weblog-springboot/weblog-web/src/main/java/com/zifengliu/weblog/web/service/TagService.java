@@ -15,7 +15,7 @@ public interface TagService {
      * 获取标签列表
      * @return
      */
-    Response findTagList(FindTagListReqVO findTagListReqVO);
+    Response findTagList( );
 
 
     /**

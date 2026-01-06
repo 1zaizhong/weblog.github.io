@@ -5,20 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="267d3ffe-7d80-4ca1-8811-492680cfbd05" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/model/vo/category/FindCategoryArticlePageListReqVO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/controller/AdminCategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/controller/AdminCategoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/AdminArticleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/AdminArticleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/AdminCategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/AdminCategoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminArticleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminArticleServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminCategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-admin/src/main/java/com/zifengliu/weblog/admin/service/impl/AdminCategoryServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/ArticleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/ArticleMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/CategoryMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-module-common/src/main/java/com/zifengliu/weblog/common/domain/mapper/CategoryMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/layouts/frontend/components/Header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/TagController.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/controller/TagController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/TagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/TagService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/TagServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/weblog-web/src/main/java/com/zifengliu/weblog/web/service/impl/TagServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/api/admin/category.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/api/admin/category.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/category-list.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/admin/category-list.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/category-article-list.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/category-article-list.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/category-list.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/pages/frontend/category-list.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../weblog-vue3/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../weblog-vue3/src/router/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -295,14 +289,6 @@
       <workItem from="1767243654622" duration="46946000" />
       <workItem from="1767337867209" duration="2681000" />
       <workItem from="1767369111201" duration="14723000" />
-    </task>
-    <task id="LOCAL-00059" summary="后台首页标签统计">
-      <option name="closed" value="true" />
-      <created>1766825296217</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1766825296217</updated>
     </task>
     <task id="LOCAL-00060" summary="后台首页阅读量统计">
       <option name="closed" value="true" />
@@ -688,7 +674,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767309621148</updated>
     </task>
-    <option name="localTasksCounter" value="108" />
+    <task id="LOCAL-00108" summary="后台分类管理文章">
+      <option name="closed" value="true" />
+      <created>1767705455979</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1767705455979</updated>
+    </task>
+    <option name="localTasksCounter" value="109" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -754,7 +748,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="审核" />
     <MESSAGE value="完结撒花" />
     <MESSAGE value="完结撒花1" />
     <MESSAGE value="知识库bug" />
@@ -779,7 +772,8 @@
     <MESSAGE value="前台后端关注列表" />
     <MESSAGE value="前台后端博主的统计信息" />
     <MESSAGE value="前台关注/博主详情页" />
-    <option name="LAST_COMMIT_MESSAGE" value="前台关注/博主详情页" />
+    <MESSAGE value="后台分类管理文章" />
+    <option name="LAST_COMMIT_MESSAGE" value="后台分类管理文章" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

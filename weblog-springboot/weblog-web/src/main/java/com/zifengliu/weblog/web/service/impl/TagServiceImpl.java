@@ -42,14 +42,12 @@ public class TagServiceImpl implements TagService {
     private ArticleMapper articleMapper;
 
     /**
-     * 获取标签列表 (支持按用户 ID 过滤)
+     * 获取标签列表（随机取 12 个）
      */
     @Override
-    public Response findTagList(FindTagListReqVO reqVO) {
-
-        // 执行 SQL 过滤
+    public Response findTagList() {
         List<TagDO> tagDOS = tagMapper.selectList(Wrappers.<TagDO>lambdaQuery()
-                .orderByDesc(TagDO::getArticlesTotal));
+                .last("ORDER BY RAND() LIMIT 12"));
 
         // DO 转 VO
         List<FindTagListRspVO> vos = null;

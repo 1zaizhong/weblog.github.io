@@ -19,3 +19,7 @@ export function deleteCategory(id) {
 export function getCategorySelectList() {
     return axios.post("/admin/category/select/list")
 }
+// 查询下的文章列表
+export function getCategoryArticlePageList(data) {
+    return axios.post("/admin/category/article/list", data)
+}
