@@ -61,6 +61,8 @@
             <aside class="col-span-12 md:col-span-3">
                 <div class="sticky top-[5.5rem] space-y-4">
                     <UserInfoCard></UserInfoCard>
+                   
+                    <CategoryListCard></CategoryListCard>
                 </div>
             </aside>
         </div>

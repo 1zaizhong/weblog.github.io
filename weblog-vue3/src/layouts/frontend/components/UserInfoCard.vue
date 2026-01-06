@@ -32,11 +32,7 @@
                     <!-- 字体大小为 text-sm -->
                     <div class="text-sm">文章</div>
                 </div>
-                <div 
-                    class="flex items-center flex-col gap-1 hover:text-sky-600 hover:scale-110 cursor-pointer">
-                    <CountTo :value="statisticsInfo.categoryTotalCount" customClass="text-lg font-bold"></CountTo>
-                    <div class="text-sm">分类</div>
-                </div>
+               
                 <div
                     class="flex items-center flex-col gap-1 hover:text-sky-600 hover:scale-110 cursor-pointer">
                     <CountTo :value="statisticsInfo.tagTotalCount" customClass="text-lg font-bold"></CountTo>

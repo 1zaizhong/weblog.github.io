@@ -1,8 +1,8 @@
 import axios from "@/axios";
 
 // 获取标签列表
-export function getTagList(data) {
-    return axios.post("/tag/list", data)
+export function getTagList() {
+    return axios.post("/tag/list", {})
 }
 
 // 获取标签下文章列表
